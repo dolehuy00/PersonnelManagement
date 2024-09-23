@@ -10,7 +10,7 @@
         public string? Detail { get; set; }
         public required string Name { get; set; }
         public int PriotityLevel { get; set; }
-        public AssignmentStatus Status { get; set; }
+        public required AssignmentStatus Status { get; set; }
         public required Employee ResponsiblePeson { get; set; }
         public required Project Project { get; set; }
     }

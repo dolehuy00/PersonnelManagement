@@ -11,7 +11,7 @@
         public double BonusSalary { get; set; }
         public string? Detail { get; set; }
         public double Penalty { get; set; }
-        public SalaryHistoryStatus Status { get; set; }
+        public required SalaryHistoryStatus Status { get; set; }
         public double Tax { get; set; }
         public required Employee Employee { get; set; }
 
