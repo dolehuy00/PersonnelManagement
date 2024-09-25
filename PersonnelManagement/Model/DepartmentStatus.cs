@@ -1,9 +1,9 @@
 ﻿namespace PersonnelManagement.Model
 {
-    public class Role
+    public class DepartmentStatus
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public ICollection<Account>? Accounts { get; set; }
+        public ICollection<Department>? Departments { get; set; }
     }
 }

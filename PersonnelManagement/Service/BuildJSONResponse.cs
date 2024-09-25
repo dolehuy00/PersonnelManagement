@@ -13,7 +13,9 @@ namespace PersonnelManagement.Service
             {
                 account.Id,
                 token,
-                account.Email
+                account.Email,
+                account.Employee.Fullname,
+                account.Employee.DateOfBirth,
             };
         }
     }

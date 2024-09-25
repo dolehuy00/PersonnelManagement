@@ -13,9 +13,15 @@
         public string? Fullname { get; set; }
         public string? Position { get; set; }
         public DateTime StartDate { get; set; }
+        public long? AccountId { get; set; }
+        public Account? Account { get; set; }
+        public int StatusId { get; set; }
         public required EmployeeStatus Status { get; set; }
-        public required Team Team { get; set; }
-        public ICollection<SalaryHistory>? SalaryHistory { get; set; }
+        public long? TeamId { get; set; }
+        public Team? Team { get; set; }
+        public ICollection<SalaryHistory>? SalaryHistories { get; set; }
         public ICollection<Assignment>? Assignments { get; set; }
+        public ICollection<Team>? LeaderOfTeams { get; set; }
+        public ICollection<Department>? LeaderOfDepartments { get; set; }
     }
 }
