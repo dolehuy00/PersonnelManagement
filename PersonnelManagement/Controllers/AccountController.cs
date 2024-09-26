@@ -65,6 +65,10 @@ namespace PersonnelManagement.Controllers
                 {
                     return NotFound("This account is'nt exist!");
                 }
+                else if (changePassDTO.NewPassword.Length < 8)
+                {
+                    return BadRequest("Password must be at least 8 characters long!");
+                }
                 else if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
                 {
                     return BadRequest("Password confirm is not the same password");
@@ -95,36 +99,79 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        //// GET: api/<AccountController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        [HttpPost("forgot-password-request")]
+        public async Task<IActionResult> ForgotPasswordRequest([FromBody] ForgotPasswordDTO forgotDTO)
+        {
+            try
+            {
+                var existAccount = await _dataContext.Accounts
+                    .Where(acc => acc.Email == forgotDTO.Email).FirstOrDefaultAsync() != null;
+                if (existAccount)
+                {
+                    var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
+                    if (code != null)
+                    {
+                        if (DateTimeOffset.UtcNow.AddMinutes(4) < code.DeadTime)
+                        {
+                            return BadRequest("Too many request, please wait 1 minute since the last successful request");
+                        }
+                    }
+                    int randomCode = new Random().Next(100100, 999999);
+                    _cache.Set(forgotDTO.Email, new ForgotPasswordConfirmCode(randomCode, DateTimeOffset.UtcNow.AddMinutes(5)), TimeSpan.FromMinutes(5));
+                    await new SMTPService().SendPasswordResetEmail(forgotDTO.Email, randomCode);
+                }
+                return Ok(new { existAccount });
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
-        //// GET api/<AccountController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpPost("forgot-password-checkcode")]
+        public IActionResult ForgotPasswordCheckCode([FromBody] ForgotPasswordDTO forgotDTO)
+        {
+            try
+            {
+                var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
+                var codeMatch = code != null && code.CodeNumber.Equals(forgotDTO.Code);
+                return Ok(new { codeMatch });
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
-        //// POST api/<AccountController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
 
-        //// PUT api/<AccountController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPost("forgot-password-change")]
+        public async Task<IActionResult> ForgotPasswordChange([FromBody] ForgotPasswordDTO forgotDTO)
+        {
+            try
+            {
+                if (forgotDTO.Password == null || forgotDTO.Password.Length < 8)
+                {
+                    return BadRequest("Password must be at least 8 characters long");
+                }
+                else if (forgotDTO.Password != forgotDTO.PasswordConfirm)
+                {
+                    return BadRequest("Password confirm is not the same password");
+                }
+                var user = await _dataContext.Accounts.Where(u => u.Email == forgotDTO.Email).FirstOrDefaultAsync();
+                var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
+                var changeSuccess = false;
+                if (user != null && code != null && code.CodeNumber.Equals(forgotDTO.Code))
+                {
+                    user.Password = forgotDTO.Password;
+                    changeSuccess = await _dataContext.SaveChangesAsync() == 1;
+                }
+                return Ok(new { changeSuccess });
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
-        //// DELETE api/<AccountController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
