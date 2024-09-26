@@ -38,6 +38,7 @@ namespace PersonnelManagement.Controllers
             {
                 var account = await _dataContext.Accounts
                     .Include(acc => acc.Employee)
+                    .Include(acc => acc.Role)
                     .FirstOrDefaultAsync(acc => acc.Email.Equals(loginDTO.Email));
                 if (account != null && loginDTO.Password.Equals(account.Password))
                 {
@@ -88,7 +89,7 @@ namespace PersonnelManagement.Controllers
                     }
                     else
                     {
-                        return Unauthorized();
+                        return Unauthorized("Can't change password!");
                     }
 
                 }
@@ -173,5 +174,32 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("test-role-admin")]
+        public IActionResult TestRoleAdmin()
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return Unauthorized("Bạn không phải admin.");
+            }
+            return Ok("ok");
+        }
+
+        [HttpGet("test-role-user")]
+        public IActionResult TestRoleUser()
+        {
+            if (!User.IsInRole("User"))
+            {
+                return Unauthorized("Bạn không phải User.");
+            }
+            return Ok("ok");
+        }
+
+        [Authorize]
+        [HttpGet("test-role-all")]
+        public IActionResult TestRoleAll()
+        {
+            return Ok("ok");
+        }
     }
 }

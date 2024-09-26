@@ -17,6 +17,54 @@
   },
   {
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "ForgotPasswordChange",
+    "RelativePath": "api/Account/forgot-password-change",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forgotDTO",
+        "Type": "MovieAppApi.DTO.ForgotPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "ForgotPasswordCheckCode",
+    "RelativePath": "api/Account/forgot-password-checkcode",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forgotDTO",
+        "Type": "MovieAppApi.DTO.ForgotPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "ForgotPasswordRequest",
+    "RelativePath": "api/Account/forgot-password-request",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forgotDTO",
+        "Type": "MovieAppApi.DTO.ForgotPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "CheckLogin",
     "RelativePath": "api/Account/login",
     "HttpMethod": "POST",
@@ -29,6 +77,36 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "TestRoleAdmin",
+    "RelativePath": "api/Account/test-role-admin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "TestRoleAll",
+    "RelativePath": "api/Account/test-role-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.AccountController",
+    "Method": "TestRoleUser",
+    "RelativePath": "api/Account/test-role-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
