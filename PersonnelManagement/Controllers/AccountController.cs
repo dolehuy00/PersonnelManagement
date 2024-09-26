@@ -178,21 +178,14 @@ namespace PersonnelManagement.Controllers
         [HttpGet("test-role-admin")]
         public IActionResult TestRoleAdmin()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return Unauthorized("Bạn không phải admin.");
-            }
-            return Ok("ok");
+            return Ok("Welcome Admin");
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("test-role-user")]
         public IActionResult TestRoleUser()
         {
-            if (!User.IsInRole("User"))
-            {
-                return Unauthorized("Bạn không phải User.");
-            }
-            return Ok("ok");
+            return Ok("Welcome User");
         }
 
         [Authorize]
