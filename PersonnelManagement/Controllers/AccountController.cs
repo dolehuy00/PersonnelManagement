@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using MovieAppApi.DTO;
 using MovieAppApi.Service;
-using PersonnelManagement.Data;
 using PersonnelManagement.DTO;
 using PersonnelManagement.Service;
+using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,19 +15,19 @@ namespace PersonnelManagement.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private PersonnelDataContext _dataContext;
+        private AccountService _accServ;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly JwtTokenService _jwtTokenServ;
-        private BuildJSONResponse _buildJSONResponse;
+        private JsonResponseService _jsonResponseServ;
 
-        public AccountController(PersonnelDataContext dataContext, IMemoryCache cache, IConfiguration config)
+        public AccountController(IMemoryCache cache, IConfiguration config, AccountService accountService)
         {
-            _dataContext = dataContext;
             _cache = cache;
             _config = config;
+            _accServ = accountService;
             _jwtTokenServ = new JwtTokenService();
-            _buildJSONResponse = new BuildJSONResponse();
+            _jsonResponseServ = new JsonResponseService();
         }
 
         [HttpPost("login")]
@@ -36,14 +35,11 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                var account = await _dataContext.Accounts
-                    .Include(acc => acc.Employee)
-                    .Include(acc => acc.Role)
-                    .FirstOrDefaultAsync(acc => acc.Email.Equals(loginDTO.Email));
+                var account = await _accServ.ValidateUserAsync(loginDTO.Email, loginDTO.Password);
                 if (account != null && loginDTO.Password.Equals(account.Password))
                 {
                     var token = _jwtTokenServ.GenerateJwtToken(account, _config);
-                    return Ok(_buildJSONResponse.LoginSuccessResponse(account, token));
+                    return Ok(_jsonResponseServ.LoginSuccessResponse(account, token));
                 }
                 return Unauthorized("Not match");
             }
@@ -59,14 +55,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
-                var account = await _dataContext.Accounts
-                    .FirstOrDefaultAsync(acc => acc.Email == changePassDTO.Email);
-                if (account == null)
-                {
-                    return NotFound("This account is'nt exist!");
-                }
-                else if (changePassDTO.NewPassword.Length < 8)
+                if (changePassDTO.NewPassword.Length < 8)
                 {
                     return BadRequest("Password must be at least 8 characters long!");
                 }
@@ -74,25 +63,14 @@ namespace PersonnelManagement.Controllers
                 {
                     return BadRequest("Password confirm is not the same password");
                 }
-                else if (changePassDTO.OldPassword != account.Password)
+                var userIdInToken = _jwtTokenServ.GetAccountIdFromToken(HttpContext);
+                var result = await _accServ.ChangePasswordAsync(long.Parse(userIdInToken),
+                    changePassDTO.CurrentPassword, changePassDTO.NewPassword);
+                if (result)
                 {
-                    return BadRequest("Old password not match!");
+                    return Ok("Password changed successfully");
                 }
-                else
-                {
-                    var userIdInToken = _jwtTokenServ.GetAccountIdFromToken(HttpContext);
-                    if (int.Parse(userIdInToken) == account.Id)
-                    {
-                        account.Password = changePassDTO.NewPassword;
-                        await _dataContext.SaveChangesAsync();
-                        return Ok();
-                    }
-                    else
-                    {
-                        return Unauthorized("Can't change password!");
-                    }
-
-                }
+                return BadRequest("Current password is incorrect or account not found");
             }
             catch (Exception)
             {
@@ -105,8 +83,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                var existAccount = await _dataContext.Accounts
-                    .Where(acc => acc.Email == forgotDTO.Email).FirstOrDefaultAsync() != null;
+                var existAccount = await _accServ.ExistAccountAsync(forgotDTO.Email);
                 if (existAccount)
                 {
                     var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
@@ -158,13 +135,12 @@ namespace PersonnelManagement.Controllers
                 {
                     return BadRequest("Password confirm is not the same password");
                 }
-                var user = await _dataContext.Accounts.Where(u => u.Email == forgotDTO.Email).FirstOrDefaultAsync();
                 var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
                 var changeSuccess = false;
-                if (user != null && code != null && code.CodeNumber.Equals(forgotDTO.Code))
+                if (code != null && code.CodeNumber.Equals(forgotDTO.Code))
                 {
-                    user.Password = forgotDTO.Password;
-                    changeSuccess = await _dataContext.SaveChangesAsync() == 1;
+                    changeSuccess = await _accServ.ChangePasswordAsync(forgotDTO.Email,
+                        forgotDTO.Password, forgotDTO.PasswordConfirm);
                 }
                 return Ok(new { changeSuccess });
             }
