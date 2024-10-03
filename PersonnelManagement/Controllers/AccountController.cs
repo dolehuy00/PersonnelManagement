@@ -40,7 +40,7 @@ namespace PersonnelManagement.Controllers
                     var token = _jwtTokenServ.GenerateJwtToken(account, _config);
                     return Ok(_jsonResponseServ.LoginSuccessResponse(account, token));
                 }
-                return Unauthorized("Not match");
+                return Unauthorized(new { message = "Password or account is incorrect!" });
             }
             catch (Exception e)
             {
