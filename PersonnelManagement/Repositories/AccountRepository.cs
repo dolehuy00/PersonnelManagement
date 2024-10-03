@@ -21,19 +21,9 @@ namespace PersonnelManagement.Repositories
                 .FirstOrDefaultAsync(acc => acc.Email.Equals(email));
         }
 
-        async Task<Account?> IAccountRepository.GetAccountAsync(long accountId)
-        {
-            return await _dataContext.Accounts.FindAsync(accountId);
-        }
-
         async Task<Account?> IAccountRepository.GetAccountAsync(string email)
         {
             return await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
-        }
-
-        public async Task<bool> ExistAccountAsync(long accountId)
-        {
-            return await _dataContext.Accounts.FindAsync(accountId) != null;
         }
 
         public async Task<bool> ExistAccountAsync(string email)

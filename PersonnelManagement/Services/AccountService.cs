@@ -26,7 +26,7 @@ namespace PersonnelManagement.Services
 
         public async Task<bool> ChangePasswordAsync(long accountId, string currentPassword, string newPassword)
         {
-            var account = await _accRepo.GetAccountAsync(accountId);
+            var account = await _genericRepository.GetByIdAsync(accountId);
             if (account == null || account.Password != currentPassword)
             {
                 return false;
