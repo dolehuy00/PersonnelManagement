@@ -5,12 +5,12 @@ namespace PersonnelManagement.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IGenericCurdRepository<Account> _genericRepository;
+        private readonly IGenericCurdRepository<Account> _genericAccRepo;
         private readonly IAccountRepository _accRepo;
 
         public AccountService(IGenericCurdRepository<Account> repository, IAccountRepository accountRepository)
         {
-            _genericRepository = repository;
+            _genericAccRepo = repository;
             _accRepo = accountRepository;
         }
 
@@ -26,7 +26,7 @@ namespace PersonnelManagement.Services
 
         public async Task<bool> ChangePasswordAsync(long accountId, string currentPassword, string newPassword)
         {
-            var account = await _genericRepository.GetByIdAsync(accountId);
+            var account = await _genericAccRepo.GetByIdAsync(accountId);
             if (account == null || account.Password != currentPassword)
             {
                 return false;

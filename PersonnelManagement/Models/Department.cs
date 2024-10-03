@@ -9,5 +9,6 @@
         public long? LeaderId { get; set; }
         public Employee? Leader { get; set; }
         public ICollection<DeptAssignment>? DeptAssignments { get; set; }
+        public ICollection<Employee>? Employees { get; set; }
     }
 }

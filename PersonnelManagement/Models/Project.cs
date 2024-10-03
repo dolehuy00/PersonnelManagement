@@ -10,6 +10,5 @@
         public int StatusId { get; set; }
         public required ProjectStatus Status { get; set; }
         public ICollection<DeptAssignment>? DeptAssignments { get; set; }
-        public ICollection<ProjectTeamDetail>? ProjectTeamDetails { get; set; }
     }
 }

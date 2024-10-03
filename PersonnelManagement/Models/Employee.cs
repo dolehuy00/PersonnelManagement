@@ -13,11 +13,10 @@
         public Account? Account { get; set; }
         public int StatusId { get; set; }
         public required EmployeeStatus Status { get; set; }
-        public long? TeamId { get; set; }
-        public Team? Team { get; set; }
+        public long? DepartmentId { get; set; }
+        public Department? Department { get; set; }
         public ICollection<SalaryHistory>? SalaryHistories { get; set; }
         public ICollection<Assignment>? Assignments { get; set; }
-        public ICollection<Team>? LeaderOfTeams { get; set; }
         public ICollection<Department>? LeaderOfDepartments { get; set; }
     }
 }
