@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PersonnelManagement.Data;
 
 namespace PersonnelManagement.Repositories
 {
     public class GenericCurdRepository<T> : IGenericCurdRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        private readonly PersonnelDataContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public GenericCurdRepository(DbContext context)
+        public GenericCurdRepository(PersonnelDataContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

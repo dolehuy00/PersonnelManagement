@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "3WiIGZijAiUzHvRfJn0rNdFYyS1wNmtkBrmjeOmAYSc=",
+  "Source": "PersonnelManagement",
+  "BasePath": "_content/PersonnelManagement",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

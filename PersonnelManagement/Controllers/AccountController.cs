@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using MovieAppApi.DTO;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
 using PersonnelManagement.Service;
@@ -15,13 +14,13 @@ namespace PersonnelManagement.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private AccountService _accServ;
+        private IAccountService _accServ;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly JwtTokenService _jwtTokenServ;
         private JsonResponseService _jsonResponseServ;
 
-        public AccountController(IMemoryCache cache, IConfiguration config, AccountService accountService)
+        public AccountController(IMemoryCache cache, IConfiguration config, IAccountService accountService)
         {
             _cache = cache;
             _config = config;

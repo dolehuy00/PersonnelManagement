@@ -3,10 +3,6 @@
     public class DeptAssignment
     {
         public long Id { get; set; }
-        public string? CreateBy { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime ModifiedDate { get; set; }
         public int PriotityLevel { get; set; }
         public string? MainTaskDetail { get; set; }
         public long ProjectId { get; set; }

@@ -3,10 +3,6 @@
     public class Employee
     {
         public long Id { get; set; }
-        public string? CreateBy { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime ModifiedDate { get; set; }
         public string? Address { get; set; }
         public double BasicSalary { get; set; }
         public DateTime DateOfBirth { get; set; }

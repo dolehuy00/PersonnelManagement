@@ -1,4 +1,4 @@
-﻿namespace MovieAppApi.DTO
+﻿namespace PersonnelManagement.DTO
 {
     public class RequestChangePasswordDTO
     {
