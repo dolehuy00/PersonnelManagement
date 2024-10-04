@@ -13,7 +13,7 @@ namespace PersonnelManagement.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<Account?> GetUserAsync(string email)
+        public async Task<Account?> GetAccountFullInforAsync(string email)
         {
             return await _dataContext.Accounts
                 .Include(acc => acc.Employee)

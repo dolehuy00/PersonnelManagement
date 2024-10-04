@@ -35,16 +35,16 @@ namespace PersonnelManagement.Controllers
             try
             {
                 var account = await _accServ.ValidateUserAsync(loginDTO.Email, loginDTO.Password);
-                if (account != null && loginDTO.Password.Equals(account.Password))
+                if (account != null)
                 {
                     var token = _jwtTokenServ.GenerateJwtToken(account, _config);
                     return Ok(_jsonResponseServ.LoginSuccessResponse(account, token));
                 }
-                return Unauthorized(new { message = "Password or account is incorrect!" });
+                return Unauthorized(_jsonResponseServ.LoginNotMatchResponse());
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -54,22 +54,21 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                if (changePassDTO.NewPassword.Length < 8)
+                if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
                 {
-                    return BadRequest("Password must be at least 8 characters long!");
-                }
-                else if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
-                {
-                    return BadRequest("Password confirm is not the same password");
+                    return BadRequest(_jsonResponseServ.BadMessageResponse(
+                        "Change password.", ["Password confirm is not the same password."]));
                 }
                 var userIdInToken = _jwtTokenServ.GetAccountIdFromToken(HttpContext);
                 var result = await _accServ.ChangePasswordAsync(long.Parse(userIdInToken),
                     changePassDTO.CurrentPassword, changePassDTO.NewPassword);
                 if (result)
                 {
-                    return Ok("Password changed successfully");
+                    return Ok(_jsonResponseServ.OkMessageResponse(
+                        "Change password.", ["Password changed successfully."]));
                 }
-                return BadRequest("Current password is incorrect or account not found");
+                return BadRequest(_jsonResponseServ.BadMessageResponse(
+                        "Change password.", ["Current password is incorrect or account not found."]));
             }
             catch (Exception)
             {
@@ -85,19 +84,22 @@ namespace PersonnelManagement.Controllers
                 var existAccount = await _accServ.ExistAccountAsync(forgotDTO.Email);
                 if (existAccount)
                 {
-                    var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
+                    var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
                     if (code != null)
                     {
                         if (DateTimeOffset.UtcNow.AddMinutes(4) < code.DeadTime)
                         {
-                            return BadRequest("Too many request, please wait 1 minute since the last successful request");
+                            return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
+                                ["Too many request, please wait 1 minute since the last successful request."]));
                         }
                     }
                     int randomCode = new Random().Next(100100, 999999);
-                    _cache.Set(forgotDTO.Email, new ForgotPasswordConfirmCode(randomCode, DateTimeOffset.UtcNow.AddMinutes(5)), TimeSpan.FromMinutes(5));
+                    _cache.Set(forgotDTO.Email, new ForgotPasswordCode(randomCode, DateTimeOffset.UtcNow.AddMinutes(5)),
+                        TimeSpan.FromMinutes(5));
                     await new SMTPService().SendPasswordResetEmail(forgotDTO.Email, randomCode);
+                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Send request successfully."]));
                 }
-                return Ok(new { existAccount });
+                return Ok(_jsonResponseServ.BadMessageResponse("Forgot password.", ["Account isn't exist."]));
             }
             catch (Exception)
             {
@@ -110,9 +112,12 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
-                var codeMatch = code != null && code.CodeNumber.Equals(forgotDTO.Code);
-                return Ok(new { codeMatch });
+                var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
+                if (code != null && code.CodeNumber.Equals(forgotDTO.Code))
+                {
+                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Code verification successful."]));
+                }
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.", ["Code verification failed."]));
             }
             catch
             {
@@ -128,20 +133,22 @@ namespace PersonnelManagement.Controllers
             {
                 if (forgotDTO.Password == null || forgotDTO.Password.Length < 8)
                 {
-                    return BadRequest("Password must be at least 8 characters long");
+                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
+                        ["Password must be at least 8 characters long."]));
                 }
                 else if (forgotDTO.Password != forgotDTO.PasswordConfirm)
                 {
-                    return BadRequest("Password confirm is not the same password");
+                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
+                        ["Password confirm is not the same password."]));
                 }
-                var code = _cache.Get<ForgotPasswordConfirmCode>(forgotDTO.Email);
+                var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
                 var changeSuccess = false;
                 if (code != null && code.CodeNumber.Equals(forgotDTO.Code))
                 {
                     changeSuccess = await _accServ.ChangePasswordAsync(forgotDTO.Email,
                         forgotDTO.Password, forgotDTO.PasswordConfirm);
                 }
-                return Ok(new { changeSuccess });
+                return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Change password successfully."]));
             }
             catch
             {
@@ -150,24 +157,116 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("test-role-admin")]
-        public IActionResult TestRoleAdmin()
+        [HttpGet("add")]
+        public async Task<IActionResult> Add([FromBody] AccountDTO accountDTO)
         {
-            return Ok("Welcome Admin");
+            try
+            {
+                var account = await _accServ.Add(accountDTO);
+                return Ok(_jsonResponseServ.OkListAccountResponse("Create account.", [account]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Create account.", [ex.Message]));
+            }
         }
 
-        [Authorize(Roles = "User")]
-        [HttpGet("test-role-user")]
-        public IActionResult TestRoleUser()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("edit/{id}")]
+        public async Task<IActionResult> Edit(long id, [FromBody] AccountDTO accountDTO)
         {
-            return Ok("Welcome User");
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Update account.", [ex.Message]));
+            }
         }
 
-        [Authorize]
-        [HttpGet("test-role-all")]
-        public IActionResult TestRoleAll()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("delete/{id}")]
+        public async Task<IActionResult> Delete(long id)
         {
-            return Ok("ok");
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> Get(long id)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("get")]
+        public async Task<IActionResult> Get(string email)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("get/{skip}/{take}")]
+        public async Task<IActionResult> Get(int skip, int take)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("get/all")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Search account.", [ex.Message]));
+            }
         }
     }
 }

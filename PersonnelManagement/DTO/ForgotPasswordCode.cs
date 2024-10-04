@@ -1,8 +1,8 @@
 ﻿namespace PersonnelManagement.DTO
 {
-    public class ForgotPasswordConfirmCode
+    public class ForgotPasswordCode
     {
-        public ForgotPasswordConfirmCode(int codeNumber, DateTimeOffset deadTime)
+        public ForgotPasswordCode(int codeNumber, DateTimeOffset deadTime)
         {
             CodeNumber = codeNumber;
             DeadTime = deadTime;

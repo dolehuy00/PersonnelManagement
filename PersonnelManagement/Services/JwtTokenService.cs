@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.IdentityModel.Tokens;
-using PersonnelManagement.Model;
+using PersonnelManagement.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -37,15 +37,15 @@ namespace MovieAppApi.Service
             }
             return string.Empty;
         }
-        public string GenerateJwtToken(Account account, IConfiguration _config)
+        public string GenerateJwtToken(AccountDTO account, IConfiguration _config)
         {
             var claims = new[] {
-                        new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"] !),
+                        new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]!),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                         new Claim("Id", account.Id.ToString()),
                         new Claim("Email", account.Email),
-                        new Claim(ClaimTypes.Role, account.Role.Name)
+                        new Claim(ClaimTypes.Role, account.RoleName!)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
