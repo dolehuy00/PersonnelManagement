@@ -163,7 +163,7 @@ namespace PersonnelManagement.Controllers
             try
             {
                 var account = await _accServ.Add(accountDTO);
-                return Ok(_jsonResponseServ.OkListAccountResponse("Create account.", [account]));
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Create account.", [account]));
             }
             catch (Exception ex)
             {
@@ -172,12 +172,13 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("edit/{id}")]
-        public async Task<IActionResult> Edit(long id, [FromBody] AccountDTO accountDTO)
+        [HttpGet("edit")]
+        public async Task<IActionResult> Edit([FromBody] AccountDTO accountDTO)
         {
             try
             {
-
+                var account = await _accServ.Edit(accountDTO);
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Update account.", [account]));
             }
             catch (Exception ex)
             {
@@ -191,7 +192,8 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
+                await _accServ.Delete(id);
+                return Ok(_jsonResponseServ.OkMessageResponse("Delete account.", [$"Delete account id = {id} successfully."]));
             }
             catch (Exception ex)
             {
@@ -205,21 +207,8 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
-            }
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("get")]
-        public async Task<IActionResult> Get(string email)
-        {
-            try
-            {
-
+                var account = await _accServ.Get(id);
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Get a account.", [account]));
             }
             catch (Exception ex)
             {
@@ -233,7 +222,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -247,7 +236,8 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
+                var accounts = await _accServ.GetAll();
+                return Ok(_jsonResponseServ.OkListAccountResponse("Get all account.", accounts, 1, 1, accounts.Count));
             }
             catch (Exception ex)
             {
@@ -261,7 +251,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-
+                return Ok();
             }
             catch (Exception ex)
             {

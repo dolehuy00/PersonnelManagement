@@ -11,7 +11,6 @@ namespace PersonnelManagement.Service
         {
             return new SuccessResponseDTO<dynamic>
             {
-                Status = 200,
                 Title = "Login successfully.",
                 Results = [
                     new
@@ -51,13 +50,24 @@ namespace PersonnelManagement.Service
                 Messages = messages
             };
         }
-        public dynamic OkListAccountResponse(string title, AccountDTO[] accountDTOs)
+        public dynamic OkOneAccountResponse(string title, AccountDTO[] accountDTOs)
         {
             return new SuccessResponseDTO<AccountDTO>
             {
                 Title = title,
-                Status = 200,
                 Results = accountDTOs
+            };
+        }
+        public dynamic OkListAccountResponse(string title,
+            ICollection<AccountDTO> accountDTOs, int page, int totalPage, int totalCount)
+        {
+            return new SuccessResponseDTO<AccountDTO>
+            {
+                Title = title,
+                Results = accountDTOs,
+                Page = page,
+                TotalPage = totalPage,
+                TotalCount = totalCount
             };
         }
     }

@@ -33,8 +33,8 @@ SET IDENTITY_INSERT [dbo].[Employees] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Accounts] ON 
 GO
-INSERT [dbo].[Accounts] ([Id], [Email], [Password], [RoleId], [StatusId], [EmployeeId]) VALUES (1, N'admin@email.com', N'12345678', 1, 1, 1)
-INSERT [dbo].[Accounts] ([Id], [Email], [Password], [RoleId], [StatusId], [EmployeeId]) VALUES (2, N'user@email.com', N'12345678', 2, 1, 2)
+INSERT [dbo].[Accounts] ([Id], [Email], [Password], [RoleId], [StatusId], [EmployeeId]) VALUES (1, N'admin@email.com', N'$2a$11$61d2ukojviUOX8oR2eeBNO0qiq4xCWJrV3OHnQ7NltBDrg2UZas9.', 1, 1, 1)
+INSERT [dbo].[Accounts] ([Id], [Email], [Password], [RoleId], [StatusId], [EmployeeId]) VALUES (2, N'user@email.com', N'$2a$11$61d2ukojviUOX8oR2eeBNO0qiq4xCWJrV3OHnQ7NltBDrg2UZas9.', 2, 1, 2)
 GO
 SET IDENTITY_INSERT [dbo].[Accounts] OFF
 GO

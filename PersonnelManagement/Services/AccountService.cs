@@ -1,4 +1,5 @@
-﻿using PersonnelManagement.DTO;
+﻿using MovieAppApi.Service;
+using PersonnelManagement.DTO;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
@@ -70,13 +71,65 @@ namespace PersonnelManagement.Services
             {
                 throw new Exception("Email already used in another account.");
             }
-            await _genericAccRepo.AddAsync(_accMapper.ToModel(accountDTO));
+            var newAccount = _accMapper.ToModel(accountDTO);
+            var password = RandomStringGenerator.Generate(12);
+            newAccount.Password = HashPassword(password);
+            await _genericAccRepo.AddAsync(newAccount);
             var account = await _accRepo.GetAccountFullInforAsync(accountDTO.Email);
             if (account != null)
             {
+                await SMTPService.SendPasswordNewAccountEmail(newAccount.Email, password);
                 return _accMapper.ToDTO(account);
             }
             throw new Exception("An error occurred while creating an account.");
+        }
+
+        async Task<AccountDTO> IAccountService.Edit(AccountDTO accountDTO)
+        {
+            var account = await _genericAccRepo.GetByIdAsync(accountDTO.Id);
+            if (account == null)
+            {
+                throw new Exception("Account does not exist.");
+            }
+            if (account.Email.Equals(accountDTO.Email)!)
+            {
+                var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
+                if (exist)
+                {
+                    throw new Exception("Email already used in another account.");
+                }
+            }
+            account.StatusId = accountDTO.StatusId;
+            account.Email = accountDTO.Email;
+            account.RoleId = accountDTO.RoleId;
+            await _genericAccRepo.UpdateAsync(account);
+            return _accMapper.ToDTO(account);
+        }
+
+        async Task IAccountService.Delete(long accountId)
+        {
+            var account = await _genericAccRepo.GetByIdAsync(accountId);
+            if (account == null)
+            {
+                throw new Exception("Account doesn't exist.");
+            }
+            await _genericAccRepo.DeleteAsync(account);
+        }
+
+        async Task<AccountDTO> IAccountService.Get(long accountId)
+        {
+            var account = await _genericAccRepo.GetByIdAsync(accountId);
+            if (account == null)
+            {
+                throw new Exception("Account doesn't exist.");
+            }
+            return _accMapper.ToDTO(account);
+        }
+
+        async Task<ICollection<AccountDTO>> IAccountService.GetAll()
+        {
+            var accounts = await _genericAccRepo.GetAllAsync();
+            return _accMapper.TolistDTO(accounts);
         }
     }
 }
