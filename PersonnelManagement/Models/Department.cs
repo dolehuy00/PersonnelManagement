@@ -3,6 +3,7 @@
     public class Department
     {
         public long Id { get; set; }
+        public required string Name { get; set; }
         public string? TaskDetail { get; set; }
         public int StatusId { get; set; }
         public required DepartmentStatus Status { get; set; }

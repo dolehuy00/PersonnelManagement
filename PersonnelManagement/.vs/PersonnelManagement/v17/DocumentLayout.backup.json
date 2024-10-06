@@ -3,64 +3,124 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\igenericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\igenericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\igenericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\igenericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\genericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\genericcurdrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\jsonresponseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\jsonresponseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\successresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\successresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\migrations\\20241003065158_all.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:migrations\\20241003065158_all.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\smtpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\smtpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\randomstringgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\randomstringgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\mappers\\employeemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:mappers\\employeemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\mappers\\accountmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:mappers\\accountmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\data\\personneldatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:data\\personneldatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006140945_update3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241006140945_update3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006135150_update2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241006135150_update2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\migrations\\20241003065158_all.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:migrations\\20241003065158_all.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\migrations\\20241003082038_update1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:migrations\\20241003082038_update1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\jsonresponseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\jsonresponseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\successresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\successresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\randomstringgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\randomstringgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\messageresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -69,26 +129,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\errorresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\errorresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\migrations\\20241003082038_update1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:migrations\\20241003082038_update1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\data\\personneldatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:data\\personneldatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\mappers\\accountmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:mappers\\accountmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\dto\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -107,10 +147,6 @@
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:dto\\requestchangepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\middlewares\\rolemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:middlewares\\rolemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -119,20 +155,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241003081937_update1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\models\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:models\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|c:\\users\\pc\\desktop\\mon.net\\project\\personnelmanagement\\services\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D0A69C3-78F0-498F-B7E0-30CD79504C76}|PersonnelManagement.csproj|solutionrelative:services\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003065101_update2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -162,8 +186,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 308,
-          "SelectedChildIndex": 34,
+          "SelectedChildIndex": 45,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EmployeeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\EmployeeRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\EmployeeRepository.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\EmployeeRepository.cs",
+              "RelativeToolTip": "Repositories\\EmployeeRepository.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwCsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T14:24:44.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IEmployeeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IEmployeeRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IEmployeeRepository.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IEmployeeRepository.cs",
+              "RelativeToolTip": "Repositories\\IEmployeeRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T14:23:29.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "20241006140945_update3.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006140945_update3.cs",
+              "RelativeDocumentMoniker": "Migrations\\20241006140945_update3.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006140945_update3.cs",
+              "RelativeToolTip": "Migrations\\20241006140945_update3.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T14:09:45.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "20241006135150_update2.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006135150_update2.cs",
+              "RelativeDocumentMoniker": "Migrations\\20241006135150_update2.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241006135150_update2.cs",
+              "RelativeToolTip": "Migrations\\20241006135150_update2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T13:51:50.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "EmployeeMapper.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Mappers\\EmployeeMapper.cs",
+              "RelativeDocumentMoniker": "Mappers\\EmployeeMapper.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Mappers\\EmployeeMapper.cs",
+              "RelativeToolTip": "Mappers\\EmployeeMapper.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAIA5wBIAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T13:15:04.901Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -186,7 +275,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
+              "Title": "EmployeeDTO.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\EmployeeDTO.cs",
+              "RelativeDocumentMoniker": "DTO\\EmployeeDTO.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\EmployeeDTO.cs",
+              "RelativeToolTip": "DTO\\EmployeeDTO.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwAwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T12:01:31.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
               "Title": "RandomStringGenerator.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\RandomStringGenerator.cs",
               "RelativeDocumentMoniker": "Services\\RandomStringGenerator.cs",
@@ -194,37 +296,37 @@
               "RelativeToolTip": "Services\\RandomStringGenerator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-05T12:21:06.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-05T12:21:06.073Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 14,
               "Title": "AccountMapper.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Mappers\\AccountMapper.cs",
               "RelativeDocumentMoniker": "Mappers\\AccountMapper.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Mappers\\AccountMapper.cs",
               "RelativeToolTip": "Mappers\\AccountMapper.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:14:38.174Z"
+              "WhenOpened": "2024-10-04T14:14:38.174Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "AccountDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\AccountDTO.cs",
               "RelativeDocumentMoniker": "DTO\\AccountDTO.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\AccountDTO.cs",
               "RelativeToolTip": "DTO\\AccountDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-04T12:29:41.061Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 30,
               "Title": "MessageResponseDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\MessageResponseDTO.cs",
               "RelativeDocumentMoniker": "DTO\\MessageResponseDTO.cs",
@@ -236,20 +338,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 27,
               "Title": "SuccessResponseDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\SuccessResponseDTO.cs",
               "RelativeDocumentMoniker": "DTO\\SuccessResponseDTO.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\SuccessResponseDTO.cs",
               "RelativeToolTip": "DTO\\SuccessResponseDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T06:36:13.623Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-04T06:36:13.623Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 31,
               "Title": "ErrorResponseDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\ErrorResponseDTO.cs",
               "RelativeDocumentMoniker": "DTO\\ErrorResponseDTO.cs",
@@ -261,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 34,
               "Title": "RequestLoginDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\RequestLoginDTO.cs",
               "RelativeDocumentMoniker": "DTO\\RequestLoginDTO.cs",
@@ -273,19 +374,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "20241003082038_update1.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003082038_update1.cs",
               "RelativeDocumentMoniker": "Migrations\\20241003082038_update1.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003082038_update1.cs",
               "RelativeToolTip": "Migrations\\20241003082038_update1.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAYwBYAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T08:20:38.865Z"
+              "WhenOpened": "2024-10-03T08:20:38.865Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 37,
               "Title": "20241003081937_update1.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003081937_update1.cs",
               "RelativeDocumentMoniker": "Migrations\\20241003081937_update1.cs",
@@ -296,20 +398,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 23,
               "Title": "20241003065158_all.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003065158_all.cs",
               "RelativeDocumentMoniker": "Migrations\\20241003065158_all.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003065158_all.cs",
               "RelativeToolTip": "Migrations\\20241003065158_all.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAQwCsAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAACABAAAAAAAAAAApwDEBAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T06:51:58.859Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 39,
               "Title": "20241003065101_update2.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Migrations\\20241003065101_update2.cs",
               "RelativeDocumentMoniker": "Migrations\\20241003065101_update2.cs",
@@ -320,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 42,
               "Title": "SalaryHistory.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\SalaryHistory.cs",
               "RelativeDocumentMoniker": "Models\\SalaryHistory.cs",
@@ -332,7 +434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
               "Title": "Project.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Project.cs",
               "RelativeDocumentMoniker": "Models\\Project.cs",
@@ -344,7 +446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 41,
               "Title": "DeptAssignment.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\DeptAssignment.cs",
               "RelativeDocumentMoniker": "Models\\DeptAssignment.cs",
@@ -356,19 +458,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 18,
               "Title": "Department.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Department.cs",
               "RelativeDocumentMoniker": "Models\\Department.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Department.cs",
               "RelativeToolTip": "Models\\Department.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T06:27:35.319Z"
+              "WhenOpened": "2024-10-03T06:27:35.319Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 40,
               "Title": "Assignment.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Assignment.cs",
               "RelativeDocumentMoniker": "Models\\Assignment.cs",
@@ -380,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 33,
               "Title": "ForgotPasswordCode.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\ForgotPasswordCode.cs",
               "RelativeDocumentMoniker": "DTO\\ForgotPasswordCode.cs",
@@ -392,55 +495,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 17,
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Employee.cs",
               "RelativeDocumentMoniker": "Models\\Employee.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Employee.cs",
               "RelativeToolTip": "Models\\Employee.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAxwBIAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAYwA4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T05:46:49.546Z"
+              "WhenOpened": "2024-10-03T05:46:49.546Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 1,
               "Title": "EmployeeService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\EmployeeService.cs",
               "RelativeDocumentMoniker": "Services\\EmployeeService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\EmployeeService.cs",
               "RelativeToolTip": "Services\\EmployeeService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAowFkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T05:39:11.49Z"
+              "WhenOpened": "2024-10-03T05:39:11.49Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 15,
               "Title": "IEmployeeService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\IEmployeeService.cs",
               "RelativeDocumentMoniker": "Services\\IEmployeeService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\IEmployeeService.cs",
               "RelativeToolTip": "Services\\IEmployeeService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T05:39:04.269Z"
+              "WhenOpened": "2024-10-03T05:39:04.269Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 11,
               "Title": "EmployeeController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "Controllers\\EmployeeController.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Controllers\\EmployeeController.cs",
               "RelativeToolTip": "Controllers\\EmployeeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAwwFgAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T05:27:35.77Z"
+              "WhenOpened": "2024-10-03T05:27:35.77Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 35,
               "Title": "RequestChangePasswordDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\RequestChangePasswordDTO.cs",
               "RelativeDocumentMoniker": "DTO\\RequestChangePasswordDTO.cs",
@@ -452,38 +559,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 7,
               "Title": "AccountRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\AccountRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\AccountRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\AccountRepository.cs",
               "RelativeToolTip": "Repositories\\AccountRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowDgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T17:24:23.831Z"
+              "WhenOpened": "2024-10-02T17:24:23.831Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "IAccountRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IAccountRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IAccountRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IAccountRepository.cs",
               "RelativeToolTip": "Repositories\\IAccountRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAB3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T17:24:00.315Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 25,
               "Title": "JsonResponseService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\JsonResponseService.cs",
               "RelativeDocumentMoniker": "Services\\JsonResponseService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\JsonResponseService.cs",
               "RelativeToolTip": "Services\\JsonResponseService.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAgwDwAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAswFIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T15:58:34.58Z",
               "EditorCaption": ""
@@ -496,20 +604,20 @@
               "RelativeDocumentMoniker": "Services\\AccountService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\AccountService.cs",
               "RelativeToolTip": "Services\\AccountService.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAIwIMAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAiwJsAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T10:24:08.05Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 22,
               "Title": "IAccountService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\IAccountService.cs",
               "RelativeDocumentMoniker": "Services\\IAccountService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\IAccountService.cs",
               "RelativeToolTip": "Services\\IAccountService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T10:23:49.508Z",
               "EditorCaption": ""
@@ -522,39 +630,40 @@
               "RelativeDocumentMoniker": "Data\\PersonnelDataContext.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Data\\PersonnelDataContext.cs",
               "RelativeToolTip": "Data\\PersonnelDataContext.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAYwBgAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAqwDEAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:02:10.211Z"
+              "WhenOpened": "2024-09-29T16:02:10.211Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GenericCurdRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\GenericCurdRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\GenericCurdRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\GenericCurdRepository.cs",
               "RelativeToolTip": "Repositories\\GenericCurdRepository.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBAAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-29T16:00:34.427Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "IGenericCurdRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IGenericCurdRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IGenericCurdRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Repositories\\IGenericCurdRepository.cs",
               "RelativeToolTip": "Repositories\\IGenericCurdRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-29T15:58:59.384Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 36,
               "Title": "RoleMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Middlewares\\RoleMiddleware.cs",
               "RelativeDocumentMoniker": "Middlewares\\RoleMiddleware.cs",
@@ -566,7 +675,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 28,
               "Title": "Account.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Models\\Account.cs",
               "RelativeDocumentMoniker": "Models\\Account.cs",
@@ -574,12 +683,11 @@
               "RelativeToolTip": "Models\\Account.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T09:19:51.379Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-26T09:19:51.379Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 32,
               "Title": "ForgotPasswordDTO.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\DTO\\ForgotPasswordDTO.cs",
               "RelativeDocumentMoniker": "DTO\\ForgotPasswordDTO.cs",
@@ -591,45 +699,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 9,
               "Title": "SMTPService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\SMTPService.cs",
               "RelativeDocumentMoniker": "Services\\SMTPService.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\SMTPService.cs",
               "RelativeToolTip": "Services\\SMTPService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T07:52:00.449Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Controllers\\AccountController.cs",
               "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAUwOsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAKAAAAAAAAAAAAA/wK0AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T07:44:24.554Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 16,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T07:37:17.678Z"
+              "WhenOpened": "2024-09-26T07:37:17.678Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 43,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -641,7 +750,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 26,
               "Title": "JwtTokenService.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\Mon.net\\Project\\PersonnelManagement\\Services\\JwtTokenService.cs",
               "RelativeDocumentMoniker": "Services\\JwtTokenService.cs",
@@ -649,8 +758,7 @@
               "RelativeToolTip": "Services\\JwtTokenService.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAQwCoAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T07:35:37.555Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-26T07:35:37.555Z"
             }
           ]
         }

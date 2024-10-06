@@ -91,7 +91,7 @@ namespace PersonnelManagement.Services
             {
                 throw new Exception("Account does not exist.");
             }
-            if (account.Email.Equals(accountDTO.Email)!)
+            if (!account.Email.Equals(accountDTO.Email))
             {
                 var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
                 if (exist)
@@ -130,6 +130,31 @@ namespace PersonnelManagement.Services
         {
             var accounts = await _genericAccRepo.GetAllAsync();
             return _accMapper.TolistDTO(accounts);
+        }
+
+        async Task<string[]> IAccountService.DeleteMany(long[] accountIds)
+        {
+            string[] messages = new string[accountIds.Length];
+            foreach (var id in accountIds)
+            {
+                var account = await _genericAccRepo.GetByIdAsync(id);
+                if (account == null)
+                {
+                    messages.Append($"Can't delete account id = {id}. Account doesn't exist.");
+                }
+                else
+                {
+                    await _genericAccRepo.DeleteAsync(account);
+                    messages.Append($"Delete account id = {id} successfully.");
+                }
+            }
+            return messages;
+        }
+
+        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize)
+        {
+            var (accounts, totalPage, totalRecords) = await _accRepo.GetPagedListAsync(pageNumber, pageSize);
+            return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
         }
     }
 }

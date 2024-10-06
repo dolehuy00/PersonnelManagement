@@ -18,6 +18,7 @@ namespace PersonnelManagement.Repositories
             return await _dataContext.Accounts
                 .Include(acc => acc.Employee)
                 .Include(acc => acc.Role)
+                .Include(acc => acc.Status)
                 .FirstOrDefaultAsync(acc => acc.Email.Equals(email));
         }
 
@@ -53,6 +54,20 @@ namespace PersonnelManagement.Repositories
                 return true;
             }
             return false;
+        }
+
+        public async Task<(ICollection<Account>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
+        {
+            var skip = (pageNumber - 1) * pageSize;
+            var totalRecords = await _dataContext.Accounts.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            var pagedList = await _dataContext.Accounts
+                .OrderBy(e => e.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (pagedList, totalPages, totalRecords);
         }
     }
 }

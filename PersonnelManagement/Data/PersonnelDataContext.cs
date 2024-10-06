@@ -44,9 +44,9 @@ namespace PersonnelManagement.Data
                 .HasForeignKey(acc => acc.StatusId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Employee>()
-                .HasOne(emp => emp.Account)
-                .WithOne(acc => acc.Employee)
+            modelBuilder.Entity<Account>()
+                .HasOne(acc => acc.Employee)
+                .WithOne(em => em.Account)
                 .HasForeignKey<Account>(acc => acc.EmployeeId);
 
             modelBuilder.Entity<Employee>()

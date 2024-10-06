@@ -9,7 +9,6 @@
         public string? Fullname { get; set; }
         public string? Position { get; set; }
         public DateTime StartDate { get; set; }
-        public long? AccountId { get; set; }
         public Account? Account { get; set; }
         public int StatusId { get; set; }
         public required EmployeeStatus Status { get; set; }

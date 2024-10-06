@@ -23,10 +23,12 @@ namespace PersonnelManagement.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
-        public async Task<bool> ExistAccountAsync(long id)
+
+        public async Task<bool> ExistAsync(long id)
         {
             return await _dbSet.FindAsync(id) != null;
         }
+
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);

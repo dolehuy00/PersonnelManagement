@@ -23,6 +23,7 @@ namespace PersonnelManagement.Service
                 ]
             };
         }
+
         public dynamic LoginNotMatchResponse()
         {
             return new MessageResponseDTO
@@ -32,6 +33,32 @@ namespace PersonnelManagement.Service
                 Messages = ["Password or account is incorrect."]
             };
         }
+
+        public dynamic OkOneAccountResponse(string title, AccountDTO[] accountDTOs)
+        {
+            return new SuccessResponseDTO<AccountDTO>
+            {
+                Title = title,
+                Results = accountDTOs
+            };
+        }
+
+        public dynamic OkListAccountResponse(string title,
+            ICollection<AccountDTO> accountDTOs, int page, int totalPage, int totalCount)
+        {
+            return new SuccessResponseDTO<AccountDTO>
+            {
+                Title = title,
+                Results = accountDTOs,
+                Page = page,
+                TotalPage = totalPage,
+                TotalCount = totalCount
+            };
+        }
+
+        //
+        // Message
+        //
         public dynamic BadMessageResponse(string title, string[] messages)
         {
             return new MessageResponseDTO
@@ -50,21 +77,25 @@ namespace PersonnelManagement.Service
                 Messages = messages
             };
         }
-        public dynamic OkOneAccountResponse(string title, AccountDTO[] accountDTOs)
+        //
+        // Employee
+        //
+        public dynamic OkOneEmployeeResponse(string title, EmployeeDTO[] employeeDTOs)
         {
-            return new SuccessResponseDTO<AccountDTO>
+            return new SuccessResponseDTO<EmployeeDTO>
             {
                 Title = title,
-                Results = accountDTOs
+                Results = employeeDTOs
             };
         }
-        public dynamic OkListAccountResponse(string title,
-            ICollection<AccountDTO> accountDTOs, int page, int totalPage, int totalCount)
+
+        public dynamic OkListEmployeeResponse(string title, ICollection<EmployeeDTO> employeeDTOs,
+            int page, int totalPage, int totalCount)
         {
-            return new SuccessResponseDTO<AccountDTO>
+            return new SuccessResponseDTO<EmployeeDTO>
             {
                 Title = title,
-                Results = accountDTOs,
+                Results = employeeDTOs,
                 Page = page,
                 TotalPage = totalPage,
                 TotalCount = totalCount

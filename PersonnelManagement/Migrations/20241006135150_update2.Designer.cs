@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonnelManagement.Data;
 
@@ -11,9 +12,11 @@ using PersonnelManagement.Data;
 namespace PersonnelManagement.Migrations
 {
     [DbContext(typeof(PersonnelDataContext))]
-    partial class PersonnelDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241006135150_update2")]
+    partial class update2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,6 +217,9 @@ namespace PersonnelManagement.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");

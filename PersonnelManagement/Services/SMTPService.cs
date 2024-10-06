@@ -8,7 +8,7 @@ namespace MovieAppApi.Service
     {
         private static string from = "noreply";
         private static string authenEmail = "huydo24082002@gmail.com";
-        private static string authrnPassword = "";
+        private static string authrnPassword = "zuzsjefblbftfnhd";
 
         public async Task SendPasswordResetEmail(string emailAddress, int randomCode)
         {

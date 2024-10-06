@@ -163,11 +163,11 @@ namespace PersonnelManagement.Controllers
             try
             {
                 var account = await _accServ.Add(accountDTO);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Create account.", [account]));
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Create an account.", [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Create account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Create an account.", [ex.Message]));
             }
         }
 
@@ -178,11 +178,11 @@ namespace PersonnelManagement.Controllers
             try
             {
                 var account = await _accServ.Edit(accountDTO);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Update account.", [account]));
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Update an account.", [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Update account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Update an account.", [ex.Message]));
             }
         }
 
@@ -193,11 +193,26 @@ namespace PersonnelManagement.Controllers
             try
             {
                 await _accServ.Delete(id);
-                return Ok(_jsonResponseServ.OkMessageResponse("Delete account.", [$"Delete account id = {id} successfully."]));
+                return Ok(_jsonResponseServ.OkMessageResponse("Delete an account.", [$"Delete account id = {id} successfully."]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete an account.", [ex.Message]));
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("delete")]
+        public async Task<IActionResult> DeleteMany([FromBody] long[] ids)
+        {
+            try
+            {
+                var messages = await _accServ.DeleteMany(ids);
+                return Ok(_jsonResponseServ.OkMessageResponse("Delete many account.", messages));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete many account.", [ex.Message]));
             }
         }
 
@@ -208,25 +223,26 @@ namespace PersonnelManagement.Controllers
             try
             {
                 var account = await _accServ.Get(id);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Get a account.", [account]));
+                return Ok(_jsonResponseServ.OkOneAccountResponse("Get an account.", [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get an account.", [ex.Message]));
             }
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("get/{skip}/{take}")]
-        public async Task<IActionResult> Get(int skip, int take)
+        [HttpGet("get/{page}/{itemPerPage}")]
+        public async Task<IActionResult> Get(int page, int itemPerPage)
         {
             try
             {
-                return Ok();
+                var (accounts, totalPage, totalRecords) = await _accServ.GetPagedListWithTotalPagesAsync(page, itemPerPage);
+                return Ok(_jsonResponseServ.OkListAccountResponse("Get page account.", accounts, page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get page account.", [ex.Message]));
             }
         }
 
@@ -241,13 +257,13 @@ namespace PersonnelManagement.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Get all account.", [ex.Message]));
             }
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("search")]
-        public async Task<IActionResult> Search(string keyword)
+        [HttpGet("filter")]
+        public async Task<IActionResult> Filter(string keyword)
         {
             try
             {
@@ -255,7 +271,7 @@ namespace PersonnelManagement.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Search account.", [ex.Message]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Filter account.", [ex.Message]));
             }
         }
     }
