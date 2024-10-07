@@ -148,9 +148,18 @@ namespace PersonnelManagement.Services
             return messages;
         }
 
-        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize)
+        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.
+            GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize)
         {
             var (accounts, totalPage, totalRecords) = await _accRepo.GetPagedListAsync(pageNumber, pageSize);
+            return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
+        }
+
+        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.FilterAsync(string? keyword,
+            string? sortByEmail, int? filterByStatus, int? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
+        {
+            var (accounts, totalPage, totalRecords) = await _accRepo.FilterAsync(keyword, sortByEmail, filterByStatus,
+                filterByRole, keywordByEmployee, pageNumber, pageSize);
             return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
         }
     }

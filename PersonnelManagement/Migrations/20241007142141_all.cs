@@ -102,19 +102,6 @@ namespace PersonnelManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TeamStatuses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamStatuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -196,6 +183,7 @@ namespace PersonnelManagement.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaskDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     LeaderId = table.Column<long>(type: "bigint", nullable: true)
@@ -245,19 +233,23 @@ namespace PersonnelManagement.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasicSalary = table.Column<double>(type: "float", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fullname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AccountId = table.Column<long>(type: "bigint", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<long>(type: "bigint", nullable: true)
+                    DepartmentId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Employees_EmployeeStatuses_StatusId",
                         column: x => x.StatusId,
@@ -295,58 +287,6 @@ namespace PersonnelManagement.Migrations
                         principalTable: "SalaryHistoryStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Teams",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    LeaderId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Teams_Employees_LeaderId",
-                        column: x => x.LeaderId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Teams_TeamStatuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "TeamStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectTeamDetails",
-                columns: table => new
-                {
-                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
-                    TeamId = table.Column<long>(type: "bigint", nullable: false),
-                    PriorityLevel = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectTeamDetails", x => new { x.TeamId, x.ProjectId });
-                    table.ForeignKey(
-                        name: "FK_ProjectTeamDetails_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectTeamDetails_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -401,24 +341,19 @@ namespace PersonnelManagement.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_DepartmentId",
+                table: "Employees",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_StatusId",
                 table: "Employees",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_TeamId",
-                table: "Employees",
-                column: "TeamId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_StatusId",
                 table: "Projects",
                 column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectTeamDetails_ProjectId",
-                table: "ProjectTeamDetails",
-                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalaryHistories_EmployeeId",
@@ -428,16 +363,6 @@ namespace PersonnelManagement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SalaryHistories_StatusId",
                 table: "SalaryHistories",
-                column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_LeaderId",
-                table: "Teams",
-                column: "LeaderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_StatusId",
-                table: "Teams",
                 column: "StatusId");
 
             migrationBuilder.AddForeignKey(
@@ -471,30 +396,20 @@ namespace PersonnelManagement.Migrations
                 principalTable: "Employees",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.SetNull);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employees_Teams_TeamId",
-                table: "Employees",
-                column: "TeamId",
-                principalTable: "Teams",
-                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Teams_Employees_LeaderId",
-                table: "Teams");
+                name: "FK_Departments_Employees_LeaderId",
+                table: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Assignments");
-
-            migrationBuilder.DropTable(
-                name: "ProjectTeamDetails");
 
             migrationBuilder.DropTable(
                 name: "SalaryHistories");
@@ -515,13 +430,7 @@ namespace PersonnelManagement.Migrations
                 name: "SalaryHistoryStatuses");
 
             migrationBuilder.DropTable(
-                name: "Departments");
-
-            migrationBuilder.DropTable(
                 name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "DepartmentStatuses");
 
             migrationBuilder.DropTable(
                 name: "ProjectStatuses");
@@ -530,13 +439,13 @@ namespace PersonnelManagement.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "Departments");
+
+            migrationBuilder.DropTable(
                 name: "EmployeeStatuses");
 
             migrationBuilder.DropTable(
-                name: "Teams");
-
-            migrationBuilder.DropTable(
-                name: "TeamStatuses");
+                name: "DepartmentStatuses");
         }
     }
 }

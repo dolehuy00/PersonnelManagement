@@ -14,6 +14,10 @@ namespace PersonnelManagement.Services
         public Task<AccountDTO> Get(long accountId);
         public Task<ICollection<AccountDTO>> GetAll();
         public Task<string[]> DeleteMany(long[] accountId);
-        Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize);
+        Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> GetPagedListWithTotalPagesAsync(
+            int pageNumber, int pageSize);
+        Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> FilterAsync(string? keyword,
+            string? sortByEmail, int? filterByStatus, int? filterByRole, string? keywordByEmployee,
+            int pageNumber, int pageSize);
     }
 }

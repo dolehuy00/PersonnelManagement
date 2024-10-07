@@ -66,9 +66,62 @@ namespace PersonnelManagement.Repositories
             return (pagedList, totalPages, totalRecords);
         }
 
-        async Task IAccountRepository.SaveChangesAsync()
+        async Task<(ICollection<Account>, int totalPages, int totalRecords)> IAccountRepository.FilterAsync(string? keyword,
+            string? sortByEmail, int? filterByStatus, int? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
         {
-            await _dataContext.SaveChangesAsync();
+            // Tim theo email hoac id, xep theo email, loc theo status, loc theo role, tim kiem theo ten hoac id employee
+            var query = _dataContext.Accounts
+                .Include(a => a.Employee)
+                .AsQueryable();
+
+            // Tìm kiếm theo email hoặc id
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(a => a.Email.Contains(keyword) || a.Id.ToString().Contains(keyword));
+            }
+
+            // Tìm kiếm theo tên hoặc id Employee
+            if (!string.IsNullOrEmpty(keywordByEmployee))
+            {
+                query = query.Where(a => a.Employee.Fullname.Contains(keywordByEmployee) || a.Employee.Id.ToString().Contains(keywordByEmployee));
+            }
+
+            // Lọc theo status nếu filterByStatus có giá trị
+            if (filterByStatus.HasValue)
+            {
+                query = query.Where(a => a.StatusId == filterByStatus.Value);
+            }
+
+            // Lọc theo role nếu filterByRole có giá trị
+            if (filterByRole.HasValue)
+            {
+                query = query.Where(a => a.RoleId == filterByRole.Value);
+            }
+
+            // Tính tổng số record (trước khi phân trang)
+            var totalRecords = await query.CountAsync();
+
+            // Sắp xếp theo email nếu sortByEmail có giá trị là asc hoặc desc
+            if (!string.IsNullOrEmpty(sortByEmail))
+            {
+                if (sortByEmail.Equals("asc", StringComparison.OrdinalIgnoreCase))
+                {
+                    query = query.OrderBy(a => a.Email);
+                }
+                else if (sortByEmail.Equals("dec", StringComparison.OrdinalIgnoreCase))
+                {
+                    query = query.OrderByDescending(a => a.Email);
+                }
+            }
+            else
+            {
+                query = query.OrderBy(a => a.Id);
+            }
+
+            var skip = (pageNumber - 1) * pageSize;
+            var items = await query.Skip(skip).Take(pageSize).ToListAsync();
+            var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            return (items, totalPages, totalRecords);
         }
     }
 }

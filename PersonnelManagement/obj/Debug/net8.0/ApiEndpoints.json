@@ -82,7 +82,7 @@
   {
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "Filter",
-    "RelativePath": "api/Account/filter",
+    "RelativePath": "api/Account/filter/{page}/{itemPerPage}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -91,6 +91,36 @@
         "Name": "keyword",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "sortByEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "filterByStatus",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "filterByRole",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "keywordByEmployee",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "itemPerPage",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

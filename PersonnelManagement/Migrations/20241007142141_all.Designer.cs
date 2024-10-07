@@ -12,8 +12,8 @@ using PersonnelManagement.Data;
 namespace PersonnelManagement.Migrations
 {
     [DbContext(typeof(PersonnelDataContext))]
-    [Migration("20241006140945_update3")]
-    partial class update3
+    [Migration("20241007142141_all")]
+    partial class all
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,7 @@ namespace PersonnelManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("BasicSalary")
@@ -231,9 +232,11 @@ namespace PersonnelManagement.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Fullname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

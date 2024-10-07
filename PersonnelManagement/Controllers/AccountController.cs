@@ -272,12 +272,14 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("filter")]
-        public async Task<IActionResult> Filter(string keyword)
+        [HttpGet("filter/{page}/{itemPerPage}")]
+        public async Task<IActionResult> Filter(string? keyword, string? sortByEmail, int? filterByStatus,
+            int? filterByRole, string? keywordByEmployee, int page, int itemPerPage)
         {
             try
             {
-                return Ok();
+                var (results, totalPage, totalRecords) = await _accServ.FilterAsync(keyword, sortByEmail, filterByStatus, filterByRole, keywordByEmployee, page, itemPerPage);
+                return Ok(_jsonResponseServ.OkListAccountResponse("Filter account.", results, page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {

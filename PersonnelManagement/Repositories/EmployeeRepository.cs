@@ -45,5 +45,11 @@ namespace PersonnelManagement.Repositories
 
             return (pagedList, totalPages, totalRecords);
         }
+
+        Task<ICollection<Employee>> IEmployeeRepository.FilterAsync()
+        {
+            throw new NotImplementedException();
+            // Tim kiem theo ten hoac id, tim theo dia chi, loc theo khoang ngay sinh, loc theo khoang luong co ban, loc theo vi tri, loc theo khoang ngay bat dau, loc theo phong ban, loc theo trang thai
+        }
     }
 }
