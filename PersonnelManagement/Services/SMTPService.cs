@@ -8,7 +8,7 @@ namespace MovieAppApi.Service
     {
         private static string from = "noreply";
         private static string authenEmail = "huydo24082002@gmail.com";
-        private static string authrnPassword = "zuzsjefblbftfnhd";
+        private static string authenPassword = "zuzsjefblbftfnhd";
 
         public async Task SendPasswordResetEmail(string emailAddress, int randomCode)
         {
@@ -23,7 +23,7 @@ namespace MovieAppApi.Service
 
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(authenEmail, authrnPassword);
+            await smtp.AuthenticateAsync(authenEmail, authenPassword);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
@@ -40,7 +40,7 @@ namespace MovieAppApi.Service
 
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(authenEmail, authrnPassword);
+            await smtp.AuthenticateAsync(authenEmail, authenPassword);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
