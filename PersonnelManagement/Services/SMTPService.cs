@@ -7,8 +7,8 @@ namespace MovieAppApi.Service
     public class SMTPService
     {
         private static string from = "noreply";
-        private static string authenEmail = "huydo24082002@gmail.com";
-        private static string authenPassword = "zuzsjefblbftfnhd";
+        private static string authenEmail = "noreply78224@gmail.com";
+        private static string authenPassword = "aeqvnbvgkpkgemvz";
 
         public async Task SendPasswordResetEmail(string emailAddress, int randomCode)
         {
