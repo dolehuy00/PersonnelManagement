@@ -44,16 +44,12 @@ namespace PersonnelManagement.Repositories
             return false;
         }
 
-        async Task<bool> IAccountRepository.UpdatePasswordAsync(string email, string newPassword)
+        async Task IAccountRepository.UpdatePasswordAsync(string email, string newPassword)
         {
-            var account = await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
-            if (account != null)
-            {
-                account.Password = newPassword;
-                await _dataContext.SaveChangesAsync();
-                return true;
-            }
-            return false;
+            var account = await _dataContext.Accounts.
+                FirstOrDefaultAsync(acc => acc.Email.Equals(email)) ?? throw new Exception("Account doesn't exist.");
+            account.Password = newPassword;
+            await _dataContext.SaveChangesAsync();
         }
 
         public async Task<(ICollection<Account>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
@@ -68,6 +64,11 @@ namespace PersonnelManagement.Repositories
                 .ToListAsync();
 
             return (pagedList, totalPages, totalRecords);
+        }
+
+        async Task IAccountRepository.SaveChangesAsync()
+        {
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

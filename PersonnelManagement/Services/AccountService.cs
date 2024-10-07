@@ -32,21 +32,18 @@ namespace PersonnelManagement.Services
         public async Task<bool> ChangePasswordAsync(long accountId, string currentPassword, string newPassword)
         {
             var account = await _genericAccRepo.GetByIdAsync(accountId);
-            if (account == null || VerifyPassword(currentPassword, account.Password)!)
+            if (account == null || !VerifyPassword(currentPassword, account.Password))
             {
                 return false;
             }
-            return await _accRepo.UpdatePasswordAsync(accountId, newPassword);
+            account.Password = HashPassword(newPassword);
+            await _genericAccRepo.SaveChangesAsync();
+            return true;
         }
 
-        public async Task<bool> ChangePasswordAsync(string email, string currentPassword, string newPassword)
+        public async Task ChangePasswordNoCheckOldPassAsync(string email, string password)
         {
-            var account = await _accRepo.GetAccountAsync(email);
-            if (account == null || VerifyPassword(currentPassword, account.Password)!)
-            {
-                return false;
-            }
-            return await _accRepo.UpdatePasswordAsync(email, newPassword);
+            await _accRepo.UpdatePasswordAsync(email, HashPassword(password));
         }
 
         public async Task<bool> ExistAccountAsync(string email)

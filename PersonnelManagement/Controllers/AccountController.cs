@@ -29,6 +29,7 @@ namespace PersonnelManagement.Controllers
             _jsonResponseServ = new JsonResponseService();
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> CheckLogin([FromBody] RequestLoginDTO loginDTO)
         {
@@ -42,12 +43,13 @@ namespace PersonnelManagement.Controllers
                 }
                 return Unauthorized(_jsonResponseServ.LoginNotMatchResponse());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 
+        [Authorize(Policy = "AllRoles")]
         [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] RequestChangePasswordDTO changePassDTO)
@@ -76,6 +78,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("forgot-password-request")]
         public async Task<IActionResult> ForgotPasswordRequest([FromBody] ForgotPasswordDTO forgotDTO)
         {
@@ -97,9 +100,9 @@ namespace PersonnelManagement.Controllers
                     _cache.Set(forgotDTO.Email, new ForgotPasswordCode(randomCode, DateTimeOffset.UtcNow.AddMinutes(5)),
                         TimeSpan.FromMinutes(5));
                     await new SMTPService().SendPasswordResetEmail(forgotDTO.Email, randomCode);
-                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Send request successfully."]));
+                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password request.", ["Send request successfully."]));
                 }
-                return Ok(_jsonResponseServ.BadMessageResponse("Forgot password.", ["Account isn't exist."]));
+                return Ok(_jsonResponseServ.BadMessageResponse("Forgot password request.", ["Account isn't exist."]));
             }
             catch (Exception)
             {
@@ -107,17 +110,20 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [HttpPost("forgot-password-checkcode")]
-        public IActionResult ForgotPasswordCheckCode([FromBody] ForgotPasswordDTO forgotDTO)
+        [AllowAnonymous]
+        [HttpPost("forgot-password-verify-code")]
+        public IActionResult ForgotPasswordVerifyCode([FromBody] ForgotPasswordDTO forgotDTO)
         {
             try
             {
                 var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
                 if (code != null && code.CodeNumber.Equals(forgotDTO.Code))
                 {
-                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Code verification successful."]));
+                    code.IsVerified = true;
+                    _cache.Set(forgotDTO.Email, code);
+                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password verify code.", ["Code verification successful."]));
                 }
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.", ["Code verification failed."]));
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password verify code.", ["Code verification failed."]));
             }
             catch
             {
@@ -125,39 +131,43 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpPost("forgot-password-change")]
-        public async Task<IActionResult> ForgotPasswordChange([FromBody] ForgotPasswordDTO forgotDTO)
+        public async Task<IActionResult> ForgotPasswordChange([FromBody] ForgotPasswordChangeDTO forgotDTO)
         {
             try
             {
-                if (forgotDTO.Password == null || forgotDTO.Password.Length < 8)
+                if (forgotDTO.Password != forgotDTO.PasswordConfirm)
                 {
-                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
-                        ["Password must be at least 8 characters long."]));
-                }
-                else if (forgotDTO.Password != forgotDTO.PasswordConfirm)
-                {
-                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
+                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password change password.",
                         ["Password confirm is not the same password."]));
                 }
                 var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
-                var changeSuccess = false;
-                if (code != null && code.CodeNumber.Equals(forgotDTO.Code))
+                if (code != null)
                 {
-                    changeSuccess = await _accServ.ChangePasswordAsync(forgotDTO.Email,
-                        forgotDTO.Password, forgotDTO.PasswordConfirm);
+                    if (!code.IsVerified)
+                    {
+                        return BadRequest(_jsonResponseServ.
+                            BadMessageResponse("Forgot password change password.", ["Code not verified."]));
+                    }
+                    if (code.CodeNumber.Equals(forgotDTO.Code))
+                    {
+                        await _accServ.ChangePasswordNoCheckOldPassAsync(forgotDTO.Email, forgotDTO.Password);
+                        return Ok(_jsonResponseServ.
+                            OkMessageResponse("Forgot password change password.", ["Change password successfully."]));
+                    }
                 }
-                return Ok(_jsonResponseServ.OkMessageResponse("Forgot password.", ["Change password successfully."]));
+                return BadRequest(_jsonResponseServ.
+                    BadMessageResponse("Forgot password change password.", ["Code has expired or account doesn't exist."]));
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password change password.", [e.Message]));
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("add")]
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] AccountDTO accountDTO)
         {
             try
@@ -171,8 +181,8 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("edit")]
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] AccountDTO accountDTO)
         {
             try
@@ -186,8 +196,8 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("delete/{id}")]
+        [Authorize(Policy = "AdminOnly")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
@@ -201,8 +211,8 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("delete")]
+        [Authorize(Policy = "AdminOnly")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMany([FromBody] long[] ids)
         {
             try
@@ -216,7 +226,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
@@ -231,7 +241,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/{page}/{itemPerPage}")]
         public async Task<IActionResult> Get(int page, int itemPerPage)
         {
@@ -246,7 +256,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {
@@ -261,7 +271,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("filter")]
         public async Task<IActionResult> Filter(string keyword)
         {

@@ -9,6 +9,7 @@ using PersonnelManagement.Services;
 
 namespace PersonnelManagement.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -25,8 +26,7 @@ namespace PersonnelManagement.Controllers
             _jsonResponseServ = new JsonResponseService();
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("add")]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] EmployeeDTO employeeDTO)
         {
             try
@@ -40,8 +40,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] EmployeeDTO employeeDTO)
         {
             try
@@ -55,8 +54,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
@@ -70,8 +68,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMany([FromBody] long[] ids)
         {
             try
@@ -85,7 +82,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
@@ -100,7 +96,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("get/{page}/{itemPerPage}")]
         public async Task<IActionResult> Get(int page, int itemPerPage)
         {
@@ -115,7 +110,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {
@@ -130,7 +124,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("filter")]
         public async Task<IActionResult> Filter(string keyword)
         {

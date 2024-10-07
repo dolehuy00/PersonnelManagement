@@ -6,7 +6,7 @@ namespace PersonnelManagement.Services
     {
         public Task<AccountDTO?> ValidateUserAsync(string email, string password);
         public Task<bool> ChangePasswordAsync(long accountId, string currentPassword, string newPassword);
-        public Task<bool> ChangePasswordAsync(string email, string currentPassword, string newPassword);
+        public Task ChangePasswordNoCheckOldPassAsync(string email, string password);
         public Task<bool> ExistAccountAsync(string email);
         public Task<AccountDTO> Add(AccountDTO accountDTO);
         public Task<AccountDTO> Edit(AccountDTO accountDTO);

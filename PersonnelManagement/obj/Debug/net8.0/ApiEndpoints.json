@@ -3,7 +3,7 @@
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "Add",
     "RelativePath": "api/Account/add",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -35,7 +35,7 @@
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "DeleteMany",
     "RelativePath": "api/Account/delete",
-    "HttpMethod": "GET",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -51,7 +51,7 @@
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "Delete",
     "RelativePath": "api/Account/delete/{id}",
-    "HttpMethod": "GET",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -67,7 +67,7 @@
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "Edit",
     "RelativePath": "api/Account/edit",
-    "HttpMethod": "GET",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -105,7 +105,7 @@
     "Parameters": [
       {
         "Name": "forgotDTO",
-        "Type": "PersonnelManagement.DTO.ForgotPasswordDTO",
+        "Type": "PersonnelManagement.DTO.ForgotPasswordChangeDTO",
         "IsRequired": true
       }
     ],
@@ -113,8 +113,8 @@
   },
   {
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
-    "Method": "ForgotPasswordCheckCode",
-    "RelativePath": "api/Account/forgot-password-checkcode",
+    "Method": "ForgotPasswordRequest",
+    "RelativePath": "api/Account/forgot-password-request",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -129,8 +129,8 @@
   },
   {
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
-    "Method": "ForgotPasswordRequest",
-    "RelativePath": "api/Account/forgot-password-request",
+    "Method": "ForgotPasswordVerifyCode",
+    "RelativePath": "api/Account/forgot-password-verify-code",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -210,7 +210,7 @@
     "ContainingType": "PersonnelManagement.Controllers.EmployeeController",
     "Method": "Add",
     "RelativePath": "api/Employee/add",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -226,7 +226,7 @@
     "ContainingType": "PersonnelManagement.Controllers.EmployeeController",
     "Method": "DeleteMany",
     "RelativePath": "api/Employee/delete",
-    "HttpMethod": "GET",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -242,7 +242,7 @@
     "ContainingType": "PersonnelManagement.Controllers.EmployeeController",
     "Method": "Delete",
     "RelativePath": "api/Employee/delete/{id}",
-    "HttpMethod": "GET",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -258,7 +258,7 @@
     "ContainingType": "PersonnelManagement.Controllers.EmployeeController",
     "Method": "Edit",
     "RelativePath": "api/Employee/edit",
-    "HttpMethod": "GET",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
