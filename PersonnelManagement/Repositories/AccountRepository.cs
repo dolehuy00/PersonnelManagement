@@ -115,7 +115,7 @@ namespace PersonnelManagement.Repositories
             }
             else
             {
-                query = query.OrderBy(a => a.Id);
+                query = query.OrderByDescending(a => a.Id);
             }
 
             var skip = (pageNumber - 1) * pageSize;
