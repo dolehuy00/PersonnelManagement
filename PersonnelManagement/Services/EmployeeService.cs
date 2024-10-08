@@ -18,7 +18,7 @@ namespace PersonnelManagement.Services
             _emplMapper = new EmployeeMapper();
         }
 
-        async Task<EmployeeDTO> IEmployeeService.Add(EmployeeDTO employeeDTO)
+        public async Task<EmployeeDTO> Add(EmployeeDTO employeeDTO)
         {
             var newEmployee = _emplMapper.ToModel(employeeDTO);
             await _genericEmplRepo.AddAsync(newEmployee);
@@ -26,7 +26,7 @@ namespace PersonnelManagement.Services
 
         }
 
-        async Task<EmployeeDTO> IEmployeeService.Edit(EmployeeDTO employeeDTO)
+        public async Task<EmployeeDTO> Edit(EmployeeDTO employeeDTO)
         {
             var exist = await _genericEmplRepo.ExistAsync(employeeDTO.Id);
             if (!exist)
@@ -38,7 +38,7 @@ namespace PersonnelManagement.Services
             return _emplMapper.ToDTO(employee);
         }
 
-        async Task IEmployeeService.Delete(long employeeId)
+        public async Task Delete(long employeeId)
         {
             var employee = await _genericEmplRepo.GetByIdAsync(employeeId);
             if (employee == null)
@@ -48,7 +48,7 @@ namespace PersonnelManagement.Services
             await _genericEmplRepo.DeleteAsync(employee);
         }
 
-        async Task<EmployeeDTO> IEmployeeService.Get(long employeeId)
+        public async Task<EmployeeDTO> Get(long employeeId)
         {
             var employee = await _genericEmplRepo.GetByIdAsync(employeeId);
             if (employee == null)
@@ -58,13 +58,13 @@ namespace PersonnelManagement.Services
             return _emplMapper.ToDTO(employee);
         }
 
-        async Task<ICollection<EmployeeDTO>> IEmployeeService.GetAll()
+        public async Task<ICollection<EmployeeDTO>> GetAll()
         {
             var employees = await _genericEmplRepo.GetAllAsync();
             return _emplMapper.TolistDTO(employees);
         }
 
-        async Task<string[]> IEmployeeService.DeleteMany(long[] employeeIds)
+        public async Task<string[]> DeleteMany(long[] employeeIds)
         {
             string[] messages = new string[employeeIds.Length];
             for (var i = 0; i < employeeIds.Length; i++)
@@ -83,9 +83,23 @@ namespace PersonnelManagement.Services
             return messages;
         }
 
-        async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> IEmployeeService.GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize)
+        public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagesAsync(
+            int pageNumber, int pageSize)
         {
             var (employees, totalPage, totalRecords) = await _emplRepo.GetPagedListAsync(pageNumber, pageSize);
+            return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
+        }
+
+        public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> FilterAsync(EmployeeFilterDTO filter)
+        {
+            if (filter.Page < 1 || filter.PageSize < 1)
+            {
+                throw new ArgumentException("Page and PageSize must be >= 1.");
+            }
+            var (employees, totalPage, totalRecords) = await _emplRepo.FilterAsync(filter.NameOrId,
+                filter.Address, filter.FromDoB, filter.ToDoB, filter.FromSalary, filter.ToSalary,
+                filter.Position, filter.FromStartDate, filter.ToStartDate, filter.DepartmentId,
+                filter.StatusId, filter.SortBy, filter.Page, filter.PageSize);
             return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
         }
     }

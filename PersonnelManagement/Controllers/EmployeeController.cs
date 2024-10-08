@@ -69,11 +69,11 @@ namespace PersonnelManagement.Controllers
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteMany([FromBody] long[] ids)
+        public async Task<IActionResult> DeleteMany([FromQuery] long[] id)
         {
             try
             {
-                var messages = await _emplServ.DeleteMany(ids);
+                var messages = await _emplServ.DeleteMany(id);
                 return Ok(_jsonResponseServ.OkMessageResponse("Delete many employee.", messages));
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                var (employees, totalPage, totalRecords) = await _emplServ.GetPagedListWithTotalPagesAsync(page, itemPerPage);
+                var (employees, totalPage, totalRecords) = await _emplServ.GetPagesAsync(page, itemPerPage);
                 return Ok(_jsonResponseServ.OkListEmployeeResponse("Get page employee.", employees, page, totalPage, totalRecords));
             }
             catch (Exception ex)
@@ -125,11 +125,12 @@ namespace PersonnelManagement.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<IActionResult> Filter(string keyword)
+        public async Task<IActionResult> Filter([FromQuery] EmployeeFilterDTO filterDTO)
         {
             try
             {
-                return Ok();
+                var (results, totalPage, totalRecords) = await _emplServ.FilterAsync(filterDTO);
+                return Ok(_jsonResponseServ.OkListEmployeeResponse("Filter employee.", results, filterDTO.Page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {

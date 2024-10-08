@@ -61,7 +61,7 @@ namespace PersonnelManagement.Services
             return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
 
-        async Task<AccountDTO> IAccountService.Add(AccountDTO accountDTO)
+        public async Task<AccountDTO> Add(AccountDTO accountDTO)
         {
             var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
             if (exist)
@@ -81,7 +81,7 @@ namespace PersonnelManagement.Services
             throw new Exception("An error occurred while creating an account.");
         }
 
-        async Task<AccountDTO> IAccountService.Edit(AccountDTO accountDTO)
+        public async Task<AccountDTO> Edit(AccountDTO accountDTO)
         {
             var account = await _genericAccRepo.GetByIdAsync(accountDTO.Id);
             if (account == null)
@@ -103,7 +103,7 @@ namespace PersonnelManagement.Services
             return _accMapper.ToDTO(account);
         }
 
-        async Task IAccountService.Delete(long accountId)
+        public async Task Delete(long accountId)
         {
             var account = await _genericAccRepo.GetByIdAsync(accountId);
             if (account == null)
@@ -113,7 +113,7 @@ namespace PersonnelManagement.Services
             await _genericAccRepo.DeleteAsync(account);
         }
 
-        async Task<AccountDTO> IAccountService.Get(long accountId)
+        public async Task<AccountDTO> Get(long accountId)
         {
             var account = await _genericAccRepo.GetByIdAsync(accountId);
             if (account == null)
@@ -123,13 +123,13 @@ namespace PersonnelManagement.Services
             return _accMapper.ToDTO(account);
         }
 
-        async Task<ICollection<AccountDTO>> IAccountService.GetAll()
+        public async Task<ICollection<AccountDTO>> GetAll()
         {
             var accounts = await _genericAccRepo.GetAllAsync();
             return _accMapper.TolistDTO(accounts);
         }
 
-        async Task<string[]> IAccountService.DeleteMany(long[] accountIds)
+        public async Task<string[]> DeleteMany(long[] accountIds)
         {
             string[] messages = new string[accountIds.Length];
             foreach (var id in accountIds)
@@ -148,18 +148,23 @@ namespace PersonnelManagement.Services
             return messages;
         }
 
-        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.
-            GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize)
+        public async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> GetPagesAsync(
+            int pageNumber, int pageSize)
         {
             var (accounts, totalPage, totalRecords) = await _accRepo.GetPagedListAsync(pageNumber, pageSize);
             return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
         }
 
-        async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> IAccountService.FilterAsync(string? keyword,
-            string? sortByEmail, int? filterByStatus, int? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
+        public async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> FilterAsync(
+            AccountFilterDTO filterDTO)
         {
-            var (accounts, totalPage, totalRecords) = await _accRepo.FilterAsync(keyword, sortByEmail, filterByStatus,
-                filterByRole, keywordByEmployee, pageNumber, pageSize);
+            if (filterDTO.Page < 1 || filterDTO.PageSize < 1)
+            {
+                throw new ArgumentException("Page and PageSize must be >= 1.");
+            }
+            var (accounts, totalPage, totalRecords) = await _accRepo.FilterAsync(filterDTO.Keyword,
+                filterDTO.SortByEmail, filterDTO.FilterByStatus, filterDTO.FilterByRole,
+                filterDTO.KeywordByEmployee, filterDTO.Page, filterDTO.PageSize);
             return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
         }
     }

@@ -4,12 +4,15 @@ namespace PersonnelManagement.Services
 {
     public interface IEmployeeService
     {
-        public Task<EmployeeDTO> Add(EmployeeDTO accountDTO);
-        public Task<EmployeeDTO> Edit(EmployeeDTO accountDTO);
-        public Task Delete(long accountId);
-        public Task<EmployeeDTO> Get(long accountId);
-        public Task<ICollection<EmployeeDTO>> GetAll();
-        public Task<string[]> DeleteMany(long[] accountId);
-        Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagedListWithTotalPagesAsync(int pageNumber, int pageSize);
+        Task<EmployeeDTO> Add(EmployeeDTO accountDTO);
+        Task<EmployeeDTO> Edit(EmployeeDTO accountDTO);
+        Task Delete(long accountId);
+        Task<EmployeeDTO> Get(long accountId);
+        Task<ICollection<EmployeeDTO>> GetAll();
+        Task<string[]> DeleteMany(long[] accountId);
+        Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagesAsync(
+            int pageNumber, int pageSize);
+        Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> FilterAsync(
+            EmployeeFilterDTO filter);
     }
 }

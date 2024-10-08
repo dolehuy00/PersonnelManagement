@@ -83,7 +83,9 @@ namespace PersonnelManagement.Repositories
             // Tìm kiếm theo tên hoặc id Employee
             if (!string.IsNullOrEmpty(keywordByEmployee))
             {
-                query = query.Where(a => a.Employee.Fullname.Contains(keywordByEmployee) || a.Employee.Id.ToString().Contains(keywordByEmployee));
+                query = query.Where(a =>
+                    a.Employee.Fullname.Contains(keywordByEmployee) ||
+                    a.Employee.Id.ToString().Contains(keywordByEmployee));
             }
 
             // Lọc theo status nếu filterByStatus có giá trị

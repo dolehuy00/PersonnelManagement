@@ -213,11 +213,11 @@ namespace PersonnelManagement.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteMany([FromBody] long[] ids)
+        public async Task<IActionResult> DeleteMany([FromQuery] long[] id)
         {
             try
             {
-                var messages = await _accServ.DeleteMany(ids);
+                var messages = await _accServ.DeleteMany(id);
                 return Ok(_jsonResponseServ.OkMessageResponse("Delete many account.", messages));
             }
             catch (Exception ex)
@@ -247,7 +247,7 @@ namespace PersonnelManagement.Controllers
         {
             try
             {
-                var (accounts, totalPage, totalRecords) = await _accServ.GetPagedListWithTotalPagesAsync(page, itemPerPage);
+                var (accounts, totalPage, totalRecords) = await _accServ.GetPagesAsync(page, itemPerPage);
                 return Ok(_jsonResponseServ.OkListAccountResponse("Get page account.", accounts, page, totalPage, totalRecords));
             }
             catch (Exception ex)
@@ -272,14 +272,13 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("filter/{page}/{itemPerPage}")]
-        public async Task<IActionResult> Filter(string? keyword, string? sortByEmail, int? filterByStatus,
-            int? filterByRole, string? keywordByEmployee, int page, int itemPerPage)
+        [HttpGet("filter")]
+        public async Task<IActionResult> Filter([FromQuery] AccountFilterDTO filterDTO)
         {
             try
             {
-                var (results, totalPage, totalRecords) = await _accServ.FilterAsync(keyword, sortByEmail, filterByStatus, filterByRole, keywordByEmployee, page, itemPerPage);
-                return Ok(_jsonResponseServ.OkListAccountResponse("Filter account.", results, page, totalPage, totalRecords));
+                var (results, totalPage, totalRecords) = await _accServ.FilterAsync(filterDTO);
+                return Ok(_jsonResponseServ.OkListAccountResponse("Filter account.", results, filterDTO.Page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {

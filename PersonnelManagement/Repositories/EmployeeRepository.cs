@@ -47,11 +47,13 @@ namespace PersonnelManagement.Repositories
         }
 
         async Task<(ICollection<Employee>, int, int)> IEmployeeRepository.FilterAsync(string? nameOrId, string? address,
-            DateTime? fromDoB, DateTime? toDob, double? fromSalary, double? toSalary, string? position,
-            DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, int? statusId, int page, int pageSize)
+            DateTime? fromDoB, DateTime? toDoB, double? fromSalary, double? toSalary, string? position,
+            DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, int? statusId, string? sortBy,
+            int page, int pageSize)
         {
             // Tim kiem theo ten hoac id, tim theo dia chi, loc theo khoang ngay sinh, loc theo khoang luong co ban
             // Loc theo vi tri, loc theo khoang ngay bat dau, loc theo phong ban, loc theo trang thai
+            // Sap xep theo ten, sap xep theo ngay sinh, sap xep theo ngay bat dau
             var query = _dataContext.Employees.AsQueryable();
 
             // Tim kiem theo ten hoac id
@@ -71,9 +73,9 @@ namespace PersonnelManagement.Repositories
             {
                 query = query.Where(e => e.DateOfBirth >= fromDoB);
             }
-            if (toDob != null)
+            if (toDoB != null)
             {
-                query = query.Where(e => e.DateOfBirth <= toDob);
+                query = query.Where(e => e.DateOfBirth <= toDoB);
             }
 
             // Loc theo khoang luong co ban
@@ -105,13 +107,46 @@ namespace PersonnelManagement.Repositories
             // Loc theo phong ban
             if (departmentId.HasValue)
             {
-                query = query.Where(e => e.DepartmentId == departmentId.Value);
+                query = departmentId < 1
+                    ? query.Where(e => e.DepartmentId == null)
+                    : query.Where(e => e.DepartmentId == departmentId.Value);
             }
 
             // Loc theo status
             if (statusId.HasValue)
             {
                 query = query.Where(e => e.StatusId == statusId.Value);
+            }
+
+            // Sap xep theo ten, ngay sinh, ngay bat dau
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                var sortBySplit = sortBy.Split(':');
+                var sortField = sortBySplit[0].ToLower();
+                var sortOrder = sortBySplit[1].ToLower();
+                var sortFields = new Dictionary<string, Func<IQueryable<Employee>, IOrderedQueryable<Employee>>>
+                {
+                    { "fullname", q => sortOrder == "asc" ? q.OrderBy(e => e.Fullname) : q.OrderByDescending(e => e.Fullname) },
+                    { "dateOfBirth", q => sortOrder == "asc" ? q.OrderBy(e => e.DateOfBirth) : q.OrderByDescending(e => e.DateOfBirth) },
+                    { "startDate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
+                };
+
+                if (sortFields.ContainsKey(sortField))
+                {
+                    query = sortFields[sortField](query);
+                }
+                else
+                {
+                    throw new Exception("Invalid sort field.\n" +
+                                        "We support:\n" +
+                                        "\tfullname:asc / fullname:dec\n" +
+                                        "\tdateOfBirth:asc / dateOfBirth:dec\n" +
+                                        "\tstartDate:asc / startDate:dec");
+                }
+            }
+            else
+            {
+                query = query.OrderByDescending(e => e.Id);
             }
 
             // Phan trang
