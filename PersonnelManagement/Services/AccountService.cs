@@ -83,11 +83,7 @@ namespace PersonnelManagement.Services
 
         public async Task<AccountDTO> Edit(AccountDTO accountDTO)
         {
-            var account = await _genericAccRepo.GetByIdAsync(accountDTO.Id);
-            if (account == null)
-            {
-                throw new Exception("Account does not exist.");
-            }
+            var account = await _genericAccRepo.GetByIdAsync(accountDTO.Id) ?? throw new Exception("Account does not exist.");
             if (!account.Email.Equals(accountDTO.Email))
             {
                 var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
@@ -105,22 +101,14 @@ namespace PersonnelManagement.Services
 
         public async Task Delete(long accountId)
         {
-            var account = await _genericAccRepo.GetByIdAsync(accountId);
-            if (account == null)
-            {
-                throw new Exception("Account doesn't exist.");
-            }
+            var account = await _genericAccRepo.GetByIdAsync(accountId) ?? throw new Exception("Account doesn't exist.");
             await _genericAccRepo.DeleteAsync(account);
         }
 
         public async Task<AccountDTO> Get(long accountId)
         {
             var account = await _genericAccRepo.GetByIdAsync(accountId);
-            if (account == null)
-            {
-                throw new Exception("Account doesn't exist.");
-            }
-            return _accMapper.ToDTO(account);
+            return account == null ? throw new Exception("Account doesn't exist.") : _accMapper.ToDTO(account);
         }
 
         public async Task<ICollection<AccountDTO>> GetAll()

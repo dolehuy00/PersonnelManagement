@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
-using PersonnelManagement.Service;
 using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,7 +17,6 @@ namespace PersonnelManagement.Controllers
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _config;
         private readonly JwtTokenService _jwtTokenServ;
-        private JsonResponseService _jsonResponseServ;
 
         public AccountController(IMemoryCache cache, IConfiguration config, IAccountService accountService)
         {
@@ -26,7 +24,6 @@ namespace PersonnelManagement.Controllers
             _config = config;
             _accServ = accountService;
             _jwtTokenServ = new JwtTokenService();
-            _jsonResponseServ = new JsonResponseService();
         }
 
         [AllowAnonymous]
@@ -39,9 +36,11 @@ namespace PersonnelManagement.Controllers
                 if (account != null)
                 {
                     var token = _jwtTokenServ.GenerateJwtToken(account, _config);
-                    return Ok(_jsonResponseServ.LoginSuccessResponse(account, token));
+                    var response = new { account.Id, token, account.Email, account.EmployeeName };
+                    return Ok(new ResponseObjectDTO<dynamic>("Login successfully", [response]));
                 }
-                return Unauthorized(_jsonResponseServ.LoginNotMatchResponse());
+                return Unauthorized(
+                    new ResponseMessageDTO("Can't login.", 401, ["Password or account is incorrect."]));
             }
             catch (Exception e)
             {
@@ -54,23 +53,23 @@ namespace PersonnelManagement.Controllers
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] RequestChangePasswordDTO changePassDTO)
         {
+            var titleResponse = "Change password.";
             try
             {
                 if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
                 {
-                    return BadRequest(_jsonResponseServ.BadMessageResponse(
-                        "Change password.", ["Password confirm is not the same password."]));
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password confirm is not the same password."]));
                 }
                 var userIdInToken = _jwtTokenServ.GetAccountIdFromToken(HttpContext);
                 var result = await _accServ.ChangePasswordAsync(long.Parse(userIdInToken),
                     changePassDTO.CurrentPassword, changePassDTO.NewPassword);
                 if (result)
                 {
-                    return Ok(_jsonResponseServ.OkMessageResponse(
-                        "Change password.", ["Password changed successfully."]));
+                    return Ok(new ResponseMessageDTO(titleResponse, ["Password changed successfully."]));
                 }
-                return BadRequest(_jsonResponseServ.BadMessageResponse(
-                        "Change password.", ["Current password is incorrect or account not found."]));
+                return BadRequest(new ResponseMessageDTO(
+                    titleResponse, 400, ["Current password is incorrect or account not found."]));
             }
             catch (Exception)
             {
@@ -82,6 +81,7 @@ namespace PersonnelManagement.Controllers
         [HttpPost("forgot-password-request")]
         public async Task<IActionResult> ForgotPasswordRequest([FromBody] ForgotPasswordDTO forgotDTO)
         {
+            var titleResponse = "Forgot password.";
             try
             {
                 var existAccount = await _accServ.ExistAccountAsync(forgotDTO.Email);
@@ -92,7 +92,7 @@ namespace PersonnelManagement.Controllers
                     {
                         if (DateTimeOffset.UtcNow.AddMinutes(4) < code.DeadTime)
                         {
-                            return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password.",
+                            return BadRequest(new ResponseMessageDTO(titleResponse, 400,
                                 ["Too many request, please wait 1 minute since the last successful request."]));
                         }
                     }
@@ -100,9 +100,9 @@ namespace PersonnelManagement.Controllers
                     _cache.Set(forgotDTO.Email, new ForgotPasswordCode(randomCode, DateTimeOffset.UtcNow.AddMinutes(5)),
                         TimeSpan.FromMinutes(5));
                     await new SMTPService().SendPasswordResetEmail(forgotDTO.Email, randomCode);
-                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password request.", ["Send request successfully."]));
+                    return Ok(new ResponseMessageDTO(titleResponse, ["Send request successfully."]));
                 }
-                return Ok(_jsonResponseServ.BadMessageResponse("Forgot password request.", ["Account isn't exist."]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, ["Account isn't exist."]));
             }
             catch (Exception)
             {
@@ -114,6 +114,7 @@ namespace PersonnelManagement.Controllers
         [HttpPost("forgot-password-verify-code")]
         public IActionResult ForgotPasswordVerifyCode([FromBody] ForgotPasswordDTO forgotDTO)
         {
+            var titleResponse = "Forgot password verify code.";
             try
             {
                 var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
@@ -121,9 +122,9 @@ namespace PersonnelManagement.Controllers
                 {
                     code.IsVerified = true;
                     _cache.Set(forgotDTO.Email, code);
-                    return Ok(_jsonResponseServ.OkMessageResponse("Forgot password verify code.", ["Code verification successful."]));
+                    return Ok(new ResponseMessageDTO(titleResponse, ["Code verification successful."]));
                 }
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password verify code.", ["Code verification failed."]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, ["Code verification failed."]));
             }
             catch
             {
@@ -135,34 +136,33 @@ namespace PersonnelManagement.Controllers
         [HttpPost("forgot-password-change")]
         public async Task<IActionResult> ForgotPasswordChange([FromBody] ForgotPasswordChangeDTO forgotDTO)
         {
+            var titleResponse = "Forgot password change password.";
             try
             {
                 if (forgotDTO.Password != forgotDTO.PasswordConfirm)
                 {
-                    return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password change password.",
-                        ["Password confirm is not the same password."]));
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password confirm is not the same password."]));
                 }
                 var code = _cache.Get<ForgotPasswordCode>(forgotDTO.Email);
                 if (code != null)
                 {
                     if (!code.IsVerified)
                     {
-                        return BadRequest(_jsonResponseServ.
-                            BadMessageResponse("Forgot password change password.", ["Code not verified."]));
+                        return BadRequest(new ResponseMessageDTO(titleResponse, 400, ["Code not verified."]));
                     }
                     if (code.CodeNumber.Equals(forgotDTO.Code))
                     {
                         await _accServ.ChangePasswordNoCheckOldPassAsync(forgotDTO.Email, forgotDTO.Password);
-                        return Ok(_jsonResponseServ.
-                            OkMessageResponse("Forgot password change password.", ["Change password successfully."]));
+                        return Ok(new ResponseMessageDTO(titleResponse, ["Change password successfully."]));
                     }
                 }
-                return BadRequest(_jsonResponseServ.
-                    BadMessageResponse("Forgot password change password.", ["Code has expired or account doesn't exist."]));
+                return BadRequest(new ResponseMessageDTO(
+                    titleResponse, 400, ["Code has expired or account doesn't exist."]));
             }
             catch (Exception e)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Forgot password change password.", [e.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [e.Message]));
             }
         }
 
@@ -170,14 +170,15 @@ namespace PersonnelManagement.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] AccountDTO accountDTO)
         {
+            var titleResponse = "Create an account.";
             try
             {
                 var account = await _accServ.Add(accountDTO);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Create an account.", [account]));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Create an account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -185,14 +186,15 @@ namespace PersonnelManagement.Controllers
         [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] AccountDTO accountDTO)
         {
+            var titleResponse = "Update an account.";
             try
             {
                 var account = await _accServ.Edit(accountDTO);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Update an account.", [account]));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Update an account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -200,14 +202,15 @@ namespace PersonnelManagement.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
+            var titleResponse = "Delete an account.";
             try
             {
                 await _accServ.Delete(id);
-                return Ok(_jsonResponseServ.OkMessageResponse("Delete an account.", [$"Delete account id = {id} successfully."]));
+                return Ok(new ResponseMessageDTO(titleResponse, [$"Delete account id = {id} successfully."]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete an account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -215,14 +218,15 @@ namespace PersonnelManagement.Controllers
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMany([FromQuery] long[] id)
         {
+            var titleResponse = "Delete many account.";
             try
             {
                 var messages = await _accServ.DeleteMany(id);
-                return Ok(_jsonResponseServ.OkMessageResponse("Delete many account.", messages));
+                return Ok(new ResponseMessageDTO(titleResponse, messages));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Delete many account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -230,14 +234,15 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
+            var titleResponse = "Get an account.";
             try
             {
                 var account = await _accServ.Get(id);
-                return Ok(_jsonResponseServ.OkOneAccountResponse("Get an account.", [account]));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, [account]));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get an account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -245,14 +250,15 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/{page}/{itemPerPage}")]
         public async Task<IActionResult> Get(int page, int itemPerPage)
         {
+            var titleResponse = "Get page account.";
             try
             {
                 var (accounts, totalPage, totalRecords) = await _accServ.GetPagesAsync(page, itemPerPage);
-                return Ok(_jsonResponseServ.OkListAccountResponse("Get page account.", accounts, page, totalPage, totalRecords));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, accounts, page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get page account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -260,14 +266,15 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {
+            var titleResponse = "Get all account.";
             try
             {
                 var accounts = await _accServ.GetAll();
-                return Ok(_jsonResponseServ.OkListAccountResponse("Get all account.", accounts, 1, 1, accounts.Count));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, accounts, 1, 1, accounts.Count));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Get all account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -275,14 +282,15 @@ namespace PersonnelManagement.Controllers
         [HttpGet("filter")]
         public async Task<IActionResult> Filter([FromQuery] AccountFilterDTO filterDTO)
         {
+            var titleResponse = "Filter account.";
             try
             {
                 var (results, totalPage, totalRecords) = await _accServ.FilterAsync(filterDTO);
-                return Ok(_jsonResponseServ.OkListAccountResponse("Filter account.", results, filterDTO.Page, totalPage, totalRecords));
+                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {
-                return BadRequest(_jsonResponseServ.BadMessageResponse("Filter account.", [ex.Message]));
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
     }
