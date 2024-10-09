@@ -18,7 +18,7 @@ namespace PersonnelManagement.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] AccountStatusDTO statusDTO)
         {
-            var titleResponse = "Create a status.";
+            var titleResponse = "Create a account status.";
             try
             {
                 var status = await _statusServ.Add(statusDTO);
@@ -34,7 +34,7 @@ namespace PersonnelManagement.Controllers
         [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] AccountStatusDTO statusDTO)
         {
-            var titleResponse = "Update a status.";
+            var titleResponse = "Update a account status.";
             try
             {
                 var account = await _statusServ.Edit(statusDTO);
@@ -50,7 +50,7 @@ namespace PersonnelManagement.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var titleResponse = "Delete a status.";
+            var titleResponse = "Delete a account status.";
             try
             {
                 await _statusServ.Delete(id);
@@ -66,7 +66,7 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            var titleResponse = "Get a status.";
+            var titleResponse = "Get a account status.";
             try
             {
                 var status = await _statusServ.Get(id);
@@ -82,7 +82,7 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {
-            var titleResponse = "Get all status.";
+            var titleResponse = "Get all account status.";
             try
             {
                 var statuses = await _statusServ.GetAll();
