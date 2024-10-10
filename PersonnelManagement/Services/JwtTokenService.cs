@@ -54,7 +54,7 @@ namespace MovieAppApi.Service
                 _config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddDays(1),
+                expires: DateTime.UtcNow.AddDays(100),
                 signingCredentials: signIng);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

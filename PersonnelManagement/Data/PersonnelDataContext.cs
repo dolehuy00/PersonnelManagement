@@ -7,27 +7,15 @@ namespace PersonnelManagement.Data
     {
         public PersonnelDataContext(DbContextOptions<PersonnelDataContext> options) : base(options) { }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<AccountStatus> AccountStatuses { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
-        public DbSet<AssignmentStatus> AssignmentStatuses { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EmployeeStatus> EmployeeStatuses { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<SalaryHistory> SalaryHistories { get; set; }
-        public DbSet<SalaryHistoryStatus> SalaryHistoryStatuses { get; set; }
-        public DbSet<DepartmentStatus> DepartmentStatuses { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<DeptAssignment> DeptAssignments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SalaryHistory>()
-                .HasOne(sh => sh.Status)
-                .WithMany(stt => stt.SalaryHistories)
-                .HasForeignKey(sh => sh.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<SalaryHistory>()
                 .HasOne(sh => sh.Employee)
                 .WithMany(em => em.SalaryHistories)
@@ -37,12 +25,6 @@ namespace PersonnelManagement.Data
                 .HasOne(acc => acc.Role)
                 .WithMany(role => role.Accounts)
                 .HasForeignKey(acc => acc.RoleId);
-
-            modelBuilder.Entity<Account>()
-                .HasOne(acc => acc.Status)
-                .WithMany(stt => stt.Accounts)
-                .HasForeignKey(acc => acc.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Account>()
                 .HasOne(acc => acc.Employee)
@@ -55,22 +37,10 @@ namespace PersonnelManagement.Data
                 .HasForeignKey(asm => asm.ResponsiblePesonId);
 
             modelBuilder.Entity<Employee>()
-                .HasOne(emp => emp.Status)
-                .WithMany(stt => stt.Employees)
-                .HasForeignKey(acc => acc.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Employee>()
                .HasOne(em => em.Department)
                .WithMany(dept => dept.Employees)
                .HasForeignKey(dept => dept.DepartmentId)
                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Assignment>()
-                .HasOne(asm => asm.Status)
-                .WithMany(stt => stt.Assignments)
-                .HasForeignKey(asm => asm.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Assignment>()
                 .HasOne(asm => asm.DeptAssignment)
@@ -84,21 +54,11 @@ namespace PersonnelManagement.Data
                .OnDelete(DeleteBehavior.SetNull)
                .IsRequired(false);
 
-            modelBuilder.Entity<Project>()
-               .HasOne(p => p.Status)
-               .WithMany(stt => stt.Projects)
-               .HasForeignKey(t => t.StatusId);
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.DeptAssignments)
                 .WithOne(da => da.Project)
                 .HasForeignKey(da => da.ProjectId);
-
-            modelBuilder.Entity<Department>()
-               .HasOne(d => d.Status)
-               .WithMany(stt => stt.Departments)
-               .HasForeignKey(t => t.StatusId)
-               .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Department>()
                 .HasMany(d => d.DeptAssignments)

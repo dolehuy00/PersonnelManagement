@@ -14,7 +14,6 @@ namespace PersonnelManagement.Mappers
             {
                 cfg.CreateMap<Account, AccountDTO>()
                     .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-                    .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.Name))
                     .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.Fullname));
             }).CreateMapper();
             mapperToEntity = new MapperConfiguration(cfg => cfg.CreateMap<AccountDTO, Account>()).CreateMapper();

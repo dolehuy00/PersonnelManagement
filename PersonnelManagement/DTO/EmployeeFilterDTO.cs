@@ -12,7 +12,7 @@
         public DateTime? FromStartDate { get; set; }
         public DateTime? ToStartDate { get; set; }
         public int? DepartmentId { get; set; }
-        public int? StatusId { get; set; }
+        public string? Status { get; set; }
         public string? SortBy { get; set; }
         public required int Page { get; set; }
         public required int PageSize { get; set; }

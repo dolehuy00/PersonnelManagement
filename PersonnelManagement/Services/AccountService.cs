@@ -92,7 +92,7 @@ namespace PersonnelManagement.Services
                     throw new Exception("Email already used in another account.");
                 }
             }
-            account.StatusId = accountDTO.StatusId;
+            account.Status = accountDTO.Status;
             account.Email = accountDTO.Email;
             account.RoleId = accountDTO.RoleId;
             await _genericAccRepo.UpdateAsync(account);

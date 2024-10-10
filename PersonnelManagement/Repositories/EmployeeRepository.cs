@@ -48,7 +48,7 @@ namespace PersonnelManagement.Repositories
 
         async Task<(ICollection<Employee>, int, int)> IEmployeeRepository.FilterAsync(string? nameOrId, string? address,
             DateTime? fromDoB, DateTime? toDoB, double? fromSalary, double? toSalary, string? position,
-            DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, int? statusId, string? sortBy,
+            DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, string? status, string? sortBy,
             int page, int pageSize)
         {
             // Tim kiem theo ten hoac id, tim theo dia chi, loc theo khoang ngay sinh, loc theo khoang luong co ban
@@ -113,9 +113,9 @@ namespace PersonnelManagement.Repositories
             }
 
             // Loc theo status
-            if (statusId.HasValue)
+            if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(e => e.StatusId == statusId.Value);
+                query = query.Where(e => e.Status.Contains(status));
             }
 
             // Sap xep theo ten, ngay sinh, ngay bat dau

@@ -2,7 +2,8 @@
 
 namespace PersonnelManagement.Controllers
 {
-    public class SalaryHistoryController : Controller
+    [Route("api/[controller]")]
+    public class SalaryHistoryController : ControllerBase
     {
 
     }

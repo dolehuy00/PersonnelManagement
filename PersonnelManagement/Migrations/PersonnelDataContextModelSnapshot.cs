@@ -44,8 +44,9 @@ namespace PersonnelManagement.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -54,26 +55,7 @@ namespace PersonnelManagement.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.AccountStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccountStatuses");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Assignment", b =>
@@ -100,8 +82,9 @@ namespace PersonnelManagement.Migrations
                     b.Property<long>("ResponsiblePesonId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -109,26 +92,7 @@ namespace PersonnelManagement.Migrations
 
                     b.HasIndex("ResponsiblePesonId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("Assignments");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.AssignmentStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssignmentStatuses");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Department", b =>
@@ -146,8 +110,9 @@ namespace PersonnelManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskDetail")
                         .HasColumnType("nvarchar(max)");
@@ -156,26 +121,7 @@ namespace PersonnelManagement.Migrations
 
                     b.HasIndex("LeaderId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.DepartmentStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DepartmentStatuses");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.DeptAssignment", b =>
@@ -239,33 +185,15 @@ namespace PersonnelManagement.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.EmployeeStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployeeStatuses");
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Project", b =>
@@ -289,31 +217,13 @@ namespace PersonnelManagement.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.ProjectStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectStatuses");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Role", b =>
@@ -359,8 +269,9 @@ namespace PersonnelManagement.Migrations
                     b.Property<double>("Penalty")
                         .HasColumnType("float");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Tax")
                         .HasColumnType("float");
@@ -369,26 +280,7 @@ namespace PersonnelManagement.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("SalaryHistories");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.SalaryHistoryStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SalaryHistoryStatuses");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Account", b =>
@@ -405,17 +297,9 @@ namespace PersonnelManagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonnelManagement.Model.AccountStatus", "Status")
-                        .WithMany("Accounts")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Employee");
 
                     b.Navigation("Role");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Assignment", b =>
@@ -432,17 +316,9 @@ namespace PersonnelManagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonnelManagement.Model.AssignmentStatus", "Status")
-                        .WithMany("Assignments")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("DeptAssignment");
 
                     b.Navigation("ResponsiblePeson");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Department", b =>
@@ -452,15 +328,7 @@ namespace PersonnelManagement.Migrations
                         .HasForeignKey("LeaderId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("PersonnelManagement.Model.DepartmentStatus", "Status")
-                        .WithMany("Departments")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Leader");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.DeptAssignment", b =>
@@ -489,26 +357,7 @@ namespace PersonnelManagement.Migrations
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("PersonnelManagement.Model.EmployeeStatus", "Status")
-                        .WithMany("Employees")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Department");
-
-                    b.Navigation("Status");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.Project", b =>
-                {
-                    b.HasOne("PersonnelManagement.Model.ProjectStatus", "Status")
-                        .WithMany("Projects")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.SalaryHistory", b =>
@@ -519,25 +368,7 @@ namespace PersonnelManagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonnelManagement.Model.SalaryHistoryStatus", "Status")
-                        .WithMany("SalaryHistories")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Employee");
-
-                    b.Navigation("Status");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.AccountStatus", b =>
-                {
-                    b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.AssignmentStatus", b =>
-                {
-                    b.Navigation("Assignments");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.Department", b =>
@@ -545,11 +376,6 @@ namespace PersonnelManagement.Migrations
                     b.Navigation("DeptAssignments");
 
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.DepartmentStatus", b =>
-                {
-                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("PersonnelManagement.Model.DeptAssignment", b =>
@@ -568,29 +394,14 @@ namespace PersonnelManagement.Migrations
                     b.Navigation("SalaryHistories");
                 });
 
-            modelBuilder.Entity("PersonnelManagement.Model.EmployeeStatus", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
             modelBuilder.Entity("PersonnelManagement.Model.Project", b =>
                 {
                     b.Navigation("DeptAssignments");
                 });
 
-            modelBuilder.Entity("PersonnelManagement.Model.ProjectStatus", b =>
-                {
-                    b.Navigation("Projects");
-                });
-
             modelBuilder.Entity("PersonnelManagement.Model.Role", b =>
                 {
                     b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("PersonnelManagement.Model.SalaryHistoryStatus", b =>
-                {
-                    b.Navigation("SalaryHistories");
                 });
 #pragma warning restore 612, 618
         }

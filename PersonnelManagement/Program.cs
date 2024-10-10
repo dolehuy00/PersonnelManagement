@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PersonnelManagement.Data;
@@ -22,12 +23,6 @@ builder.Services.AddDbContext<PersonnelDataContext>(options =>
 // Dependency Injection
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IAccountStatusService, AccountStatusService>();
-builder.Services.AddScoped<IAssignmentStatusService, AssignmentStatusService>();
-builder.Services.AddScoped<IDepartmentStatusService, DepartmentStatusService>();
-builder.Services.AddScoped<IEmployeeStatusService, EmployeeStatusService>();
-builder.Services.AddScoped<IProjectStatusService, ProjectStatusService>();
-builder.Services.AddScoped<ISalaryHistoryStatusService, SalaryHistoryStatusService>();
 builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -54,6 +49,15 @@ builder.Services.AddAuthorizationBuilder()
 // Json
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+//Limit rate
+builder.Services.AddOptions();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
 /// App
 var app = builder.Build();

@@ -99,7 +99,7 @@ namespace PersonnelManagement.Services
             var (employees, totalPage, totalRecords) = await _emplRepo.FilterAsync(filter.NameOrId,
                 filter.Address, filter.FromDoB, filter.ToDoB, filter.FromSalary, filter.ToSalary,
                 filter.Position, filter.FromStartDate, filter.ToStartDate, filter.DepartmentId,
-                filter.StatusId, filter.SortBy, filter.Page, filter.PageSize);
+                filter.Status, filter.SortBy, filter.Page, filter.PageSize);
             return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
         }
     }

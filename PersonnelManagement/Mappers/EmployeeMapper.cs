@@ -14,7 +14,6 @@ namespace PersonnelManagement.Mappers
             mapperToDTO = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeDTO>()
-                    .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.Name))
                     .ForMember(
                         dest => dest.DepartmentName,
                         opt => opt.MapFrom(src => src.Department == null ? "No" : src.Department.Name));

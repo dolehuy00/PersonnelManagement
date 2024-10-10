@@ -6,7 +6,7 @@
         public required string Email { get; set; }
         public int RoleId { get; set; }
         public string? RoleName { get; set; }
-        public int StatusId { get; set; }
+        public required string Status { get; set; }
         public string? StatusName { get; set; }
         public long EmployeeId { get; set; }
         public string? EmployeeName { get; set; }

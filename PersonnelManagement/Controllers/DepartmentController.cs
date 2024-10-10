@@ -2,7 +2,9 @@
 
 namespace PersonnelManagement.Controllers
 {
-    public class DepartmentController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DepartmentController : ControllerBase
     {
 
     }
