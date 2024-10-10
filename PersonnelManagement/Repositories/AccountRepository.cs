@@ -18,7 +18,6 @@ namespace PersonnelManagement.Repositories
             return await _dataContext.Accounts
                 .Include(acc => acc.Employee)
                 .Include(acc => acc.Role)
-                .Include(acc => acc.Status)
                 .FirstOrDefaultAsync(acc => acc.Email.Equals(email));
         }
 

@@ -16,7 +16,6 @@ namespace PersonnelManagement.Repositories
         async Task<Employee?> IEmployeeRepository.GetFullInforAsync(long id)
         {
             return await _dataContext.Employees
-               .Include(e => e.Status)
                .Include(e => e.Department)
                .FirstOrDefaultAsync(e => e.Id == id);
         }
