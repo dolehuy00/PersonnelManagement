@@ -5,6 +5,7 @@ using PersonnelManagement.Services;
 
 namespace PersonnelManagement.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     public class AssignmentStatusController : Controller
     {
         private readonly IAssignmentStatusService _statusServ;
@@ -14,7 +15,6 @@ namespace PersonnelManagement.Controllers
             _statusServ = statusService;
         }
 
-        [Authorize(Policy = "AdminOnly")]
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] AssignmentStatusDTO statusDTO)
         {
@@ -30,7 +30,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
         [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] AssignmentStatusDTO statusDTO)
         {
@@ -46,7 +45,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
@@ -62,7 +60,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
@@ -78,7 +75,6 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {

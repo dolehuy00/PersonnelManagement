@@ -27,6 +27,7 @@ builder.Services.AddScoped<IAssignmentStatusService, AssignmentStatusService>();
 builder.Services.AddScoped<IDepartmentStatusService, DepartmentStatusService>();
 builder.Services.AddScoped<IEmployeeStatusService, EmployeeStatusService>();
 builder.Services.AddScoped<IProjectStatusService, ProjectStatusService>();
+builder.Services.AddScoped<ISalaryHistoryStatusService, SalaryHistoryStatusService>();
 builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
