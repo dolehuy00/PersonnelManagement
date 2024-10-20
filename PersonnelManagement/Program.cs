@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PersonnelManagement.Data;
+using PersonnelManagement.Mappers;
 using PersonnelManagement.Repositories;
 using PersonnelManagement.Services;
 using System.Text;
@@ -26,6 +27,9 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+// Department
+builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository
 
 // JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
