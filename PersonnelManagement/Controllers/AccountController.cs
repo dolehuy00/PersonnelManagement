@@ -15,15 +15,13 @@ namespace PersonnelManagement.Controllers
     {
         private IAccountService _accServ;
         private readonly IMemoryCache _cache;
-        private readonly IConfiguration _config;
-        private readonly JwtTokenService _jwtTokenServ;
+        private readonly TokenService _tokenServ;
 
-        public AccountController(IMemoryCache cache, IConfiguration config, IAccountService accountService)
+        public AccountController(IMemoryCache cache, IAccountService accountService, TokenService tokenService)
         {
             _cache = cache;
-            _config = config;
             _accServ = accountService;
-            _jwtTokenServ = new JwtTokenService();
+            _tokenServ = tokenService;
         }
 
         [AllowAnonymous]
@@ -35,8 +33,10 @@ namespace PersonnelManagement.Controllers
                 var account = await _accServ.ValidateUserAsync(loginDTO.Email, loginDTO.Password);
                 if (account != null)
                 {
-                    var token = _jwtTokenServ.GenerateJwtToken(account, _config);
-                    var response = new { account.Id, token, account.Email, account.EmployeeName };
+                    var accessToken = _tokenServ.GenerateAccessToken(account.Id.ToString(), account.RoleName!);
+                    var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                    var refreshToken = await _tokenServ.GenerateRefreshTokenAsync(account.Id.ToString(), account.RoleName!, ipAddress);
+                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName };
                     return Ok(new ResponseObjectDTO<dynamic>("Login successfully", [response]));
                 }
                 return Unauthorized(
@@ -45,6 +45,24 @@ namespace PersonnelManagement.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("get-access-token")]
+        public async Task<IActionResult> GetAccessTokenUsingRefressToken([FromHeader] string refressToken)
+        {
+            var titleResponse = "Get access token.";
+            try
+            {
+                var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                var (newAccessToken, newRefreshToken) = await _tokenServ.RefreshTokenAsync(refressToken, ipAddress);
+                var response = new { newAccessToken, newRefreshToken };
+                return Ok(new ResponseObjectDTO<dynamic>("Get access successfully.", [response]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
@@ -61,7 +79,7 @@ namespace PersonnelManagement.Controllers
                     return BadRequest(new ResponseMessageDTO(
                         titleResponse, 400, ["Password confirm is not the same password."]));
                 }
-                var userIdInToken = _jwtTokenServ.GetAccountIdFromToken(HttpContext);
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 var result = await _accServ.ChangePasswordAsync(long.Parse(userIdInToken),
                     changePassDTO.CurrentPassword, changePassDTO.NewPassword);
                 if (result)
@@ -71,9 +89,9 @@ namespace PersonnelManagement.Controllers
                 return BadRequest(new ResponseMessageDTO(
                     titleResponse, 400, ["Current password is incorrect or account not found."]));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
 
