@@ -15,12 +15,12 @@ namespace PersonnelManagement.Controllers
     {
 
         private IEmployeeService _emplServ;
-        private readonly JwtTokenService _jwtTokenServ;
+        private readonly TokenService _tokenServ;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, TokenService tokenService)
         {
             _emplServ = employeeService;
-            _jwtTokenServ = new JwtTokenService();
+            _tokenServ = tokenService;
         }
 
         [HttpPost("add")]
