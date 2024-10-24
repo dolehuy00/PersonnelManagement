@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieAppApi.Service;
 using PersonnelManagement.Data;
+using PersonnelManagement.Mappers;
 using PersonnelManagement.Repositories;
 using PersonnelManagement.Services;
 using StackExchange.Redis;
@@ -32,6 +33,9 @@ builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
 builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+// Department
+builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<ISalaryHistoryRepository, SalaryHistoryRepository>();
 

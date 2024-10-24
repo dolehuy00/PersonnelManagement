@@ -175,22 +175,6 @@
   },
   {
     "ContainingType": "PersonnelManagement.Controllers.AccountController",
-    "Method": "GetAccessTokenUsingRefressToken",
-    "RelativePath": "api/Account/get-access-token",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "refressToken",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AccountController",
     "Method": "Get",
     "RelativePath": "api/Account/get/{id}",
     "HttpMethod": "GET",
@@ -253,25 +237,25 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "Add",
-    "RelativePath": "api/Assignment/add",
+    "RelativePath": "api/Department/add",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "assignmentDTO",
-        "Type": "PersonnelManagement.DTO.AssignmentDTO",
+        "Name": "departmentDTO",
+        "Type": "PersonnelManagement.DTO.DepartmentDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "DeleteMany",
-    "RelativePath": "api/Assignment/delete",
+    "RelativePath": "api/Department/delete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -285,9 +269,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "Delete",
-    "RelativePath": "api/Assignment/delete/{id}",
+    "RelativePath": "api/Department/delete/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -301,52 +285,42 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "Edit",
-    "RelativePath": "api/Assignment/edit",
+    "RelativePath": "api/Department/edit",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "assignmentDTO",
-        "Type": "PersonnelManagement.DTO.AssignmentDTO",
+        "Name": "departmentDTO",
+        "Type": "PersonnelManagement.DTO.DepartmentDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "Filter",
-    "RelativePath": "api/Assignment/filter",
+    "RelativePath": "api/Department/filter",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "SortBy",
+        "Name": "Id",
+        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
         "Type": "System.String",
         "IsRequired": false
       },
       {
         "Name": "Status",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ResponsiblePesonId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "ProjectId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "DepartmentId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -358,60 +332,19 @@
         "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "FilterByUser",
-    "RelativePath": "api/Assignment/filter-by-user",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+      },
       {
         "Name": "SortBy",
         "Type": "System.String",
         "IsRequired": false
-      },
-      {
-        "Name": "Status",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ResponsiblePesonId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "ProjectId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "DepartmentId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "GetByUser",
-    "RelativePath": "api/Assignment/get-by-user/{id}",
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "Get",
+    "RelativePath": "api/Department/get/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -422,74 +355,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "GetByUser",
-    "RelativePath": "api/Assignment/get-by-user/{page}/{itemPerPage}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "itemPerPage",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "Get",
-    "RelativePath": "api/Assignment/get/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int64",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "Get",
-    "RelativePath": "api/Assignment/get/{page}/{itemPerPage}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "itemPerPage",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.AssignmentController",
-    "Method": "GetAll",
-    "RelativePath": "api/Assignment/get/all",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -678,226 +543,6 @@
     "ContainingType": "PersonnelManagement.Controllers.EmployeeController",
     "Method": "GetAll",
     "RelativePath": "api/Employee/get/all",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Add",
-    "RelativePath": "api/SalaryHistory/add",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaryHistoryDTO",
-        "Type": "PersonnelManagement.DTO.SalaryHistoryDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "DeleteMany",
-    "RelativePath": "api/SalaryHistory/delete",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int64[]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Delete",
-    "RelativePath": "api/SalaryHistory/delete/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int64",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Edit",
-    "RelativePath": "api/SalaryHistory/edit",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaryHistoryDTO",
-        "Type": "PersonnelManagement.DTO.SalaryHistoryDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Filter",
-    "RelativePath": "api/SalaryHistory/filter",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "SortByDate",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Status",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "EmployeeId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "FilterByUser",
-    "RelativePath": "api/SalaryHistory/filter-by-user",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "SortByDate",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Status",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "EmployeeId",
-        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "GetByUser",
-    "RelativePath": "api/SalaryHistory/get-by-user/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int64",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "GetByUser",
-    "RelativePath": "api/SalaryHistory/get-by-user/{page}/{itemPerPage}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "itemPerPage",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Get",
-    "RelativePath": "api/SalaryHistory/get/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int64",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "Get",
-    "RelativePath": "api/SalaryHistory/get/{page}/{itemPerPage}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "itemPerPage",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PersonnelManagement.Controllers.SalaryHistoryController",
-    "Method": "GetAll",
-    "RelativePath": "api/SalaryHistory/get/all",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
