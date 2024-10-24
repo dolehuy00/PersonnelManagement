@@ -238,6 +238,70 @@
   },
   {
     "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "Add",
+    "RelativePath": "api/Department/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentDTO",
+        "Type": "PersonnelManagement.DTO.DepartmentDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "DeleteMany",
+    "RelativePath": "api/Department/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64[]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "Delete",
+    "RelativePath": "api/Department/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "Edit",
+    "RelativePath": "api/Department/edit",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentDTO",
+        "Type": "PersonnelManagement.DTO.DepartmentDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
     "Method": "Filter",
     "RelativePath": "api/Department/filter",
     "HttpMethod": "GET",
@@ -273,6 +337,22 @@
         "Name": "SortBy",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PersonnelManagement.Controllers.DepartmentController",
+    "Method": "Get",
+    "RelativePath": "api/Department/get/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

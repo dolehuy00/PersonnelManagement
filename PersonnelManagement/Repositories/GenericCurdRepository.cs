@@ -30,6 +30,11 @@ namespace PersonnelManagement.Repositories
             return await _dbSet.FindAsync(id) != null;
         }
 
+        public bool Exist(long id)
+        {
+            return _dbSet.Find(id) != null;
+        }
+
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -95,7 +100,17 @@ namespace PersonnelManagement.Repositories
             return (items, totalPages, totalRecords);
         }
 
+        public async Task DeleteAsync(long id)
+        {
+            if (id == 0) return;
 
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+                await SaveChangesAsync();
+            }
+        }
     }
 
 }
