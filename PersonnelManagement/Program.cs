@@ -36,8 +36,18 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 // Department
 builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository
+// Project
+builder.Services.AddScoped<IProjectService, ProjectService>(); // Đăng ký dịch vụ
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>(); // Đăng ký repository
+// DeptAssignment
+builder.Services.AddScoped<IDeptAssignmentService, DeptAssignmentService>();
+builder.Services.AddScoped<IDeptAssignmentRepository, DeptAssignmentRepository>();
+// Assignment
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<ISalaryHistoryRepository, SalaryHistoryRepository>();
+
+// Đăng ký dịch vụ ánh xạ (mapping service)
+builder.Services.AddScoped<DeptAssignmentMapper>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

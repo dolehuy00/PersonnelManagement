@@ -9,23 +9,23 @@ namespace PersonnelManagement.Controllers
     [Authorize(Policy = "AdminOnly")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class DeptAssignmentController : ControllerBase
     {
-        private IProjectService _projectService;
+        private IDeptAssignmentService _deptAssignmentService;
 
-        public ProjectController(IProjectService projectService)
+        public DeptAssignmentController(IDeptAssignmentService deptAssignmentService)
         {
-            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
+            _deptAssignmentService = deptAssignmentService ?? throw new ArgumentNullException(nameof(deptAssignmentService));
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] ProjectDTO projectDTO)
+        public async Task<IActionResult> Add([FromBody] DeptAssignmentDTO deptAssignmentDTO)
         {
-            var titleResponse = "Create an project.";
+            var titleResponse = "Create an deptAssignment.";
             try
             {
-                var project = await _projectService.Add(projectDTO);
-                return Ok(new ResponseObjectDTO<ProjectDTO>(titleResponse, [project]));
+                var deptAssignment = await _deptAssignmentService.Add(deptAssignmentDTO);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, [deptAssignment]));
             }
             catch (Exception ex)
             {
@@ -34,13 +34,13 @@ namespace PersonnelManagement.Controllers
         }
 
         [HttpPut("edit")]
-        public async Task<IActionResult> Edit([FromBody] ProjectDTO projectDTO)
+        public async Task<IActionResult> Edit([FromBody] DeptAssignmentDTO deptAssignmentDTO)
         {
-            var titleResponse = "Update an project.";
+            var titleResponse = "Update an deptAssignment.";
             try
             {
-                var project = await _projectService.Edit(projectDTO);
-                return Ok(new ResponseObjectDTO<ProjectDTO>(titleResponse, [project]));
+                var deptAssignment = await _deptAssignmentService.Edit(deptAssignmentDTO);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, [deptAssignment]));
             }
             catch (Exception ex)
             {
@@ -51,11 +51,11 @@ namespace PersonnelManagement.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var titleResponse = "Delete an project.";
+            var titleResponse = "Delete an deptAssignment.";
             try
             {
-                await _projectService.Delete(id);
-                return Ok(new ResponseMessageDTO(titleResponse, [$"Delete project id = {id} successfully."]));
+                await _deptAssignmentService.Delete(id);
+                return Ok(new ResponseMessageDTO(titleResponse, [$"Delete deptAssignment id = {id} successfully."]));
             }
             catch (Exception ex)
             {
@@ -66,10 +66,10 @@ namespace PersonnelManagement.Controllers
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMany([FromQuery] long[] id)
         {
-            var titleResponse = "Delete many project.";
+            var titleResponse = "Delete many deptAssignment.";
             try
             {
-                var messages = await _projectService.DeleteMany(id);
+                var messages = await _deptAssignmentService.DeleteMany(id);
                 return Ok(new ResponseMessageDTO(titleResponse, messages));
             }
             catch (Exception ex)
@@ -81,11 +81,11 @@ namespace PersonnelManagement.Controllers
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            var titleResponse = "Get an project.";
+            var titleResponse = "Get an deptAssignment.";
             try
             {
-                var project = await _projectService.Get(id);
-                return Ok(new ResponseObjectDTO<ProjectDTO>(titleResponse, [project]));
+                var deptAssignment = await _deptAssignmentService.Get(id);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, [deptAssignment]));
             }
             catch (Exception ex)
             {
@@ -95,13 +95,13 @@ namespace PersonnelManagement.Controllers
 
 
         [HttpGet("filter")]
-        public async Task<IActionResult> Filter([FromQuery] ProjectFilterDTO filterDTO)
+        public async Task<IActionResult> Filter([FromQuery] DeptAssignmentFilterDTO filterDTO)
         {
-            var titleResponse = "Filter project.";
+            var titleResponse = "Filter deptAssignment.";
             try
             {
-                var (results, totalPage, totalRecords) = await _projectService.FilterAsync(filterDTO);
-                return Ok(new ResponseObjectDTO<ProjectDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
+                var (results, totalPage, totalRecords) = await _deptAssignmentService.FilterAsync(filterDTO);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {
