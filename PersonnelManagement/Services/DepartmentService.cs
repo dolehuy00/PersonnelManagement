@@ -12,7 +12,7 @@ namespace PersonnelManagement.Services
         private IDepartmentRepository _deptRepo;
         private DepartmentMapper _deptMapper ;
 
-        public DepartmentService( IDepartmentRepository deptRepo)        {
+        public DepartmentService(IDepartmentRepository deptRepo)        {
             
             _deptRepo = deptRepo ?? throw new ArgumentNullException(nameof(deptRepo));
             _deptMapper = new DepartmentMapper();

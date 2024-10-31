@@ -42,3 +42,5 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+/PersonnelManagement/bin/Debug/net8.0/PersonnelManagement.dll
+/PersonnelManagement/bin/Debug/net8.0/PersonnelManagement.exe
