@@ -1,4 +1,5 @@
 PersonnelManagement/.vs/
+PersonnelManagement/obj/
 *.swp
 *.*~
 project.lock.json
