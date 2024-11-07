@@ -10,7 +10,7 @@ namespace PersonnelManagement.Services
     {
         private readonly IGenericCurdRepository<Account> _genericAccRepo;
         private readonly IAccountRepository _accRepo;
-        private AccountMapper _accMapper;
+        private readonly AccountMapper _accMapper;
 
         public AccountService(IGenericCurdRepository<Account> repository, IAccountRepository accountRepository)
         {

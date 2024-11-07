@@ -36,7 +36,7 @@ namespace PersonnelManagement.Controllers
                     var accessToken = _tokenServ.GenerateAccessToken(account.Id.ToString(), account.RoleName!);
                     var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                     var refreshToken = await _tokenServ.GenerateRefreshTokenAsync(account.Id.ToString(), account.RoleName!, ipAddress);
-                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName };
+                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName, role = account.RoleName };
                     return Ok(new ResponseObjectDTO<dynamic>("Login successfully", [response]));
                 }
                 return Unauthorized(
@@ -67,7 +67,24 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Policy = "AllRoles")]
-        [Authorize]
+        [HttpPost("cancel-refressh-token")]
+        public async Task<IActionResult> CancelRefressToken([FromHeader] string refressToken)
+        {
+            var titleResponse = "Cancel refressh token.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                var isCancel = await _tokenServ.CancelRefreshTokenAsync(refressToken, userIdInToken);
+                var response = isCancel ? "Refressh token canceled." : "Can not cancel refressh token.";
+                return Ok(new ResponseObjectDTO<dynamic>("Get access successfully.", [response]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AllRoles")]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] RequestChangePasswordDTO changePassDTO)
         {

@@ -21,7 +21,7 @@ namespace PersonnelManagement.Repositories
                 .FirstOrDefaultAsync(acc => acc.Email.Equals(email));
         }
 
-        async Task<Account?> IAccountRepository.GetAccountAsync(string email)
+        public async Task<Account?> GetAccountAsync(string email)
         {
             return await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
         }
@@ -31,7 +31,7 @@ namespace PersonnelManagement.Repositories
             return await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email)) != null;
         }
 
-        async Task<bool> IAccountRepository.UpdatePasswordAsync(long accountId, string newPassword)
+        public async Task<bool> UpdatePasswordAsync(long accountId, string newPassword)
         {
             var account = await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Id == accountId);
             if (account != null)
@@ -43,7 +43,7 @@ namespace PersonnelManagement.Repositories
             return false;
         }
 
-        async Task IAccountRepository.UpdatePasswordAsync(string email, string newPassword)
+        public async Task UpdatePasswordAsync(string email, string newPassword)
         {
             var account = await _dataContext.Accounts.
                 FirstOrDefaultAsync(acc => acc.Email.Equals(email)) ?? throw new Exception("Account doesn't exist.");
@@ -65,7 +65,7 @@ namespace PersonnelManagement.Repositories
             return (pagedList, totalPages, totalRecords);
         }
 
-        async Task<(ICollection<Account>, int totalPages, int totalRecords)> IAccountRepository.FilterAsync(string? keyword,
+        public async Task<(ICollection<Account>, int totalPages, int totalRecords)> FilterAsync(string? keyword,
             string? sortByEmail, string? filterByStatus, int? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
         {
             // Tim theo email hoac id, xep theo email, loc theo status, loc theo role, tim kiem theo ten hoac id employee

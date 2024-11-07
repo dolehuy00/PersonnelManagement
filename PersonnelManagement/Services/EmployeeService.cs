@@ -8,8 +8,8 @@ namespace PersonnelManagement.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IGenericCurdRepository<Employee> _genericEmplRepo;
-        private EmployeeMapper _emplMapper;
-        private IEmployeeRepository _emplRepo;
+        private readonly EmployeeMapper _emplMapper;
+        private readonly IEmployeeRepository _emplRepo;
 
         public EmployeeService(IGenericCurdRepository<Employee> repository, IEmployeeRepository employeeRepository)
         {
@@ -34,8 +34,8 @@ namespace PersonnelManagement.Services
                 throw new Exception("Employee does not exist.");
             }
             var employee = _emplMapper.ToModel(employeeDTO);
-            await _emplRepo.UpdateAsync(employee);
-            return _emplMapper.ToDTO(employee);
+            await _genericEmplRepo.UpdateAsync(employee);
+            return employeeDTO;
         }
 
         public async Task Delete(long employeeId)

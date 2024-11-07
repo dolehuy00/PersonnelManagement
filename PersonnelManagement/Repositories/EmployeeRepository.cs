@@ -13,24 +13,13 @@ namespace PersonnelManagement.Repositories
             _dataContext = dataContext;
         }
 
-        async Task<Employee?> IEmployeeRepository.GetFullInforAsync(long id)
+        public async Task<Employee?> GetFullInforAsync(long id)
         {
             return await _dataContext.Employees
                .Include(e => e.Department)
                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        async Task IEmployeeRepository.UpdateAsync(Employee employee)
-        {
-            var existingEntity = _dataContext.Employees.Local.FirstOrDefault(e => e.Id == employee.Id);
-            if (existingEntity != null)
-            {
-                _dataContext.Entry(existingEntity).State = EntityState.Detached;
-            }
-
-            _dataContext.Employees.Update(employee);
-            await _dataContext.SaveChangesAsync();
-        }
         public async Task<(ICollection<Employee>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
         {
             var skip = (pageNumber - 1) * pageSize;
@@ -45,7 +34,7 @@ namespace PersonnelManagement.Repositories
             return (pagedList, totalPages, totalRecords);
         }
 
-        async Task<(ICollection<Employee>, int, int)> IEmployeeRepository.FilterAsync(string? nameOrId, string? address,
+        public async Task<(ICollection<Employee>, int, int)> FilterAsync(string? nameOrId, string? address,
             DateTime? fromDoB, DateTime? toDoB, double? fromSalary, double? toSalary, string? position,
             DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, string? status, string? sortBy,
             int page, int pageSize)

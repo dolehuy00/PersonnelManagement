@@ -90,6 +90,15 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins("http://localhost:3000") // Địa chỉ của ứng dụng React
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 /// App
 var app = builder.Build();
 
@@ -106,6 +115,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 
