@@ -103,7 +103,7 @@ namespace PersonnelManagement.Repositories
             // Loc theo status
             if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(e => e.Status.Contains(status));
+                query = query.Where(e => e.Status.Equals(status));
             }
 
             // Sap xep theo ten, ngay sinh, ngay bat dau
@@ -115,8 +115,8 @@ namespace PersonnelManagement.Repositories
                 var sortFields = new Dictionary<string, Func<IQueryable<Employee>, IOrderedQueryable<Employee>>>
                 {
                     { "fullname", q => sortOrder == "asc" ? q.OrderBy(e => e.Fullname) : q.OrderByDescending(e => e.Fullname) },
-                    { "dateOfBirth", q => sortOrder == "asc" ? q.OrderBy(e => e.DateOfBirth) : q.OrderByDescending(e => e.DateOfBirth) },
-                    { "startDate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
+                    { "dateofbirth", q => sortOrder == "asc" ? q.OrderBy(e => e.DateOfBirth) : q.OrderByDescending(e => e.DateOfBirth) },
+                    { "startdate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
                 };
 
                 if (sortFields.ContainsKey(sortField))
@@ -125,11 +125,11 @@ namespace PersonnelManagement.Repositories
                 }
                 else
                 {
-                    throw new Exception("Invalid sort field.\n" +
-                                        "We support:\n" +
-                                        "\tfullname:asc / fullname:dec\n" +
-                                        "\tdateOfBirth:asc / dateOfBirth:dec\n" +
-                                        "\tstartDate:asc / startDate:dec");
+                    throw new Exception("Invalid sort field. " +
+                                        "We support:" +
+                                        "fullname:asc / fullname:dec / " +
+                                        "dateOfBirth:asc / dateOfBirth:dec / " +
+                                        "startDate:asc / startDate:dec");
                 }
             }
             else
