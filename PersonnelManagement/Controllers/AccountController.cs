@@ -328,5 +328,41 @@ namespace PersonnelManagement.Controllers
                 return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("lock/{id}")]
+        public async Task<IActionResult> Lock(long id)
+        {
+            var titleResponse = "Lock account.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
+                await _accServ.Lock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [$"Locked account id = {id}"]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("unlock/{id}")]
+        public async Task<IActionResult> UnLock(long id)
+        {
+            var titleResponse = "Unlock account.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
+                await _accServ.UnLock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [$"Unlocked account id = {id}"]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
     }
 }

@@ -20,6 +20,18 @@ namespace PersonnelManagement.Repositories
                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public void Update(Employee employee)
+        {
+            _dataContext.Employees.Attach(employee);
+            _dataContext.Entry(employee).State = EntityState.Modified;
+            _dataContext.Entry(employee).Property(e => e.Status).IsModified = false;
+        }
+
+        public async Task SaveChangeAsync()
+        {
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task<(ICollection<Employee>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
         {
             var skip = (pageNumber - 1) * pageSize;
@@ -119,9 +131,9 @@ namespace PersonnelManagement.Repositories
                     { "startdate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
                 };
 
-                if (sortFields.ContainsKey(sortField))
+                if (sortFields.TryGetValue(sortField, out Func<IQueryable<Employee>, IOrderedQueryable<Employee>>? value))
                 {
-                    query = sortFields[sortField](query);
+                    query = value(query);
                 }
                 else
                 {

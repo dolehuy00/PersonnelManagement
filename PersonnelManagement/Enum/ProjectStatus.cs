@@ -1,5 +1,6 @@
 ﻿namespace PersonnelManagement.Enum
-{    public static class ProjectStatus
+{
+    public static class ProjectStatus
     {
         public const string NotStarted = "Not Started";
         public const string InProgress = "In Progress";

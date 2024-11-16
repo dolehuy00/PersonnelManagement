@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -136,6 +137,40 @@ namespace PersonnelManagement.Controllers
             {
                 var (results, totalPage, totalRecords) = await _emplServ.FilterAsync(filterDTO);
                 return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [HttpPut("lock/{id}")]
+        public async Task<IActionResult> Lock(long id)
+        {
+            var titleResponse = $"Lock employee id = {id}.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
+                var results = await _emplServ.Lock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [Status.Lock]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [HttpPut("unlock/{id}")]
+        public async Task<IActionResult> UnLock(long id)
+        {
+            var titleResponse = "Unlock employee.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
+                var results = await _emplServ.UnLock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [Status.Active]));
             }
             catch (Exception ex)
             {

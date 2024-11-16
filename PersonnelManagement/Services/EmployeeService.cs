@@ -1,4 +1,5 @@
 ﻿using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
@@ -34,7 +35,8 @@ namespace PersonnelManagement.Services
                 throw new Exception("Employee does not exist.");
             }
             var employee = _emplMapper.ToModel(employeeDTO);
-            await _genericEmplRepo.UpdateAsync(employee);
+            _emplRepo.Update(employee);
+            await _emplRepo.SaveChangeAsync();
             return employeeDTO;
         }
 
@@ -101,6 +103,21 @@ namespace PersonnelManagement.Services
                 filter.Position, filter.FromStartDate, filter.ToStartDate, filter.DepartmentId,
                 filter.Status, filter.SortBy, filter.Page, filter.PageSize);
             return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
+        }
+
+        public async Task<bool> Lock(long id)
+        {
+            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            empl.Status = Status.Lock;
+            await _genericEmplRepo.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> UnLock(long id)
+        {
+            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            empl.Status = Status.Active;
+            await _genericEmplRepo.SaveChangesAsync();
+            return true;
         }
     }
 }
