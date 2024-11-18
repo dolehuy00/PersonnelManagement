@@ -153,7 +153,7 @@ namespace PersonnelManagement.Controllers
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
                 var results = await _emplServ.Lock(id);
-                return Ok(new ResponseMessageDTO(titleResponse, 200, [Status.Lock]));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Lock]));
             }
             catch (Exception ex)
             {
@@ -170,7 +170,7 @@ namespace PersonnelManagement.Controllers
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
                 var results = await _emplServ.UnLock(id);
-                return Ok(new ResponseMessageDTO(titleResponse, 200, [Status.Active]));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Active]));
             }
             catch (Exception ex)
             {

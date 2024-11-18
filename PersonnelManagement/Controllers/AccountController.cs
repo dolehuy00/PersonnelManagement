@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -339,7 +340,7 @@ namespace PersonnelManagement.Controllers
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
                 await _accServ.Lock(id);
-                return Ok(new ResponseMessageDTO(titleResponse, 200, [$"Locked account id = {id}"]));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Lock]));
             }
             catch (Exception ex)
             {
@@ -357,7 +358,7 @@ namespace PersonnelManagement.Controllers
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
                 await _accServ.UnLock(id);
-                return Ok(new ResponseMessageDTO(titleResponse, 200, [$"Unlocked account id = {id}"]));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Active]));
             }
             catch (Exception ex)
             {
