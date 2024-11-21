@@ -92,6 +92,11 @@ namespace PersonnelManagement.Controllers
             var titleResponse = "Change password.";
             try
             {
+                if (changePassDTO.NewPassword.Length < 8)
+                {
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password must be at least 8 characters long."]));
+                }
                 if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
                 {
                     return BadRequest(new ResponseMessageDTO(
@@ -175,6 +180,11 @@ namespace PersonnelManagement.Controllers
             var titleResponse = "Forgot password change password.";
             try
             {
+                if (forgotDTO.Password.Length < 8)
+                {
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password must be at least 8 characters long."]));
+                }
                 if (forgotDTO.Password != forgotDTO.PasswordConfirm)
                 {
                     return BadRequest(new ResponseMessageDTO(
@@ -194,7 +204,7 @@ namespace PersonnelManagement.Controllers
                     }
                 }
                 return BadRequest(new ResponseMessageDTO(
-                    titleResponse, 400, ["Code has expired or account doesn't exist."]));
+                    titleResponse, 400, ["Code has expired or account doesn't exist, please try again from step 1."]));
             }
             catch (Exception e)
             {
