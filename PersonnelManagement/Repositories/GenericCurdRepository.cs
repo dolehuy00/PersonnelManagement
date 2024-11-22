@@ -60,6 +60,17 @@ namespace PersonnelManagement.Repositories
             await SaveChangesAsync();
         }
 
+        public void Update(T entity)
+        {
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
@@ -117,6 +128,47 @@ namespace PersonnelManagement.Repositories
                 await SaveChangesAsync();
             }
         }
+
+        public async Task<ICollection<T>> FindListWithIncludesAsync(
+            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            // Thêm các Include vào query
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            // Áp dụng predicate (nếu có)
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<T?> FindOneWithIncludesAsync(
+            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            // Thêm các Include vào query
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            // Áp dụng predicate (nếu có)
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
     }
 
 }

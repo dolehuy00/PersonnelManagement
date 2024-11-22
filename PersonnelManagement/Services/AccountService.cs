@@ -4,6 +4,7 @@ using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services
 {
@@ -107,7 +108,9 @@ namespace PersonnelManagement.Services
 
         public async Task<AccountDTO> Get(long accountId)
         {
-            var account = await _genericAccRepo.GetByIdAsync(accountId);
+            Expression<Func<Account, bool>> predicate = a => a.Id == accountId;
+            Expression<Func<Account, object>>[] includes = [a => a.Role];
+            var account = await _genericAccRepo.FindOneWithIncludesAsync(predicate, includes);
             return account == null ? throw new Exception("Account doesn't exist.") : _accMapper.ToDTO(account);
         }
 

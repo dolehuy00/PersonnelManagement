@@ -119,6 +119,9 @@ namespace PersonnelManagement.Repositories
                 query = query.OrderByDescending(a => a.Id);
             }
 
+            //Include
+            query = query.Include(a => a.Role);
+
             var skip = (pageNumber - 1) * pageSize;
             var items = await query.Skip(skip).Take(pageSize).ToListAsync();
             var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
