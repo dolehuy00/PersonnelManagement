@@ -66,7 +66,7 @@ namespace PersonnelManagement.Repositories
         }
 
         public async Task<(ICollection<Account>, int totalPages, int totalRecords)> FilterAsync(string? keyword,
-            string? sortByEmail, string? filterByStatus, int? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
+            string? sortByEmail, string? filterByStatus, string? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
         {
             // Tim theo email hoac id, xep theo email, loc theo status, loc theo role, tim kiem theo ten hoac id employee
             var query = _dataContext.Accounts
@@ -94,9 +94,9 @@ namespace PersonnelManagement.Repositories
             }
 
             // Lọc theo role nếu filterByRole có giá trị
-            if (filterByRole.HasValue)
+            if (!string.IsNullOrEmpty(filterByRole))
             {
-                query = query.Where(a => a.RoleId == filterByRole.Value);
+                query = query.Where(a => a.Role.Name.Contains(filterByRole) || a.RoleId.ToString().Equals(filterByRole));
             }
 
             // Tính tổng số record (trước khi phân trang)

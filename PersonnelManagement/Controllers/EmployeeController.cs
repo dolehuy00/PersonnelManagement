@@ -99,14 +99,14 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [HttpGet("get/{page}/{itemPerPage}")]
-        public async Task<IActionResult> Get(int page, int itemPerPage)
+        [HttpGet("search")]
+        public async Task<IActionResult> Get(string fullnameOrId)
         {
             var titleResponse = "Get page employee.";
             try
             {
-                var (employees, totalPage, totalRecords) = await _emplServ.GetPagesAsync(page, itemPerPage);
-                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, page, totalPage, totalRecords));
+                var employees = await _emplServ.SearchNameOrIdAsync(fullnameOrId);
+                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, 1, 1, employees.Count));
             }
             catch (Exception ex)
             {

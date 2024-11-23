@@ -24,15 +24,24 @@ builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<PersonnelDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Dependency Injection
+/// Dependency Injection
+// Token service
 builder.Services.AddScoped<TokenService>();
+// Acount
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IAssignmentService, AssignmentService>();
-builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
-builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+// Employee
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+// Assignment
+builder.Services.AddScoped<IAssignmentService, AssignmentService>();
+// Salary History
+builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
+// Generic repository
+builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
+// Role
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<RoleMapper>();
 // Department
 builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository

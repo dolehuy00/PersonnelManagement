@@ -15,10 +15,10 @@ namespace PersonnelManagement.Repositories
         void Delete(T entity);
         Task DeleteAsync(long id);
         Task SaveChangesAsync();
-        Task<ICollection<T>> FindListWithIncludesAsync(
+        Task<ICollection<T>> FindListAsync(
             Expression<Func<T, bool>> predicate,
             params Expression<Func<T, object>>[] includes);
-        Task<T?> FindOneWithIncludesAsync(
+        Task<T?> FindOneAsync(
             Expression<Func<T, bool>> predicate,
             params Expression<Func<T, object>>[] includes);
     }

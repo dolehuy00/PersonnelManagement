@@ -3,6 +3,7 @@ using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services
 {
@@ -85,11 +86,11 @@ namespace PersonnelManagement.Services
             return messages;
         }
 
-        public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagesAsync(
-            int pageNumber, int pageSize)
+        public async Task<ICollection<EmployeeDTO>> SearchNameOrIdAsync(string keyword)
         {
-            var (employees, totalPage, totalRecords) = await _emplRepo.GetPagedListAsync(pageNumber, pageSize);
-            return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
+            Expression<Func<Employee, bool>> expression = e => e.Fullname.Contains(keyword) || e.Id.ToString().Equals(keyword);
+            var employees = await _genericEmplRepo.FindListAsync(expression);
+            return _emplMapper.TolistDTO(employees);
         }
 
         public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> FilterAsync(EmployeeFilterDTO filter)
