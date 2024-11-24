@@ -94,7 +94,7 @@ namespace PersonnelManagement.Services
                     throw new Exception("Email already used in another account.");
                 }
             }
-            account.Email = accountDTO.Email;
+            account.EmployeeId = accountDTO.EmployeeId;
             account.RoleId = accountDTO.RoleId;
             await _genericAccRepo.UpdateAsync(account);
             return _accMapper.ToDTO(account);
@@ -109,7 +109,7 @@ namespace PersonnelManagement.Services
         public async Task<AccountDTO> Get(long accountId)
         {
             Expression<Func<Account, bool>> predicate = a => a.Id == accountId;
-            Expression<Func<Account, object>>[] includes = [a => a.Role];
+            Expression<Func<Account, object>>[] includes = [a => a.Role, a => a.Employee];
             var account = await _genericAccRepo.FindOneAsync(predicate, includes);
             return account == null ? throw new Exception("Account doesn't exist.") : _accMapper.ToDTO(account);
         }
