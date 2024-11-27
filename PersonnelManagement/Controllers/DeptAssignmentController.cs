@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Services;
 
 namespace PersonnelManagement.Controllers

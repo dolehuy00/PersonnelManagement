@@ -27,7 +27,13 @@ namespace PersonnelManagement.Repositories
 
         public async Task<bool> ExistAsync(long id)
         {
-            return await _dbSet.FindAsync(id) != null;
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null)
+            {
+                _context.Entry(entity).State = EntityState.Detached;
+                return true;
+            }
+            return false;
         }
 
         public bool Exist(long id)
@@ -52,6 +58,17 @@ namespace PersonnelManagement.Repositories
         {
             _dbSet.Remove(entity);
             await SaveChangesAsync();
+        }
+
+        public void Update(T entity)
+        {
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+            _dbSet.Remove(entity);
         }
 
         public async Task SaveChangesAsync()
@@ -111,6 +128,47 @@ namespace PersonnelManagement.Repositories
                 await SaveChangesAsync();
             }
         }
+
+        public async Task<ICollection<T>> FindListAsync(
+            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            // Thêm các Include vào query
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            // Áp dụng predicate (nếu có)
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<T?> FindOneAsync(
+            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            // Thêm các Include vào query
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            // Áp dụng predicate (nếu có)
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
     }
 
 }

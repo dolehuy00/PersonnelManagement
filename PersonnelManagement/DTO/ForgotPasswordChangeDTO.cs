@@ -7,9 +7,7 @@ namespace PersonnelManagement.DTO
         [MinLength(1)]
         public required string Email { get; set; }
         public required int Code { get; set; }
-        [MinLength(8)]
         public required string Password { get; set; }
-        [MinLength(8)]
         public required string PasswordConfirm { get; set; }
     }
 }

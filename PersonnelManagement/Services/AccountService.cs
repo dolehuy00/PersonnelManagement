@@ -1,8 +1,10 @@
 ﻿using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services
 {
@@ -10,7 +12,7 @@ namespace PersonnelManagement.Services
     {
         private readonly IGenericCurdRepository<Account> _genericAccRepo;
         private readonly IAccountRepository _accRepo;
-        private AccountMapper _accMapper;
+        private readonly AccountMapper _accMapper;
 
         public AccountService(IGenericCurdRepository<Account> repository, IAccountRepository accountRepository)
         {
@@ -22,7 +24,7 @@ namespace PersonnelManagement.Services
         public async Task<AccountDTO?> ValidateUserAsync(string email, string password)
         {
             var account = await _accRepo.GetAccountFullInforAsync(email);
-            if (account != null && VerifyPassword(password, account.Password))
+            if (account != null && VerifyPassword(password, account.Password) && account.Status == "Active")
             {
                 return _accMapper.ToDTO(account);
             }
@@ -92,8 +94,7 @@ namespace PersonnelManagement.Services
                     throw new Exception("Email already used in another account.");
                 }
             }
-            account.Status = accountDTO.Status;
-            account.Email = accountDTO.Email;
+            account.EmployeeId = accountDTO.EmployeeId;
             account.RoleId = accountDTO.RoleId;
             await _genericAccRepo.UpdateAsync(account);
             return _accMapper.ToDTO(account);
@@ -107,7 +108,9 @@ namespace PersonnelManagement.Services
 
         public async Task<AccountDTO> Get(long accountId)
         {
-            var account = await _genericAccRepo.GetByIdAsync(accountId);
+            Expression<Func<Account, bool>> predicate = a => a.Id == accountId;
+            Expression<Func<Account, object>>[] includes = [a => a.Role, a => a.Employee];
+            var account = await _genericAccRepo.FindOneAsync(predicate, includes);
             return account == null ? throw new Exception("Account doesn't exist.") : _accMapper.ToDTO(account);
         }
 
@@ -155,5 +158,21 @@ namespace PersonnelManagement.Services
                 filterDTO.KeywordByEmployee, filterDTO.Page, filterDTO.PageSize);
             return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
         }
+
+        public async Task<bool> Lock(long id)
+        {
+            var empl = await _genericAccRepo.GetByIdAsync(id) ?? throw new Exception("Account does not exist.");
+            empl.Status = Status.Lock;
+            await _genericAccRepo.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> UnLock(long id)
+        {
+            var empl = await _genericAccRepo.GetByIdAsync(id) ?? throw new Exception("Account does not exist.");
+            empl.Status = Status.Active;
+            await _genericAccRepo.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

@@ -10,9 +10,10 @@ namespace PersonnelManagement.Services
         Task<EmployeeDTO> Get(long accountId);
         Task<ICollection<EmployeeDTO>> GetAll();
         Task<string[]> DeleteMany(long[] accountId);
-        Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagesAsync(
-            int pageNumber, int pageSize);
+        Task<ICollection<EmployeeDTO>> SearchNameOrIdAsync(string keyword);
         Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> FilterAsync(
             EmployeeFilterDTO filter);
+        Task<bool> Lock(long id);
+        Task<bool> UnLock(long id);
     }
 }

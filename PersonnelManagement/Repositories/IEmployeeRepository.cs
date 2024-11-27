@@ -4,8 +4,9 @@ namespace PersonnelManagement.Repositories
 {
     public interface IEmployeeRepository
     {
-        public Task<Employee?> GetFullInforAsync(long id);
-        Task UpdateAsync(Employee employee);
+        Task<Employee?> GetFullInforAsync(long id);
+        void Update(Employee employee);
+        Task SaveChangeAsync();
         Task<(ICollection<Employee>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize);
         Task<(ICollection<Employee>, int, int)> FilterAsync(string? nameOrId, string? address,
             DateTime? fromDoB, DateTime? toDoB, double? fromSalary, double? toSalary, string? position,

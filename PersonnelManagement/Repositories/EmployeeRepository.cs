@@ -13,24 +13,25 @@ namespace PersonnelManagement.Repositories
             _dataContext = dataContext;
         }
 
-        async Task<Employee?> IEmployeeRepository.GetFullInforAsync(long id)
+        public async Task<Employee?> GetFullInforAsync(long id)
         {
             return await _dataContext.Employees
                .Include(e => e.Department)
                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        async Task IEmployeeRepository.UpdateAsync(Employee employee)
+        public void Update(Employee employee)
         {
-            var existingEntity = _dataContext.Employees.Local.FirstOrDefault(e => e.Id == employee.Id);
-            if (existingEntity != null)
-            {
-                _dataContext.Entry(existingEntity).State = EntityState.Detached;
-            }
+            _dataContext.Employees.Attach(employee);
+            _dataContext.Entry(employee).State = EntityState.Modified;
+            _dataContext.Entry(employee).Property(e => e.Status).IsModified = false;
+        }
 
-            _dataContext.Employees.Update(employee);
+        public async Task SaveChangeAsync()
+        {
             await _dataContext.SaveChangesAsync();
         }
+
         public async Task<(ICollection<Employee>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
         {
             var skip = (pageNumber - 1) * pageSize;
@@ -45,7 +46,7 @@ namespace PersonnelManagement.Repositories
             return (pagedList, totalPages, totalRecords);
         }
 
-        async Task<(ICollection<Employee>, int, int)> IEmployeeRepository.FilterAsync(string? nameOrId, string? address,
+        public async Task<(ICollection<Employee>, int, int)> FilterAsync(string? nameOrId, string? address,
             DateTime? fromDoB, DateTime? toDoB, double? fromSalary, double? toSalary, string? position,
             DateTime? fromStartDate, DateTime? toStartDate, int? departmentId, string? status, string? sortBy,
             int page, int pageSize)
@@ -114,7 +115,7 @@ namespace PersonnelManagement.Repositories
             // Loc theo status
             if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(e => e.Status.Contains(status));
+                query = query.Where(e => e.Status.Equals(status));
             }
 
             // Sap xep theo ten, ngay sinh, ngay bat dau
@@ -126,21 +127,21 @@ namespace PersonnelManagement.Repositories
                 var sortFields = new Dictionary<string, Func<IQueryable<Employee>, IOrderedQueryable<Employee>>>
                 {
                     { "fullname", q => sortOrder == "asc" ? q.OrderBy(e => e.Fullname) : q.OrderByDescending(e => e.Fullname) },
-                    { "dateOfBirth", q => sortOrder == "asc" ? q.OrderBy(e => e.DateOfBirth) : q.OrderByDescending(e => e.DateOfBirth) },
-                    { "startDate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
+                    { "dateofbirth", q => sortOrder == "asc" ? q.OrderBy(e => e.DateOfBirth) : q.OrderByDescending(e => e.DateOfBirth) },
+                    { "startdate", q => sortOrder == "asc" ? q.OrderBy(e => e.StartDate) : q.OrderByDescending(e => e.StartDate) }
                 };
 
-                if (sortFields.ContainsKey(sortField))
+                if (sortFields.TryGetValue(sortField, out Func<IQueryable<Employee>, IOrderedQueryable<Employee>>? value))
                 {
-                    query = sortFields[sortField](query);
+                    query = value(query);
                 }
                 else
                 {
-                    throw new Exception("Invalid sort field.\n" +
-                                        "We support:\n" +
-                                        "\tfullname:asc / fullname:dec\n" +
-                                        "\tdateOfBirth:asc / dateOfBirth:dec\n" +
-                                        "\tstartDate:asc / startDate:dec");
+                    throw new Exception("Invalid sort field. " +
+                                        "We support:" +
+                                        "fullname:asc / fullname:dec / " +
+                                        "dateOfBirth:asc / dateOfBirth:dec / " +
+                                        "startDate:asc / startDate:dec");
                 }
             }
             else

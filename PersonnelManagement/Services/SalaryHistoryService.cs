@@ -28,9 +28,14 @@ namespace PersonnelManagement.Services
 
         public async Task<SalaryHistoryDTO> Edit(SalaryHistoryDTO salaryHistoryDTO)
         {
+            var exist = await _genericSHRepo.ExistAsync(salaryHistoryDTO.Id);
+            if (!exist)
+            {
+                throw new Exception("Salary History does not exist.");
+            }
             var salaryHistory = _sHMapper.ToEntity(salaryHistoryDTO);
             await _genericSHRepo.UpdateAsync(salaryHistory);
-            return _sHMapper.ToDTO(salaryHistory);
+            return salaryHistoryDTO;
         }
 
         public async Task Delete(long salaryHistoryId)
