@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Services;
 
 namespace PersonnelManagement.Controllers

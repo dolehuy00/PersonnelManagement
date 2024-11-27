@@ -73,19 +73,21 @@ namespace MovieAppApi.Service
         {
             var token = Guid.NewGuid().ToString();
 
+            var timeToLive = TimeSpan.FromDays(7);
+
             var refreshToken = new RefreshToken
             {
                 Token = token,
                 UserId = userId,
                 RoleName = roleName,
                 IpAddress = ipAddress,
-                ExpiryDate = DateTime.UtcNow.Add(TimeSpan.FromDays(7))
+                ExpiryDate = DateTime.UtcNow.Add(timeToLive)
             };
 
             // Lưu trữ Refresh Token vào Redis, với khóa là Token
             var db = _redis.GetDatabase();
             var key = $"refresh_token:{token}";
-            await db.StringSetAsync(key, JsonConvert.SerializeObject(refreshToken), TimeSpan.FromDays(7));
+            await db.StringSetAsync(key, JsonConvert.SerializeObject(refreshToken), timeToLive);
 
             return token;
         }
@@ -158,6 +160,26 @@ namespace MovieAppApi.Service
             }
 
             return false;
+        }
+
+        public string GenerateAccessTokenImgServer()
+        {
+            var claims = new[] {
+                        new Claim(JwtRegisteredClaimNames.Sub, _config["JWTAccessTokenImgServer:Subject"]!),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTAccessTokenImgServer:Key"]!));
+            var signIng = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                _config["JWTAccessTokenImgServer:Issuer"],
+                _config["JWTAccessTokenImgServer:Audience"],
+                claims,
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(_config["JWTAccessTokenImgServer:ExpiresMinutes"]!)),
+                signingCredentials: signIng);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
     }

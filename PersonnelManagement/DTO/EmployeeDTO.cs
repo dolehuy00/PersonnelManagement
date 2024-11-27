@@ -5,6 +5,7 @@
         public long Id { get; set; }
         public string? Address { get; set; }
         public double BasicSalary { get; set; }
+        public string? Image { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? Fullname { get; set; }
         public string? Position { get; set; }

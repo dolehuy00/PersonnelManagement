@@ -1,4 +1,6 @@
 PersonnelManagement/.vs/
+StorageStaticFileApplication/.vs/
+StorageStaticFileApplication/bin
 *.swp
 *.*~
 project.lock.json

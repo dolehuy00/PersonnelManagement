@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MovieAppApi.Service;
 using PersonnelManagement.DTO;
 using PersonnelManagement.Model;
 
@@ -9,14 +10,18 @@ namespace PersonnelManagement.Mappers
         private IMapper mapperToDTO;
         private IMapper mapperToEntity;
 
-        public EmployeeMapper()
+        public EmployeeMapper(TokenService tokenService)
         {
             mapperToDTO = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeDTO>()
                     .ForMember(
                         dest => dest.DepartmentName,
-                        opt => opt.MapFrom(src => src.Department == null ? "No" : src.Department.Name));
+                        opt => opt.MapFrom(src => src.Department == null ? "No" : src.Department.Name)
+                    ).ForMember(
+                        dest => dest.Image,
+                        opt => opt.MapFrom(src => src.Image != null ? src.Image + $"/{tokenService.GenerateAccessTokenImgServer()}" : null)
+                    );
             }).CreateMapper();
             mapperToEntity = new MapperConfiguration(cfg => cfg.CreateMap<EmployeeDTO, Employee>()).CreateMapper();
         }

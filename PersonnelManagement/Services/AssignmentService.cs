@@ -1,4 +1,5 @@
 ﻿using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
