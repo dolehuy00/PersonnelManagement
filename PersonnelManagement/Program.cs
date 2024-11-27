@@ -90,6 +90,16 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")  // Cho phép yêu cầu từ localhost:3000
+              .AllowAnyHeader()                     // Cho phép bất kỳ tiêu đề
+              .AllowAnyMethod();                     // Cho phép bất kỳ phương thức HTTP (GET, POST, PUT, DELETE)
+    });
+});
+
 /// App
 var app = builder.Build();
 
@@ -106,6 +116,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowLocalhost3000");
 
 app.UseAuthentication();
 

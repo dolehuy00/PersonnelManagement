@@ -17,7 +17,7 @@ namespace PersonnelManagement.Repositories
             //Name or Id
             if (!String.IsNullOrEmpty(departmentFilter.Name) || departmentFilter.Id != null) {
                 query = query.Where(e =>
-                (string.IsNullOrEmpty(departmentFilter.Name) || e.Name.Contains(departmentFilter.Name)) &&
+                (string.IsNullOrEmpty(departmentFilter.Name) || e.Name.Contains(departmentFilter.Name)) ||
                 (departmentFilter.Id == null || e.Id == departmentFilter.Id)
                 );
             }
