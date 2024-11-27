@@ -5,7 +5,7 @@ namespace PersonnelManagement.Repositories
     public interface ISalaryHistoryRepository
     {
         Task<(ICollection<SalaryHistory>, int, int)> FilterAsync(
-            string? sortByDate, string? status, long? employeeId, int page, int pageSize);
+            string? sortByDate, long? employeeId, int page, int pageSize);
         Task<SalaryHistory?> GetByEmployeeAsync(long salaryHistoryId, long emplyeeId);
         Task<SalaryHistory?> GetFullInforAsync(long id);
         Task<ICollection<SalaryHistory>> GetFullInforAsync();

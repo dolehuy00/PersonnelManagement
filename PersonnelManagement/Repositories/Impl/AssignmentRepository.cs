@@ -2,7 +2,7 @@
 using PersonnelManagement.Data;
 using PersonnelManagement.Model;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
     public class AssignmentRepository : IAssignmentRepository
     {

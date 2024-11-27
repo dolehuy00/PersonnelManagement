@@ -181,7 +181,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "AllRoles")]
         [HttpGet("filter-by-user")]
         public async Task<IActionResult> FilterByUser([FromQuery] SalaryHistoryFilterDTO filterDTO)
         {

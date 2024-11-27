@@ -2,7 +2,7 @@
 using PersonnelManagement.Data;
 using PersonnelManagement.Model;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
     public class SalaryHistoryRepository : ISalaryHistoryRepository
     {
@@ -14,18 +14,12 @@ namespace PersonnelManagement.Repositories
         }
 
         public async Task<(ICollection<SalaryHistory>, int, int)> FilterAsync(
-            string? sortByDate, string? status, long? employeeId, int page, int pageSize)
+            string? sortByDate, long? employeeId, int page, int pageSize)
         {
             // Loc theo status, xep theo date, loc theo id employee.
             var query = _dataContext.SalaryHistories
                 .Include(s => s.Employee)
                 .AsQueryable();
-
-            // Lọc theo status nếu status có giá trị
-            if (!string.IsNullOrEmpty(status))
-            {
-                query = query.Where(s => s.Status.Contains(status));
-            }
 
             // Lọc theo id employee nếu employee có giá trị
             if (employeeId.HasValue)

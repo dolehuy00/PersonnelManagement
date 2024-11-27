@@ -4,7 +4,7 @@ using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
 
-namespace PersonnelManagement.Services
+namespace PersonnelManagement.Services.Impl
 {
     public class SalaryHistoryService : ISalaryHistoryService
     {
@@ -92,7 +92,7 @@ namespace PersonnelManagement.Services
                 throw new ArgumentException("Page and PageSize must be >= 1.");
             }
             var (salaryHistories, totalPage, totalRecords) = await _sHRepo.FilterAsync(filter.SortByDate,
-                filter.Status, filter.EmployeeId, filter.Page, filter.PageSize);
+                filter.EmployeeId, filter.Page, filter.PageSize);
             return (_sHMapper.TolistDTO(salaryHistories), totalPage, totalRecords);
         }
 

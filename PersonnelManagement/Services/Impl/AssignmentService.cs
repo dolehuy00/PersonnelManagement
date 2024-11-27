@@ -4,7 +4,7 @@ using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
 
-namespace PersonnelManagement.Services
+namespace PersonnelManagement.Services.Impl
 {
     public class AssignmentService : IAssignmentService
     {
