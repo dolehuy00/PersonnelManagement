@@ -1,4 +1,5 @@
 ﻿using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 
 namespace PersonnelManagement.Services
 {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 

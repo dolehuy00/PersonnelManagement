@@ -1,4 +1,4 @@
-﻿namespace PersonnelManagement.DTO
+﻿namespace PersonnelManagement.DTO.Filter
 {
     public class EmployeeFilterDTO
     {

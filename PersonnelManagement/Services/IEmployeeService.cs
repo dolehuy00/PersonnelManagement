@@ -1,4 +1,5 @@
 ﻿using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 
 namespace PersonnelManagement.Services
 {
@@ -15,5 +16,6 @@ namespace PersonnelManagement.Services
             EmployeeFilterDTO filter);
         Task<bool> Lock(long id);
         Task<bool> UnLock(long id);
+        Task UpdateImageAsync(long id, string fileUrl);
     }
 }

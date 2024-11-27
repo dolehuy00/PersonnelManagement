@@ -8,6 +8,7 @@ using PersonnelManagement.Data;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Repositories;
 using PersonnelManagement.Services;
+using PersonnelManagement.Services.Impl;
 using StackExchange.Redis;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -54,6 +55,8 @@ builder.Services.AddScoped<IDeptAssignmentRepository, DeptAssignmentRepository>(
 // Assignment
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<ISalaryHistoryRepository, SalaryHistoryRepository>();
+// Static File
+builder.Services.AddScoped<IStaticFileService, StaticFileService>();
 
 // Đăng ký dịch vụ ánh xạ (mapping service)
 builder.Services.AddScoped<DeptAssignmentMapper>();
@@ -73,6 +76,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AccessTokenJwt:Key"]!))
     };
 });
+
+// Authorization policy
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"))
     .AddPolicy("UserOnly", policy => policy.RequireRole("User"))
@@ -92,13 +97,13 @@ builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>()
 builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
 // Redis
-// Cấu hình Redis
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 {
     var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis")!);
     return ConnectionMultiplexer.Connect(configuration);
 });
 
+// allow specific host reactJs app run
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
@@ -107,6 +112,13 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
+
+// allow static file server
+builder.Services.AddHttpClient("WebStorageClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7084"); // Địa chỉ của Web Storage
+});
+
 
 /// App
 var app = builder.Build();
