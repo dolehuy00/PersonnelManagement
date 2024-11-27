@@ -63,7 +63,7 @@ namespace MovieAppApi.Service
                 _config["AccessTokenJwt:Issuer"],
                 _config["AccessTokenJwt:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(_config["AccessTokenJwt:ExpiresMinutes"]!)),
                 signingCredentials: signIng);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -134,6 +134,30 @@ namespace MovieAppApi.Service
             var newRefreshToken = await GenerateRefreshTokenAsync(refreshToken.UserId, refreshToken.RoleName, ipAddress);
 
             return (newAccessToken, newRefreshToken);
+        }
+
+        public async Task<bool> CancelRefreshTokenAsync(string token, string userId)
+        {
+            var db = _redis.GetDatabase();
+            var key = $"refresh_token:{token}";
+            var storedTokenJson = await db.StringGetAsync(key);
+
+            if (storedTokenJson.IsNullOrEmpty)
+            {
+                return true;
+            }
+
+            var refreshToken = JsonConvert.DeserializeObject<RefreshToken>(storedTokenJson.ToString());
+
+            // Kiểm tra Token
+            if (refreshToken == null || refreshToken.UserId == userId)
+            {
+                // Xóa token
+                await db.KeyDeleteAsync(key);
+                return true;
+            }
+
+            return false;
         }
 
     }

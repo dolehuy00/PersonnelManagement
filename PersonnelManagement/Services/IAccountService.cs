@@ -18,5 +18,7 @@ namespace PersonnelManagement.Services
             int pageNumber, int pageSize);
         Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> FilterAsync(
             AccountFilterDTO filterDTO);
+        Task<bool> Lock(long id);
+        Task<bool> UnLock(long id);
     }
 }

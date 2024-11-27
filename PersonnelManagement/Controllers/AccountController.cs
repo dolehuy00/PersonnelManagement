@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -36,7 +37,7 @@ namespace PersonnelManagement.Controllers
                     var accessToken = _tokenServ.GenerateAccessToken(account.Id.ToString(), account.RoleName!);
                     var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                     var refreshToken = await _tokenServ.GenerateRefreshTokenAsync(account.Id.ToString(), account.RoleName!, ipAddress);
-                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName };
+                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName, role = account.RoleName };
                     return Ok(new ResponseObjectDTO<dynamic>("Login successfully", [response]));
                 }
                 return Unauthorized(
@@ -67,13 +68,35 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Policy = "AllRoles")]
-        [Authorize]
+        [HttpPost("cancel-refressh-token")]
+        public async Task<IActionResult> CancelRefressToken([FromHeader] string refressToken)
+        {
+            var titleResponse = "Cancel refressh token.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                var isCancel = await _tokenServ.CancelRefreshTokenAsync(refressToken, userIdInToken);
+                var response = isCancel ? "Refressh token canceled." : "Can not cancel refressh token.";
+                return Ok(new ResponseObjectDTO<dynamic>("Get access successfully.", [response]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AllRoles")]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] RequestChangePasswordDTO changePassDTO)
         {
             var titleResponse = "Change password.";
             try
             {
+                if (changePassDTO.NewPassword.Length < 8)
+                {
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password must be at least 8 characters long."]));
+                }
                 if (changePassDTO.NewPassword != changePassDTO.PasswordConfirm)
                 {
                     return BadRequest(new ResponseMessageDTO(
@@ -157,6 +180,11 @@ namespace PersonnelManagement.Controllers
             var titleResponse = "Forgot password change password.";
             try
             {
+                if (forgotDTO.Password.Length < 8)
+                {
+                    return BadRequest(new ResponseMessageDTO(
+                        titleResponse, 400, ["Password must be at least 8 characters long."]));
+                }
                 if (forgotDTO.Password != forgotDTO.PasswordConfirm)
                 {
                     return BadRequest(new ResponseMessageDTO(
@@ -176,7 +204,7 @@ namespace PersonnelManagement.Controllers
                     }
                 }
                 return BadRequest(new ResponseMessageDTO(
-                    titleResponse, 400, ["Code has expired or account doesn't exist."]));
+                    titleResponse, 400, ["Code has expired or account doesn't exist, please try again from step 1."]));
             }
             catch (Exception e)
             {
@@ -305,6 +333,42 @@ namespace PersonnelManagement.Controllers
             {
                 var (results, totalPage, totalRecords) = await _accServ.FilterAsync(filterDTO);
                 return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("lock/{id}")]
+        public async Task<IActionResult> Lock(long id)
+        {
+            var titleResponse = "Lock account.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
+                await _accServ.Lock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Lock]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("unlock/{id}")]
+        public async Task<IActionResult> UnLock(long id)
+        {
+            var titleResponse = "Unlock account.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock your account");
+                await _accServ.UnLock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Active]));
             }
             catch (Exception ex)
             {

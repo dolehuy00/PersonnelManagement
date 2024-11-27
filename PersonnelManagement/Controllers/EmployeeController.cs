@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -98,14 +99,14 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [HttpGet("get/{page}/{itemPerPage}")]
-        public async Task<IActionResult> Get(int page, int itemPerPage)
+        [HttpGet("search")]
+        public async Task<IActionResult> Get(string fullnameOrId)
         {
             var titleResponse = "Get page employee.";
             try
             {
-                var (employees, totalPage, totalRecords) = await _emplServ.GetPagesAsync(page, itemPerPage);
-                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, page, totalPage, totalRecords));
+                var employees = await _emplServ.SearchNameOrIdAsync(fullnameOrId);
+                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, 1, 1, employees.Count));
             }
             catch (Exception ex)
             {
@@ -136,6 +137,40 @@ namespace PersonnelManagement.Controllers
             {
                 var (results, totalPage, totalRecords) = await _emplServ.FilterAsync(filterDTO);
                 return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [HttpPut("lock/{id}")]
+        public async Task<IActionResult> Lock(long id)
+        {
+            var titleResponse = $"Lock employee id = {id}.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
+                var results = await _emplServ.Lock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Lock]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [HttpPut("unlock/{id}")]
+        public async Task<IActionResult> UnLock(long id)
+        {
+            var titleResponse = "Unlock employee.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                if (userIdInToken == id.ToString()) throw new Exception("You can't lock/unlock yourself out!");
+                var results = await _emplServ.UnLock(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), Status.Active]));
             }
             catch (Exception ex)
             {

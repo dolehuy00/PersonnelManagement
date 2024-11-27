@@ -11,7 +11,7 @@ namespace PersonnelManagement.Repositories
         public Task UpdatePasswordAsync(string email, string newPassword);
         Task<(ICollection<Account>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize);
         Task<(ICollection<Account>, int totalPages, int totalRecords)> FilterAsync(string? keyword,
-            string? sortByEmail, string? filterByStatus, int? filterByRole, string? keywordByEmployee,
+            string? sortByEmail, string? filterByStatus, string? filterByRole, string? keywordByEmployee,
             int pageNumber, int pageSize);
     }
 }

@@ -1,15 +1,17 @@
 ﻿using PersonnelManagement.DTO;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IGenericCurdRepository<Employee> _genericEmplRepo;
-        private EmployeeMapper _emplMapper;
-        private IEmployeeRepository _emplRepo;
+        private readonly EmployeeMapper _emplMapper;
+        private readonly IEmployeeRepository _emplRepo;
 
         public EmployeeService(IGenericCurdRepository<Employee> repository, IEmployeeRepository employeeRepository)
         {
@@ -34,8 +36,9 @@ namespace PersonnelManagement.Services
                 throw new Exception("Employee does not exist.");
             }
             var employee = _emplMapper.ToModel(employeeDTO);
-            await _emplRepo.UpdateAsync(employee);
-            return _emplMapper.ToDTO(employee);
+            _emplRepo.Update(employee);
+            await _emplRepo.SaveChangeAsync();
+            return employeeDTO;
         }
 
         public async Task Delete(long employeeId)
@@ -83,11 +86,11 @@ namespace PersonnelManagement.Services
             return messages;
         }
 
-        public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> GetPagesAsync(
-            int pageNumber, int pageSize)
+        public async Task<ICollection<EmployeeDTO>> SearchNameOrIdAsync(string keyword)
         {
-            var (employees, totalPage, totalRecords) = await _emplRepo.GetPagedListAsync(pageNumber, pageSize);
-            return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
+            Expression<Func<Employee, bool>> expression = e => e.Fullname.Contains(keyword) || e.Id.ToString().Equals(keyword);
+            var employees = await _genericEmplRepo.FindListAsync(expression);
+            return _emplMapper.TolistDTO(employees);
         }
 
         public async Task<(ICollection<EmployeeDTO>, int totalPages, int totalRecords)> FilterAsync(EmployeeFilterDTO filter)
@@ -101,6 +104,21 @@ namespace PersonnelManagement.Services
                 filter.Position, filter.FromStartDate, filter.ToStartDate, filter.DepartmentId,
                 filter.Status, filter.SortBy, filter.Page, filter.PageSize);
             return (_emplMapper.TolistDTO(employees), totalPage, totalRecords);
+        }
+
+        public async Task<bool> Lock(long id)
+        {
+            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            empl.Status = Status.Lock;
+            await _genericEmplRepo.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> UnLock(long id)
+        {
+            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            empl.Status = Status.Active;
+            await _genericEmplRepo.SaveChangesAsync();
+            return true;
         }
     }
 }
