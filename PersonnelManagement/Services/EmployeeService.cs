@@ -1,4 +1,6 @@
-﻿using PersonnelManagement.DTO;
+﻿using MovieAppApi.Service;
+using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
@@ -13,11 +15,11 @@ namespace PersonnelManagement.Services
         private readonly EmployeeMapper _emplMapper;
         private readonly IEmployeeRepository _emplRepo;
 
-        public EmployeeService(IGenericCurdRepository<Employee> repository, IEmployeeRepository employeeRepository)
+        public EmployeeService(IGenericCurdRepository<Employee> repository, IEmployeeRepository employeeRepository, TokenService tokenService)
         {
             _genericEmplRepo = repository;
             _emplRepo = employeeRepository;
-            _emplMapper = new EmployeeMapper();
+            _emplMapper = new EmployeeMapper(tokenService);
         }
 
         public async Task<EmployeeDTO> Add(EmployeeDTO employeeDTO)
@@ -113,12 +115,20 @@ namespace PersonnelManagement.Services
             await _genericEmplRepo.SaveChangesAsync();
             return true;
         }
+
         public async Task<bool> UnLock(long id)
         {
             var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
             empl.Status = Status.Active;
             await _genericEmplRepo.SaveChangesAsync();
             return true;
+        }
+
+        public async Task UpdateImageAsync(long id, string fileUrl)
+        {
+            var employee = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist");
+            employee.Image = fileUrl;
+            await _genericEmplRepo.SaveChangesAsync();
         }
     }
 }

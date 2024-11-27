@@ -1,5 +1,6 @@
 ﻿using MovieAppApi.Service;
 using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
