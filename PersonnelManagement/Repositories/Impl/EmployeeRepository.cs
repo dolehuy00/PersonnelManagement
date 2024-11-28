@@ -2,7 +2,7 @@
 using PersonnelManagement.Data;
 using PersonnelManagement.Model;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
     public class EmployeeRepository : IEmployeeRepository
     {
@@ -59,7 +59,7 @@ namespace PersonnelManagement.Repositories
             // Tim kiem theo ten hoac id
             if (!string.IsNullOrEmpty(nameOrId))
             {
-                query = query.Where(e => e.Fullname.Contains(nameOrId) || e.Id.ToString().Contains(nameOrId));
+                query = query.Where(e => e.Fullname.Contains(nameOrId) || e.Id.ToString().Equals(nameOrId));
             }
 
             // Tim kiem theo dia chi

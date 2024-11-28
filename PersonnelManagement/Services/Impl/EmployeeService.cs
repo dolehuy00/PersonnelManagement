@@ -7,7 +7,7 @@ using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
 using System.Linq.Expressions;
 
-namespace PersonnelManagement.Services
+namespace PersonnelManagement.Services.Impl
 {
     public class EmployeeService : IEmployeeService
     {

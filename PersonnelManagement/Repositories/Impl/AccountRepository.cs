@@ -2,7 +2,7 @@
 using PersonnelManagement.Data;
 using PersonnelManagement.Model;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
     public class AccountRepository : IAccountRepository
     {
@@ -76,7 +76,7 @@ namespace PersonnelManagement.Repositories
             // Tìm kiếm theo email hoặc id
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.Email.Contains(keyword) || a.Id.ToString().Contains(keyword));
+                query = query.Where(a => a.Email.Contains(keyword) || a.Id.ToString().Equals(keyword));
             }
 
             // Tìm kiếm theo tên hoặc id Employee

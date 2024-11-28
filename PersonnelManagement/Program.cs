@@ -7,6 +7,7 @@ using MovieAppApi.Service;
 using PersonnelManagement.Data;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Repositories;
+using PersonnelManagement.Repositories.Impl;
 using PersonnelManagement.Services;
 using PersonnelManagement.Services.Impl;
 using StackExchange.Redis;
