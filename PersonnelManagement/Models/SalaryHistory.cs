@@ -9,7 +9,6 @@
         public double Penalty { get; set; }
         public double Tax { get; set; }
         public DateTime Date { get; set; }
-        public required string Status { get; set; }
         public long EmployeeId { get; set; }
         public required Employee Employee { get; set; }
     }
