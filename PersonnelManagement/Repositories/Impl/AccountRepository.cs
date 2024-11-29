@@ -17,52 +17,9 @@ namespace PersonnelManagement.Repositories.Impl
         {
             return await _dataContext.Accounts
                 .Include(acc => acc.Employee)
+                    .ThenInclude(emp => emp.LeaderOfDepartments)
                 .Include(acc => acc.Role)
                 .FirstOrDefaultAsync(acc => acc.Email.Equals(email));
-        }
-
-        public async Task<Account?> GetAccountAsync(string email)
-        {
-            return await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
-        }
-
-        public async Task<bool> ExistAccountAsync(string email)
-        {
-            return await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email)) != null;
-        }
-
-        public async Task<bool> UpdatePasswordAsync(long accountId, string newPassword)
-        {
-            var account = await _dataContext.Accounts.FirstOrDefaultAsync(acc => acc.Id == accountId);
-            if (account != null)
-            {
-                account.Password = newPassword;
-                await _dataContext.SaveChangesAsync();
-                return true;
-            }
-            return false;
-        }
-
-        public async Task UpdatePasswordAsync(string email, string newPassword)
-        {
-            var account = await _dataContext.Accounts.
-                FirstOrDefaultAsync(acc => acc.Email.Equals(email)) ?? throw new Exception("Account doesn't exist.");
-            account.Password = newPassword;
-            await _dataContext.SaveChangesAsync();
-        }
-
-        public async Task<(ICollection<Account>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1) * pageSize;
-            var totalRecords = await _dataContext.Accounts.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            var pagedList = await _dataContext.Accounts
-                .OrderBy(e => e.Id)
-                .Skip(skip)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return (pagedList, totalPages, totalRecords);
         }
 
         public async Task<(ICollection<Account>, int totalPages, int totalRecords)> FilterAsync(string? keyword,

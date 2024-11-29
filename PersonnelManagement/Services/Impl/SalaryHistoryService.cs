@@ -3,6 +3,7 @@ using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services.Impl
 {
@@ -48,7 +49,9 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<SalaryHistoryDTO> Get(long salaryHistoryId)
         {
-            var salaryHistory = await _sHRepo.GetFullInforAsync(salaryHistoryId);
+            Expression<Func<SalaryHistory, object>>[] includes = [s => s.Employee];
+            Expression<Func<SalaryHistory, bool>> expression = s => s.Id == salaryHistoryId;
+            var salaryHistory = await _genericSHRepo.FindOneAsync(expression, includes);
             return salaryHistory == null
                 ? throw new Exception("Salary History doesn't exist.")
                 : _sHMapper.ToDTO(salaryHistory);
@@ -56,7 +59,8 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<ICollection<SalaryHistoryDTO>> GetAll()
         {
-            var salaryHistories = await _sHRepo.GetFullInforAsync();
+            Expression<Func<SalaryHistory, object>>[] includes = [s => s.Employee];
+            var salaryHistories = await _genericSHRepo.FindListAsync(null, includes);
             return _sHMapper.TolistDTO(salaryHistories);
         }
 
@@ -79,12 +83,6 @@ namespace PersonnelManagement.Services.Impl
             return messages;
         }
 
-        public async Task<(ICollection<SalaryHistoryDTO>, int, int)> GetPagesAsync(int pageNumber, int pageSize)
-        {
-            var (salaryHistories, totalPage, totalRecords) = await _sHRepo.GetPagedListAsync(pageNumber, pageSize);
-            return (_sHMapper.TolistDTO(salaryHistories), totalPage, totalRecords);
-        }
-
         public async Task<(ICollection<SalaryHistoryDTO>, int, int)> FilterAsync(SalaryHistoryFilterDTO filter)
         {
             if (filter.Page < 1 || filter.PageSize < 1)
@@ -98,7 +96,9 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<SalaryHistoryDTO> GetByEmployee(long salaryHistoryId, long emplyeeId)
         {
-            var salaryHistory = await _sHRepo.GetByEmployeeAsync(salaryHistoryId, emplyeeId);
+            Expression<Func<SalaryHistory, object>>[] includes = [s => s.Employee];
+            Expression<Func<SalaryHistory, bool>> expression = s => s.Id == salaryHistoryId && s.EmployeeId == emplyeeId;
+            var salaryHistory = await _genericSHRepo.FindOneAsync(expression, includes);
             return salaryHistory == null
                 ? throw new Exception("Salary History doesn't exist.")
                 : _sHMapper.ToDTO(salaryHistory);

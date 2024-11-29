@@ -55,7 +55,9 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<EmployeeDTO> Get(long employeeId)
         {
-            var employee = await _genericEmplRepo.GetByIdAsync(employeeId);
+            Expression<Func<Employee, bool>> exppression = e => e.Id == employeeId;
+            Expression<Func<Employee, object>>[] includes = [e => e.Department!];
+            var employee = await _genericEmplRepo.FindOneAsync(exppression, includes);
             if (employee == null)
             {
                 throw new Exception("Employee doesn't exist.");

@@ -11,7 +11,6 @@ namespace PersonnelManagement.Services
         Task<SalaryHistoryDTO> Get(long accountId);
         Task<ICollection<SalaryHistoryDTO>> GetAll();
         Task<string[]> DeleteMany(long[] accountId);
-        Task<(ICollection<SalaryHistoryDTO>, int, int)> GetPagesAsync(int pageNumber, int pageSize);
         Task<(ICollection<SalaryHistoryDTO>, int, int)> FilterAsync(SalaryHistoryFilterDTO filter);
         Task<SalaryHistoryDTO> GetByEmployee(long salaryHistoryId, long emplyeeId);
         Task<(ICollection<SalaryHistoryDTO>, int, int)> GetPagesByEmployeeAsync(

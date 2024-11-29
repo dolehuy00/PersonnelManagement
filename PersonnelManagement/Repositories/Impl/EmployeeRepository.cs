@@ -13,13 +13,6 @@ namespace PersonnelManagement.Repositories.Impl
             _dataContext = dataContext;
         }
 
-        public async Task<Employee?> GetFullInforAsync(long id)
-        {
-            return await _dataContext.Employees
-               .Include(e => e.Department)
-               .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
         public void Update(Employee employee)
         {
             _dataContext.Employees.Attach(employee);
@@ -30,20 +23,6 @@ namespace PersonnelManagement.Repositories.Impl
         public async Task SaveChangeAsync()
         {
             await _dataContext.SaveChangesAsync();
-        }
-
-        public async Task<(ICollection<Employee>, int totalPages, int totalRecords)> GetPagedListAsync(int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1) * pageSize;
-            var totalRecords = await _dataContext.Employees.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            var pagedList = await _dataContext.Employees
-                .OrderBy(e => e.Id)
-                .Skip(skip)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return (pagedList, totalPages, totalRecords);
         }
 
         public async Task<(ICollection<Employee>, int, int)> FilterAsync(string? nameOrId, string? address,
@@ -152,7 +131,10 @@ namespace PersonnelManagement.Repositories.Impl
             // Phan trang
             var totalRecords = await query.CountAsync();
             var skip = (page - 1) * pageSize;
-            var items = await query.Skip(skip).Take(pageSize).ToListAsync();
+            var items = await query
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
             var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
             return (items, totalPages, totalRecords);
         }

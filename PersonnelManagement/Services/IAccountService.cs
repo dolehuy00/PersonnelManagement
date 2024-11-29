@@ -15,8 +15,6 @@ namespace PersonnelManagement.Services
         Task<AccountDTO> Get(long accountId);
         Task<ICollection<AccountDTO>> GetAll();
         Task<string[]> DeleteMany(long[] accountId);
-        Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> GetPagesAsync(
-            int pageNumber, int pageSize);
         Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> FilterAsync(
             AccountFilterDTO filterDTO);
         Task<bool> Lock(long id);

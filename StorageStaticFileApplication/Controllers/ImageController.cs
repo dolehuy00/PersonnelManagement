@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HeyRed.Mime;
+using Microsoft.AspNetCore.Mvc;
 using StorageStaticFileApplication.Services;
 
 namespace StorageStaticFileApplication.Controllers
@@ -30,7 +31,7 @@ namespace StorageStaticFileApplication.Controllers
                 return NotFound("File not found.");
             }
 
-            var contentType = "application/octet-stream";
+            var contentType = MimeTypesMap.GetMimeType(fileName);
             return PhysicalFile(filePath, contentType, fileName);
         }
     }
