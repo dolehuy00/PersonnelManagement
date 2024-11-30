@@ -4,7 +4,7 @@ using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
 
-namespace PersonnelManagement.Services
+namespace PersonnelManagement.Services.Impl
 {
     public class DeptAssignmentService : IDeptAssignmentService
     {
@@ -100,6 +100,20 @@ namespace PersonnelManagement.Services
                 // Ném lại exception để bảo toàn ngữ cảnh
                 throw;
             }
+        }
+
+        public async Task<ICollection<DeptAssignmentDTO>> AddMany(List<DeptAssignmentDTO> deptAssignmentDTOs)
+        {
+            List<DeptAssignmentDTO> results = new List<DeptAssignmentDTO>();
+            // Thêm các tác vụ vào danh sách
+            foreach (DeptAssignmentDTO deptAssignmentDTO in deptAssignmentDTOs)
+            {
+                var result = await this.Add(deptAssignmentDTO);
+                results.Add(result);
+            }
+
+            return results;
+
         }
     }
 }

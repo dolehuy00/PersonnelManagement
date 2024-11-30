@@ -7,9 +7,9 @@ namespace PersonnelManagement.Services.Impl
 {
     public class RoleService : IRoleService
     {
-        private readonly IGenericCurdRepository<Role> _repository;
+        private readonly IGenericRepository<Role> _repository;
         private readonly RoleMapper _mapper;
-        public RoleService(IGenericCurdRepository<Role> repository, RoleMapper mapper)
+        public RoleService(IGenericRepository<Role> repository, RoleMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

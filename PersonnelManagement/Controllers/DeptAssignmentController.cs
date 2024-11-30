@@ -109,5 +109,23 @@ namespace PersonnelManagement.Controllers
                 return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
+
+        [HttpPost("AddMany")]
+        public async Task<IActionResult> AddMany([FromBody] List<DeptAssignmentDTO> deptAssignmentDTOs)
+        {
+            var titleResponse = "Create multiple deptAssignments.";
+            try
+            {
+                var deptAssignments = await _deptAssignmentService.AddMany(deptAssignmentDTOs);
+                // Trả về danh sách kết quả đã thêm
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, deptAssignments));
+            }
+            catch (Exception ex)
+            {
+                // Trả về thông báo lỗi
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
     }
 }

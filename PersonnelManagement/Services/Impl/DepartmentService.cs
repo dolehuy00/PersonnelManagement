@@ -3,17 +3,19 @@ using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using PersonnelManagement.Enum;
 
-namespace PersonnelManagement.Services
+namespace PersonnelManagement.Services.Impl
 {
     public class DepartmentService : IDepartmentService
     {
 
         private IDepartmentRepository _deptRepo;
-        private DepartmentMapper _deptMapper ;
+        private DepartmentMapper _deptMapper;
 
-        public DepartmentService(IDepartmentRepository deptRepo)        {
-            
+        public DepartmentService(IDepartmentRepository deptRepo)
+        {
+
             _deptRepo = deptRepo ?? throw new ArgumentNullException(nameof(deptRepo));
             _deptMapper = new DepartmentMapper();
         }
@@ -27,9 +29,12 @@ namespace PersonnelManagement.Services
 
         public async Task Delete(long departmentId)
         {
-            if(departmentId > 0) {
+            if (departmentId > 0)
+            {
                 await _deptRepo.DeleteAsync(departmentId);
-            } else {
+            }
+            else
+            {
                 throw new Exception("Id is non-valid!");
             }
         }
@@ -67,9 +72,10 @@ namespace PersonnelManagement.Services
 
         public async Task<DepartmentDTO?> Get(long departmentId)
         {
-            var deptResutl = await _deptRepo.GetByIdAsync(departmentId);
-            if (deptResutl == null)  { 
-                throw new Exception("Department does not exist."); 
+            var deptResutl = await _deptRepo.GetByIdIncludeLeaderAsync(departmentId);
+            if (deptResutl == null)
+            {
+                throw new Exception("Department does not exist.");
             }
             return _deptMapper.ToDTO(deptResutl);
         }
@@ -82,17 +88,28 @@ namespace PersonnelManagement.Services
 
         public async Task<(ICollection<DepartmentDTO>, int totalPages, int totalRecords)> FilterAsync(DepartmentFilterDTO deptFilter)
         {
-            try {
+            try
+            {
                 var (departments, totalPage, totalRecords) = await _deptRepo.FilterAsync(deptFilter);
                 return (_deptMapper.TolistDTO(departments), totalPage, totalRecords);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 // Ghi log thông tin lỗi (sử dụng ILogger nếu có)
                 Console.WriteLine($"Lỗi: {ex.Message}");
                 Console.WriteLine($"Chi tiết: {ex.StackTrace}");
 
                 // Ném lại exception để bảo toàn ngữ cảnh
                 throw;
-            }            
+            }
+        }
+
+        public async Task<string> changeStatus(long departmentId)
+        {
+            Department currentDepartment = await _deptRepo.GetByIdAsync(departmentId);
+            currentDepartment.Status = currentDepartment.Status.Equals(Status.Lock) ?  Status.Active : Status.Lock;
+            await _deptRepo.UpdateAsync(currentDepartment);
+            return currentDepartment.Status;
         }
     }
 }

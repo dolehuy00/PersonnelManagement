@@ -11,11 +11,11 @@ namespace PersonnelManagement.Services.Impl
 {
     public class AccountService : IAccountService
     {
-        private readonly IGenericCurdRepository<Account> _genericAccRepo;
+        private readonly IGenericRepository<Account> _genericAccRepo;
         private readonly IAccountRepository _accRepo;
         private readonly AccountMapper _accMapper;
 
-        public AccountService(IGenericCurdRepository<Account> repository, IAccountRepository accountRepository)
+        public AccountService(IGenericRepository<Account> repository, IAccountRepository accountRepository)
         {
             _genericAccRepo = repository;
             _accRepo = accountRepository;

@@ -11,11 +11,11 @@ namespace PersonnelManagement.Services.Impl
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IGenericCurdRepository<Employee> _genericEmplRepo;
+        private readonly IGenericRepository<Employee> _genericEmplRepo;
         private readonly EmployeeMapper _emplMapper;
         private readonly IEmployeeRepository _emplRepo;
 
-        public EmployeeService(IGenericCurdRepository<Employee> repository, IEmployeeRepository employeeRepository, TokenService tokenService)
+        public EmployeeService(IGenericRepository<Employee> repository, IEmployeeRepository employeeRepository, TokenService tokenService)
         {
             _genericEmplRepo = repository;
             _emplRepo = employeeRepository;
