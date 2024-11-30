@@ -142,7 +142,7 @@ namespace PersonnelManagement.Repositories.Impl
         }
 
         public async Task<ICollection<T>> FindListAsync(
-            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+            Expression<Func<T, bool>>? predicate, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
 
@@ -162,7 +162,7 @@ namespace PersonnelManagement.Repositories.Impl
         }
 
         public async Task<T?> FindOneAsync(
-            Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+            Expression<Func<T, bool>>? predicate, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
 

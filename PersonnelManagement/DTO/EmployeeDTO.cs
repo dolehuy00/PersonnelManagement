@@ -10,7 +10,6 @@
         public string? Fullname { get; set; }
         public string? Position { get; set; }
         public DateTime StartDate { get; set; }
-        public long? AccountId { get; set; }
         public string? Status { get; set; }
         public long? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }

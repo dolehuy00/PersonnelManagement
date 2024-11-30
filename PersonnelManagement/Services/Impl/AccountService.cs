@@ -46,12 +46,16 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task ChangePasswordNoCheckOldPassAsync(string email, string password)
         {
-            await _accRepo.UpdatePasswordAsync(email, HashPassword(password));
+            Expression<Func<Account, bool>> expression = acc => acc.Email.Equals(email);
+            var account = await _genericAccRepo.FindOneAsync(expression) ?? throw new Exception("Account doesn't exist.");
+            account.Password = HashPassword(password);
+            await _genericAccRepo.SaveChangesAsync();
         }
 
         public async Task<bool> ExistAccountAsync(string email)
         {
-            return await _accRepo.ExistAccountAsync(email);
+            Expression<Func<Account, bool>> expression = acc => acc.Email.Equals(email);
+            return await _genericAccRepo.FindOneAsync(expression) != null;
         }
 
         private static string HashPassword(string password)
@@ -66,7 +70,8 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<AccountDTO> Add(AccountDTO accountDTO)
         {
-            var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
+            Expression<Func<Account, bool>> expressionExist = acc => acc.Email.Equals(accountDTO.Email);
+            var exist = _genericAccRepo.FindOneAsync(expressionExist) == null;
             if (exist)
             {
                 throw new Exception("Email already used in another account.");
@@ -75,12 +80,8 @@ namespace PersonnelManagement.Services.Impl
             var password = RandomStringGenerator.Generate(12);
             newAccount.Password = HashPassword(password);
             await _genericAccRepo.AddAsync(newAccount);
-            var account = await _accRepo.GetAccountFullInforAsync(accountDTO.Email);
-            if (account != null)
-            {
-                await SMTPService.SendPasswordNewAccountEmail(newAccount.Email, password);
-                return _accMapper.ToDTO(account);
-            }
+            await SMTPService.SendPasswordNewAccountEmail(newAccount.Email, password);
+            return _accMapper.ToDTO(newAccount);
             throw new Exception("An error occurred while creating an account.");
         }
 
@@ -89,7 +90,8 @@ namespace PersonnelManagement.Services.Impl
             var account = await _genericAccRepo.GetByIdAsync(accountDTO.Id) ?? throw new Exception("Account does not exist.");
             if (!account.Email.Equals(accountDTO.Email))
             {
-                var exist = await _accRepo.ExistAccountAsync(accountDTO.Email);
+                Expression<Func<Account, bool>> expression = acc => acc.Email.Equals(accountDTO.Email);
+                var exist = _genericAccRepo.FindOneAsync(expression) != null;
                 if (exist)
                 {
                     throw new Exception("Email already used in another account.");
@@ -140,13 +142,6 @@ namespace PersonnelManagement.Services.Impl
             return messages;
         }
 
-        public async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> GetPagesAsync(
-            int pageNumber, int pageSize)
-        {
-            var (accounts, totalPage, totalRecords) = await _accRepo.GetPagedListAsync(pageNumber, pageSize);
-            return (_accMapper.TolistDTO(accounts), totalPage, totalRecords);
-        }
-
         public async Task<(ICollection<AccountDTO>, int totalPages, int totalRecords)> FilterAsync(
             AccountFilterDTO filterDTO)
         {
@@ -167,6 +162,7 @@ namespace PersonnelManagement.Services.Impl
             await _genericAccRepo.SaveChangesAsync();
             return true;
         }
+
         public async Task<bool> UnLock(long id)
         {
             var empl = await _genericAccRepo.GetByIdAsync(id) ?? throw new Exception("Account does not exist.");

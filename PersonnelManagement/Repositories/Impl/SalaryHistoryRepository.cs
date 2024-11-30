@@ -56,43 +56,6 @@ namespace PersonnelManagement.Repositories.Impl
             return (items, totalPages, totalRecords);
         }
 
-        public async Task<SalaryHistory?> GetByEmployeeAsync(long salaryHistoryId, long emplyeeId)
-        {
-            return await _dataContext.SalaryHistories
-               .Include(s => s.Employee)
-               .FirstOrDefaultAsync(s => s.Id == salaryHistoryId && s.EmployeeId == emplyeeId);
-        }
-
-        public async Task<SalaryHistory?> GetFullInforAsync(long id)
-        {
-            return await _dataContext.SalaryHistories
-               .Include(s => s.Employee)
-               .FirstOrDefaultAsync(s => s.Id == id);
-        }
-
-        public async Task<ICollection<SalaryHistory>> GetFullInforAsync()
-        {
-            return await _dataContext.SalaryHistories
-               .Include(s => s.Employee)
-               .ToListAsync();
-        }
-
-        public async Task<(ICollection<SalaryHistory>, int, int)> GetPagedListAsync(
-            int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1) * pageSize;
-            var totalRecords = await _dataContext.SalaryHistories.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            var pagedList = await _dataContext.SalaryHistories
-                .OrderBy(s => s.Id)
-                .Skip(skip)
-                .Take(pageSize)
-                .Include(s => s.Employee)
-                .ToListAsync();
-
-            return (pagedList, totalPages, totalRecords);
-        }
-
         public async Task<(ICollection<SalaryHistory>, int, int)> GetPagedListByEmployeeAsync(
             int pageNumber, int pageSize, long employeeId)
         {

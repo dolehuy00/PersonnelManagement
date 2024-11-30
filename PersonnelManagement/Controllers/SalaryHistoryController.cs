@@ -100,22 +100,6 @@ namespace PersonnelManagement.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("get/{page}/{itemPerPage}")]
-        public async Task<IActionResult> Get(int page, int itemPerPage)
-        {
-            var titleResponse = "Get page Salary History.";
-            try
-            {
-                var (salaryHistories, totalPage, totalRecords) = await _sHServ.GetPagesAsync(page, itemPerPage);
-                return Ok(new ResponseObjectDTO<SalaryHistoryDTO>(titleResponse, salaryHistories, page, totalPage, totalRecords));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAll()
         {

@@ -38,7 +38,17 @@ namespace PersonnelManagement.Controllers
                     var accessToken = _tokenServ.GenerateAccessToken(account.Id.ToString(), account.RoleName!);
                     var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                     var refreshToken = await _tokenServ.GenerateRefreshTokenAsync(account.Id.ToString(), account.RoleName!, ipAddress);
-                    var response = new { account.Id, accessToken, refreshToken, account.Email, account.EmployeeName, role = account.RoleName };
+                    var response = new
+                    {
+                        account.Id,
+                        accessToken,
+                        refreshToken,
+                        account.Email,
+                        account.EmployeeName,
+                        EmployeeImage = $"{account.EmployeeImage}/{_tokenServ.GenerateAccessTokenImgServer()}",
+                        role = account.RoleName,
+                        account.LeaderOfDepartments
+                    };
                     return Ok(new ResponseObjectDTO<dynamic>("Login successfully", [response]));
                 }
                 return Unauthorized(
@@ -286,22 +296,6 @@ namespace PersonnelManagement.Controllers
             {
                 var account = await _accServ.Get(id);
                 return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, [account]));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("get/{page}/{itemPerPage}")]
-        public async Task<IActionResult> Get(int page, int itemPerPage)
-        {
-            var titleResponse = "Get page account.";
-            try
-            {
-                var (accounts, totalPage, totalRecords) = await _accServ.GetPagesAsync(page, itemPerPage);
-                return Ok(new ResponseObjectDTO<AccountDTO>(titleResponse, accounts, page, totalPage, totalRecords));
             }
             catch (Exception ex)
             {

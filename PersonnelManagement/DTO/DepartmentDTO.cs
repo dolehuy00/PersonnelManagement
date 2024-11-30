@@ -1,6 +1,4 @@
-﻿using PersonnelManagement.Model;
-
-namespace PersonnelManagement.DTO
+﻿namespace PersonnelManagement.DTO
 {
     public class DepartmentDTO
     {

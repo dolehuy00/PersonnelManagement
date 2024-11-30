@@ -9,5 +9,7 @@
         public string? Status { get; set; }
         public long EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
+        public string? EmployeeImage { get; set; }
+        public ICollection<dynamic>? LeaderOfDepartments { get; set; }
     }
 }

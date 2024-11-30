@@ -106,6 +106,23 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AllRoles")]
+        [HttpGet("get")]
+        public async Task<IActionResult> Get()
+        {
+            var titleResponse = "Get an employee.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                var employee = await _emplServ.Get(long.Parse(userIdInToken));
+                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, [employee]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("search")]
         public async Task<IActionResult> Get(string fullnameOrId)

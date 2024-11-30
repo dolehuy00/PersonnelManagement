@@ -16,10 +16,10 @@ namespace PersonnelManagement.Repositories
         Task DeleteAsync(long id);
         Task SaveChangesAsync();
         Task<ICollection<T>> FindListAsync(
-            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate,
             params Expression<Func<T, object>>[] includes);
         Task<T?> FindOneAsync(
-            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate,
             params Expression<Func<T, object>>[] includes);
     }
 }
