@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonnelManagement.Data;
+using PersonnelManagement.Model;
 using System.Linq.Expressions;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
-    public class GenericCurdRepository<T> : IGenericCurdRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly PersonnelDataContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public GenericCurdRepository(PersonnelDataContext context)
+        public GenericRepository(PersonnelDataContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
@@ -50,7 +51,18 @@ namespace PersonnelManagement.Repositories
         public async Task UpdateAsync(T entity)
         {
             _dbSet.Attach(entity);
+            var entry = _context.Entry(entity);
+            // Chỉ định trạng thái 'Modified' cho những thuộc tính không phải null
             _context.Entry(entity).State = EntityState.Modified;
+            foreach (var property in entry.Properties)
+            {
+                if (property.CurrentValue == null)
+                {
+                    property.IsModified = false; // Cập nhật thuộc tính
+                }
+            }
+
+            // Lưu thay đổi
             await SaveChangesAsync();
         }
 

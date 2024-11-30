@@ -26,24 +26,15 @@ builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<PersonnelDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-/// Dependency Injection
-// Token service
+// Dependency Injection
 builder.Services.AddScoped<TokenService>();
-// Acount
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-// Employee
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-// Assignment
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
-// Salary History
 builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
-// Generic repository
-builder.Services.AddScoped(typeof(IGenericCurdRepository<>), typeof(GenericCurdRepository<>));
-// Role
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<RoleMapper>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 // Department
 builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository
@@ -107,11 +98,12 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 // allow specific host reactJs app run
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        builder => builder
-            .WithOrigins("http://localhost:3000") // Địa chỉ của ứng dụng React
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("AllowLocalhost3000", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")  // Cho phép yêu cầu từ localhost:3000
+              .AllowAnyHeader()                     // Cho phép bất kỳ tiêu đề
+              .AllowAnyMethod();                     // Cho phép bất kỳ phương thức HTTP (GET, POST, PUT, DELETE)
+    });
 });
 
 // allow static file server
@@ -138,7 +130,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowLocalhost3000");
 
 app.UseAuthentication();
 

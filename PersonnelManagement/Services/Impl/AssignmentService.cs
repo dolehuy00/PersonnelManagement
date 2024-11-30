@@ -8,11 +8,11 @@ namespace PersonnelManagement.Services.Impl
 {
     public class AssignmentService : IAssignmentService
     {
-        private readonly IGenericCurdRepository<Assignment> _genericRepo;
+        private readonly IGenericRepository<Assignment> _genericRepo;
         private readonly AssignmentMapper _mapper;
         private readonly IAssignmentRepository _assignmentRepo;
 
-        public AssignmentService(IGenericCurdRepository<Assignment> repository, IAssignmentRepository assignmentRepository)
+        public AssignmentService(IGenericRepository<Assignment> repository, IAssignmentRepository assignmentRepository)
         {
             _genericRepo = repository;
             _assignmentRepo = assignmentRepository;

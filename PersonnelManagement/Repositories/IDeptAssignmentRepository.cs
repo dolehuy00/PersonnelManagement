@@ -4,7 +4,7 @@ using PersonnelManagement.Model;
 
 namespace PersonnelManagement.Repositories
 {
-    public interface IDeptAssignmentRepository : IGenericCurdRepository<DeptAssignment>
+    public interface IDeptAssignmentRepository : IGenericRepository<DeptAssignment>
     {
         Task<(ICollection<DeptAssignment>, int, int)> FilterAsync(DeptAssignmentFilterDTO projectFilter);
     }

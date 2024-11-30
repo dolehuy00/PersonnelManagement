@@ -11,8 +11,9 @@ namespace PersonnelManagement.Services
         Task<DepartmentDTO> Add(DepartmentDTO departmentDTO);
         Task<DepartmentDTO> Edit(DepartmentDTO departmentDTO);
         Task Delete(long departmentId);
-        Task<DepartmentDTO?> Get(long departmentIds);
+        Task<DepartmentDTO?> Get(long departmentId);
         Task<ICollection<DepartmentDTO>> GetAll();
         Task<string[]> DeleteMany(long[] departmentId);
+        Task<string> changeStatus(long departmentId);
     }
 }

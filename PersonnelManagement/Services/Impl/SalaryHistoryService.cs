@@ -9,11 +9,11 @@ namespace PersonnelManagement.Services.Impl
 {
     public class SalaryHistoryService : ISalaryHistoryService
     {
-        private readonly IGenericCurdRepository<SalaryHistory> _genericSHRepo;
+        private readonly IGenericRepository<SalaryHistory> _genericSHRepo;
         private readonly SalaryHistoryMapper _sHMapper;
         private readonly ISalaryHistoryRepository _sHRepo;
 
-        public SalaryHistoryService(IGenericCurdRepository<SalaryHistory> repository, ISalaryHistoryRepository salaryHistoryRepository)
+        public SalaryHistoryService(IGenericRepository<SalaryHistory> repository, ISalaryHistoryRepository salaryHistoryRepository)
         {
             _genericSHRepo = repository;
             _sHRepo = salaryHistoryRepository;

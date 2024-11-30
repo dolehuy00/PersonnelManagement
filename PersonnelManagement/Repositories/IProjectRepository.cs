@@ -4,7 +4,7 @@ using PersonnelManagement.Model;
 
 namespace PersonnelManagement.Repositories
 {
-    public interface IProjectRepository : IGenericCurdRepository<Project>
+    public interface IProjectRepository : IGenericRepository<Project>
     {
         Task<(ICollection<Project>, int, int)> FilterAsync(ProjectFilterDTO projectFilter);
 

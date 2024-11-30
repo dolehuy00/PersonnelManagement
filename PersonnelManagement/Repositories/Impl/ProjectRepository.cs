@@ -4,18 +4,19 @@ using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Model;
 
-namespace PersonnelManagement.Repositories
+namespace PersonnelManagement.Repositories.Impl
 {
-    public class ProjectRepository : GenericCurdRepository<Project>, IProjectRepository
+    public class ProjectRepository : GenericRepository<Project>, IProjectRepository
     {
-        public ProjectRepository(PersonnelDataContext context) : base(context){}
+        public ProjectRepository(PersonnelDataContext context) : base(context) { }
 
         async Task<(ICollection<Project>, int, int)> IProjectRepository.FilterAsync(ProjectFilterDTO projectFilter)
         {
-            var query = this._context.Projects.AsQueryable();
+            var query = _context.Projects.AsQueryable();
 
             //Name or Id
-            if (!String.IsNullOrEmpty(projectFilter.Name) || projectFilter.Id != null) {
+            if (!string.IsNullOrEmpty(projectFilter.Name) || projectFilter.Id != null)
+            {
                 query = query.Where(e =>
                 (string.IsNullOrEmpty(projectFilter.Name) || e.Name.Contains(projectFilter.Name)) &&
                 (projectFilter.Id == null || e.Id == projectFilter.Id)
@@ -27,7 +28,7 @@ namespace PersonnelManagement.Repositories
             if (projectFilter.StartDate.HasValue && projectFilter.EndDate.HasValue)
             {
                 // Nếu có cả startTime và Duration
-                query = query.Where(e => (e.StartDate >= projectFilter.StartDate && e.StartDate <= projectFilter.EndDate));
+                query = query.Where(e => e.StartDate >= projectFilter.StartDate && e.StartDate <= projectFilter.EndDate);
             }
             else if (projectFilter.StartDate.HasValue)
             {
@@ -41,18 +42,22 @@ namespace PersonnelManagement.Repositories
             }
 
             //Status
-            if (!String.IsNullOrEmpty(projectFilter.Status)) {
-                query = query.Where(e=> (e.Status == projectFilter.Status));
-            }               
+            if (!string.IsNullOrEmpty(projectFilter.Status))
+            {
+                query = query.Where(e => e.Status == projectFilter.Status);
+            }
 
             //Sorting
-            if (!String.IsNullOrEmpty(projectFilter.SortBy)) {
+            if (!string.IsNullOrEmpty(projectFilter.SortBy))
+            {
                 var sortBySplit = projectFilter.SortBy.Split(':');
                 var sortField = sortBySplit[0].ToLower();
                 var sortOrder = sortBySplit[1].ToLower();
                 if (sortField == "name" || sortField == "id")
                     query = ApplySorting(query, sortField, sortOrder);
-            } else {
+            }
+            else
+            {
                 query = query.OrderByDescending(e => e.Id);
             }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
 using System.Diagnostics;
 
@@ -107,6 +108,21 @@ namespace PersonnelManagement.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Chi tiết: {ex.StackTrace}");
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [HttpPut("changeStatus/{id}")]
+        public async Task<IActionResult> changeStatus(long id)
+        {
+            var titleResponse = "Get an department.";
+            try
+            {
+                String status = await _deptService.changeStatus(id);
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), status]));
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
             }
         }
