@@ -45,7 +45,8 @@ namespace PersonnelManagement.Controllers
                         refreshToken,
                         account.Email,
                         account.EmployeeName,
-                        EmployeeImage = $"{account.EmployeeImage}/{_tokenServ.GenerateAccessTokenImgServer()}",
+                        EmployeeImage = account.EmployeeImage != null
+                            ? $"{account.EmployeeImage}/{_tokenServ.GenerateAccessTokenImgServer()}" : null,
                         role = account.RoleName,
                         account.LeaderOfDepartments
                     };

@@ -16,7 +16,10 @@ namespace PersonnelManagement.Mappers
                 cfg.CreateMap<SalaryHistory, SalaryHistoryDTO>()
                     .ForMember(
                         dest => dest.EmployeeName,
-                        opt => opt.MapFrom(src => src.Employee == null ? "Unknow" : src.Employee.Fullname));
+                        opt => opt.MapFrom(src => src.Employee == null ? "Unknow" : src.Employee.Fullname))
+                    .ForMember(
+                        dest => dest.Total,
+                        opt => opt.MapFrom(src => src.BasicSalary + src.BasicSalary - src.Penalty - src.Tax));
             }).CreateMapper();
             mapperToEntity = new MapperConfiguration(cfg => cfg.CreateMap<SalaryHistoryDTO, SalaryHistory>()).CreateMapper();
         }
