@@ -128,5 +128,22 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [HttpPut("EditMany/{projectId}")]
+        public async Task<IActionResult> AddMany(long projectId, [FromBody] List<DeptAssignmentDTO> deptAssignmentDTOs)
+        {
+            var titleResponse = "Edit multiple deptAssignments.";
+            try
+            {
+                var deptAssignments = await _deptAssignmentService.EditManyByProjectId(projectId, deptAssignmentDTOs);
+                // Trả về danh sách kết quả đã thêm
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, deptAssignments));
+            }
+            catch (Exception ex)
+            {
+                // Trả về thông báo lỗi
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
     }
 }

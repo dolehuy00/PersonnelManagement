@@ -108,12 +108,23 @@ namespace PersonnelManagement.Services.Impl
             // Thêm các tác vụ vào danh sách
             foreach (DeptAssignmentDTO deptAssignmentDTO in deptAssignmentDTOs)
             {
+                deptAssignmentDTO.Id = 0;
                 var result = await this.Add(deptAssignmentDTO);
                 results.Add(result);
             }
 
             return results;
 
+        }
+
+        public async Task<ICollection<DeptAssignmentDTO>> EditManyByProjectId(long projectId, List<DeptAssignmentDTO> deptAssignmentDTOs)
+        {
+            await _deptAssignmentRepo.DeleteByProjectIdAsync(projectId);
+            if (deptAssignmentDTOs.Count != 0)
+            {
+                return await AddMany(deptAssignmentDTOs);
+            }
+            return new List<DeptAssignmentDTO>();
         }
     }
 }
