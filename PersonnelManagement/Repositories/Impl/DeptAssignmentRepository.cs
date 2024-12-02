@@ -8,7 +8,7 @@ namespace PersonnelManagement.Repositories.Impl
 {
     public class DeptAssignmentRepository : GenericRepository<DeptAssignment>, IDeptAssignmentRepository
     {
-        public DeptAssignmentRepository(PersonnelDataContext context) : base(context) { }
+        public DeptAssignmentRepository(PersonnelDataContext context) : base(context) { }        
 
         async Task<(ICollection<DeptAssignment>, int, int)> IDeptAssignmentRepository.FilterAsync(DeptAssignmentFilterDTO deptAssignmentFilter)
         {
@@ -44,6 +44,18 @@ namespace PersonnelManagement.Repositories.Impl
 
             // Phan trang
             return await ApplyPaging(query, deptAssignmentFilter.Page, deptAssignmentFilter.PageSize);
+        }
+
+
+        public async Task DeleteByProjectIdAsync(long projectId)
+        {
+            var deptAssignments = _context.DeptAssignments.Where(d => d.ProjectId == projectId);
+
+            if (deptAssignments.Any())
+            {
+                _context.DeptAssignments.RemoveRange(deptAssignments);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

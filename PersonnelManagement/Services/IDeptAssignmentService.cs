@@ -15,5 +15,6 @@ namespace PersonnelManagement.Services
         Task<ICollection<DeptAssignmentDTO>> GetAll();
         Task<string[]> DeleteMany(long[] deptAssignmentId);
         Task<ICollection<DeptAssignmentDTO>> AddMany(List<DeptAssignmentDTO> deptAssignmentDTOs);
+        Task<ICollection<DeptAssignmentDTO>> EditManyByProjectId(long projectId, List<DeptAssignmentDTO> deptAssignmentDTOs);
     }
 }
