@@ -13,14 +13,17 @@ namespace PersonnelManagement.Mappers
         private IProjectRepository _projectRepo;
 
         public DeptAssignmentMapper(IDepartmentRepository deptRepo, IProjectRepository projectRepo)
-        {           
-            mapperToDTO = new MapperConfiguration(cfg => {
+        {
+            mapperToDTO = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<DeptAssignment, DeptAssignmentDTO>()
                     .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
-                    .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.DepartmentId));
+                    .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.DepartmentId))
+                    .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
             }).CreateMapper();
 
-            mapperToEntity = new MapperConfiguration(cfg => {
+            mapperToEntity = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<DeptAssignmentDTO, DeptAssignment>()
                     .ForMember(dest => dest.Project, opt => opt.Ignore());
             }).CreateMapper();
@@ -70,7 +73,7 @@ namespace PersonnelManagement.Mappers
                     var project = await _projectRepo.GetByIdAsync(deptAssignment.ProjectId);
                     if (project != null) { deptAssignment.Project = project; }
                 }
-                 if (deptAssignment.DepartmentId != 0)
+                if (deptAssignment.DepartmentId != 0)
                 {
                     var department = await _deptRepo.GetByIdAsync(deptAssignment.DepartmentId);
                     if (department != null) { deptAssignment.Department = department; }

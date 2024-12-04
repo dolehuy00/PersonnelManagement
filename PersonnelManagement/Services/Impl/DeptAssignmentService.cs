@@ -1,8 +1,9 @@
-﻿using PersonnelManagement.DTO.Filter;
-using PersonnelManagement.DTO;
+﻿using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services.Impl
 {
@@ -125,6 +126,14 @@ namespace PersonnelManagement.Services.Impl
                 return await AddMany(deptAssignmentDTOs);
             }
             return new List<DeptAssignmentDTO>();
+        }
+
+        public async Task<ICollection<DeptAssignmentDTO>> SearchIdAsync(long id)
+        {
+            Expression<Func<DeptAssignment, bool>> exppression = de => de.Id == id;
+            Expression<Func<DeptAssignment, object>>[] includes = [de => de.Department!];
+            var results = await _deptAssignmentRepo.FindListAsync(exppression, includes);
+            return _deptAssignmentMapper.TolistDTO(results);
         }
     }
 }

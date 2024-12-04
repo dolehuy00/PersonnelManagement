@@ -2,7 +2,7 @@
 
 namespace PersonnelManagement.Repositories
 {
-    public interface IAccountRepository
+    public interface IAccountRepository : IGenericRepository<Account>
     {
         Task<Account?> GetAccountFullInforAsync(string email);
         Task<(ICollection<Account>, int totalPages, int totalRecords)> FilterAsync(string? keyword,

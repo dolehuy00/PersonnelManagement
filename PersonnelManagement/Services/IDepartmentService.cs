@@ -15,5 +15,6 @@ namespace PersonnelManagement.Services
         Task<ICollection<DepartmentDTO>> GetAll();
         Task<string[]> DeleteMany(long[] departmentId);
         Task<string> changeStatus(long departmentId);
+        Task<bool> IsLeaderOfDepartment(long? departmentId, long leaderId);
     }
 }

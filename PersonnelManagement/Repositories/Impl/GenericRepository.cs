@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonnelManagement.Data;
-using PersonnelManagement.Model;
 using System.Linq.Expressions;
 
 namespace PersonnelManagement.Repositories.Impl

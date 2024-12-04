@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonnelManagement.Data;
-using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Model;
 

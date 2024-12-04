@@ -38,14 +38,22 @@ namespace PersonnelManagement.Controllers
                     var accessToken = _tokenServ.GenerateAccessToken(account.Id.ToString(), account.RoleName!);
                     var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                     var refreshToken = await _tokenServ.GenerateRefreshTokenAsync(account.Id.ToString(), account.RoleName!, ipAddress);
+                    // Lưu Refresh Token vào HTTP-only Cookie
+                    HttpContext.Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+                    {
+                        HttpOnly = true, // Không cho phép truy cập qua JavaScript
+                        Secure = true,   // Chỉ gửi qua HTTPS
+                        SameSite = SameSiteMode.None,
+                        Expires = DateTime.UtcNow.AddDays(7) // Thời gian sống
+                    });
                     var response = new
                     {
                         account.Id,
                         accessToken,
-                        refreshToken,
                         account.Email,
                         account.EmployeeName,
-                        EmployeeImage = $"{account.EmployeeImage}/{_tokenServ.GenerateAccessTokenImgServer()}",
+                        EmployeeImage = account.EmployeeImage != null
+                            ? $"{account.EmployeeImage}/{_tokenServ.GenerateAccessTokenImgServer()}" : null,
                         role = account.RoleName,
                         account.LeaderOfDepartments
                     };
@@ -62,14 +70,28 @@ namespace PersonnelManagement.Controllers
 
         [AllowAnonymous]
         [HttpPost("get-access-token")]
-        public async Task<IActionResult> GetAccessTokenUsingRefressToken([FromHeader] string refressToken)
+        public async Task<IActionResult> GetAccessTokenUsingRefressToken()
         {
             var titleResponse = "Get access token.";
             try
             {
+                // Lấy Refresh Token từ Cookie
+                var refreshToken = HttpContext.Request.Cookies["refreshToken"];
+                if (string.IsNullOrEmpty(refreshToken))
+                    return Ok(new ResponseMessageDTO(titleResponse, ["Refresh token is missing."]));
                 var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-                var (newAccessToken, newRefreshToken) = await _tokenServ.RefreshTokenAsync(refressToken, ipAddress);
-                var response = new { newAccessToken, newRefreshToken };
+                var (newAccessToken, newRefreshToken) = await _tokenServ.RefreshTokenAsync(refreshToken, ipAddress);
+
+                // Lưu Refresh Token vào HTTP-only Cookie
+                HttpContext.Response.Cookies.Append("refreshToken", newRefreshToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,   // Chỉ gửi qua HTTPS
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                });
+
+                var response = new { newAccessToken };
                 return Ok(new ResponseObjectDTO<dynamic>("Get access successfully.", [response]));
             }
             catch (Exception ex)
@@ -78,17 +100,21 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-        [Authorize(Policy = "AllRoles")]
+        [AllowAnonymous]
         [HttpPost("cancel-refressh-token")]
-        public async Task<IActionResult> CancelRefressToken([FromHeader] string refressToken)
+        public async Task<IActionResult> CancelRefressToken()
         {
             var titleResponse = "Cancel refressh token.";
             try
             {
+                // Lấy Refresh Token từ Cookie
+                var refreshToken = HttpContext.Request.Cookies["refreshToken"];
+                if (string.IsNullOrEmpty(refreshToken))
+                    return Ok(new ResponseMessageDTO(titleResponse, ["Refressh token is empty."]));
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
-                var isCancel = await _tokenServ.CancelRefreshTokenAsync(refressToken, userIdInToken);
+                var isCancel = await _tokenServ.CancelRefreshTokenAsync(refreshToken, userIdInToken);
                 var response = isCancel ? "Refressh token canceled." : "Can not cancel refressh token.";
-                return Ok(new ResponseObjectDTO<dynamic>("Get access successfully.", [response]));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [response]));
             }
             catch (Exception ex)
             {

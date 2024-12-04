@@ -18,12 +18,14 @@ namespace PersonnelManagement.Controllers
         private readonly IEmployeeService _emplServ;
         private readonly TokenService _tokenServ;
         private readonly IStaticFileService _staticFileServ;
+        private readonly IDepartmentService _departmentServ;
 
-        public EmployeeController(IEmployeeService employeeService, TokenService tokenService, IStaticFileService staticFileServ)
+        public EmployeeController(IEmployeeService employeeService, TokenService tokenService, IStaticFileService staticFileServ, IDepartmentService departmentServ)
         {
             _emplServ = employeeService;
             _tokenServ = tokenService;
             _staticFileServ = staticFileServ;
+            _departmentServ = departmentServ;
         }
 
         [Authorize(Policy = "AdminOnly")]
@@ -125,12 +127,31 @@ namespace PersonnelManagement.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("search")]
-        public async Task<IActionResult> Get(string fullnameOrId)
+        public async Task<IActionResult> Search(string fullnameOrId, long? departmentId)
         {
             var titleResponse = "Get page employee.";
             try
             {
-                var employees = await _emplServ.SearchNameOrIdAsync(fullnameOrId);
+                var employees = await _emplServ.SearchNameOrIdAsync(fullnameOrId, departmentId);
+                return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, 1, 1, employees.Count));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AllRoles")]
+        [HttpGet("search-by-leader")]
+        public async Task<IActionResult> SearchByLeader(string fullnameOrId, long? departmentId)
+        {
+            var titleResponse = "Get page employee.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                var isLeader = await _departmentServ.IsLeaderOfDepartment(departmentId, long.Parse(userIdInToken));
+                if (!isLeader) return StatusCode(403, "Access denied!");
+                var employees = await _emplServ.SearchNameOrIdAsync(fullnameOrId, departmentId);
                 return Ok(new ResponseObjectDTO<EmployeeDTO>(titleResponse, employees, 1, 1, employees.Count));
             }
             catch (Exception ex)

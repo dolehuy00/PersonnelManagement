@@ -15,12 +15,13 @@ namespace PersonnelManagement.Repositories.Impl
 
         public async Task<(ICollection<Assignment>, int, int)> FilterAsync(
             string? sortBy, string? status, long? responsiblePesonId, long? projectId,
-            long? departmentId, int page, int pageSize)
+            long? departmentId, long? deptAssignmentId, int page, int pageSize)
         {
             // Loc theo status, xep theo name, sap xep theo level, loc theo employee
             // Loc theo project id, loc theo department id.
             var query = _dataContext.Assignments
                 .Include(a => a.DeptAssignment)
+                    .ThenInclude(dept => dept.Project)
                 .Include(a => a.ResponsiblePeson)
                 .AsQueryable();
 
@@ -34,6 +35,12 @@ namespace PersonnelManagement.Repositories.Impl
             if (responsiblePesonId.HasValue)
             {
                 query = query.Where(a => a.ResponsiblePesonId == responsiblePesonId.Value);
+            }
+
+            // Lọc theo id employee
+            if (deptAssignmentId.HasValue)
+            {
+                query = query.Where(a => a.DeptAssignmentId == deptAssignmentId.Value);
             }
 
             // Lọc theo id project
@@ -57,7 +64,7 @@ namespace PersonnelManagement.Repositories.Impl
                 var sortFields = new Dictionary<string, Func<IQueryable<Assignment>, IOrderedQueryable<Assignment>>>
                 {
                     { "fullname", q => sortOrder == "asc" ? q.OrderBy(e => e.Name) : q.OrderByDescending(e => e.Name) },
-                    { "priotityLevel", q => sortOrder == "asc" ? q.OrderBy(e => e.PriotityLevel) : q.OrderByDescending(e => e.PriotityLevel) }
+                    { "priotitylevel", q => sortOrder == "asc" ? q.OrderBy(e => e.PriotityLevel) : q.OrderByDescending(e => e.PriotityLevel) }
                 };
 
                 if (sortFields.ContainsKey(sortField))
@@ -85,42 +92,6 @@ namespace PersonnelManagement.Repositories.Impl
                 .ToListAsync();
             var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
             return (items, totalPages, totalRecords);
-        }
-
-        public async Task<Assignment?> GetByEmployeeAsync(long salaryHistoryId, long emplyeeId)
-        {
-            return await _dataContext.Assignments
-               .Include(s => s.ResponsiblePeson)
-               .FirstOrDefaultAsync(s => s.Id == salaryHistoryId && s.ResponsiblePesonId == emplyeeId);
-        }
-
-        public async Task<Assignment?> GetFullInforAsync(long id)
-        {
-            return await _dataContext.Assignments
-               .Include(s => s.ResponsiblePeson)
-               .FirstOrDefaultAsync(s => s.Id == id);
-        }
-
-        public async Task<ICollection<Assignment>> GetFullInforAsync()
-        {
-            return await _dataContext.Assignments
-               .Include(s => s.ResponsiblePeson)
-               .ToListAsync();
-        }
-
-        public async Task<(ICollection<Assignment>, int, int)> GetPagedListAsync(int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1) * pageSize;
-            var totalRecords = await _dataContext.Assignments.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            var pagedList = await _dataContext.Assignments
-                .OrderBy(s => s.Id)
-                .Skip(skip)
-                .Take(pageSize)
-                .Include(s => s.ResponsiblePeson)
-                .ToListAsync();
-
-            return (pagedList, totalPages, totalRecords);
         }
 
         public async Task<(ICollection<Assignment>, int, int)> GetPagedListByEmployeeAsync(int pageNumber, int pageSize, long employeeId)

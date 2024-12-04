@@ -11,13 +11,11 @@ namespace PersonnelManagement.Services.Impl
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IGenericRepository<Employee> _genericEmplRepo;
         private readonly EmployeeMapper _emplMapper;
         private readonly IEmployeeRepository _emplRepo;
 
-        public EmployeeService(IGenericRepository<Employee> repository, IEmployeeRepository employeeRepository, TokenService tokenService)
+        public EmployeeService(IEmployeeRepository employeeRepository, TokenService tokenService)
         {
-            _genericEmplRepo = repository;
             _emplRepo = employeeRepository;
             _emplMapper = new EmployeeMapper(tokenService);
         }
@@ -25,39 +23,39 @@ namespace PersonnelManagement.Services.Impl
         public async Task<EmployeeDTO> Add(EmployeeDTO employeeDTO)
         {
             var newEmployee = _emplMapper.ToModel(employeeDTO);
-            await _genericEmplRepo.AddAsync(newEmployee);
+            await _emplRepo.AddAsync(newEmployee);
             return _emplMapper.ToDTO(newEmployee);
 
         }
 
         public async Task<EmployeeDTO> Edit(EmployeeDTO employeeDTO)
         {
-            var exist = await _genericEmplRepo.ExistAsync(employeeDTO.Id);
+            var exist = await _emplRepo.ExistAsync(employeeDTO.Id);
             if (!exist)
             {
                 throw new Exception("Employee does not exist.");
             }
             var employee = _emplMapper.ToModel(employeeDTO);
-            _emplRepo.Update(employee);
-            await _emplRepo.SaveChangeAsync();
+            _emplRepo.UpdateEmployeeIgnorePropeties(employee);
+            await _emplRepo.SaveChangesAsync();
             return employeeDTO;
         }
 
         public async Task Delete(long employeeId)
         {
-            var employee = await _genericEmplRepo.GetByIdAsync(employeeId);
+            var employee = await _emplRepo.GetByIdAsync(employeeId);
             if (employee == null)
             {
                 throw new Exception("Employee doesn't exist.");
             }
-            await _genericEmplRepo.DeleteAsync(employee);
+            await _emplRepo.DeleteAsync(employee);
         }
 
         public async Task<EmployeeDTO> Get(long employeeId)
         {
             Expression<Func<Employee, bool>> exppression = e => e.Id == employeeId;
             Expression<Func<Employee, object>>[] includes = [e => e.Department!];
-            var employee = await _genericEmplRepo.FindOneAsync(exppression, includes);
+            var employee = await _emplRepo.FindOneAsync(exppression, includes);
             if (employee == null)
             {
                 throw new Exception("Employee doesn't exist.");
@@ -67,7 +65,7 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<ICollection<EmployeeDTO>> GetAll()
         {
-            var employees = await _genericEmplRepo.GetAllAsync();
+            var employees = await _emplRepo.GetAllAsync();
             return _emplMapper.TolistDTO(employees);
         }
 
@@ -76,24 +74,25 @@ namespace PersonnelManagement.Services.Impl
             string[] messages = new string[employeeIds.Length];
             for (var i = 0; i < employeeIds.Length; i++)
             {
-                var employee = await _genericEmplRepo.GetByIdAsync(employeeIds[i]);
+                var employee = await _emplRepo.GetByIdAsync(employeeIds[i]);
                 if (employee == null)
                 {
                     messages[i] = $"Can't delete employee id = {employeeIds[i]}. Employee doesn't exist.";
                 }
                 else
                 {
-                    await _genericEmplRepo.DeleteAsync(employee);
+                    await _emplRepo.DeleteAsync(employee);
                     messages[i] = $"Delete employee id = {employeeIds[i]} successfully.";
                 }
             }
             return messages;
         }
 
-        public async Task<ICollection<EmployeeDTO>> SearchNameOrIdAsync(string keyword)
+        public async Task<ICollection<EmployeeDTO>> SearchNameOrIdAsync(string keyword, long? departmentId)
         {
-            Expression<Func<Employee, bool>> expression = e => e.Fullname.Contains(keyword) || e.Id.ToString().Equals(keyword);
-            var employees = await _genericEmplRepo.FindListAsync(expression);
+            Expression<Func<Employee, bool>> expression = e =>
+                (e.Fullname.Contains(keyword) || e.Id.ToString().Equals(keyword)) && e.DepartmentId == departmentId;
+            var employees = await _emplRepo.FindListAsync(expression);
             return _emplMapper.TolistDTO(employees);
         }
 
@@ -112,25 +111,32 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<bool> Lock(long id)
         {
-            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            var empl = await _emplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
             empl.Status = Status.Lock;
-            await _genericEmplRepo.SaveChangesAsync();
+            await _emplRepo.SaveChangesAsync();
             return true;
         }
 
         public async Task<bool> UnLock(long id)
         {
-            var empl = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
+            var empl = await _emplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist.");
             empl.Status = Status.Active;
-            await _genericEmplRepo.SaveChangesAsync();
+            await _emplRepo.SaveChangesAsync();
             return true;
         }
 
         public async Task UpdateImageAsync(long id, string fileUrl)
         {
-            var employee = await _genericEmplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist");
+            var employee = await _emplRepo.GetByIdAsync(id) ?? throw new Exception("Employee does not exist");
             employee.Image = fileUrl;
-            await _genericEmplRepo.SaveChangesAsync();
+            await _emplRepo.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsPersonOfDepartment(long? departmentId, long personId)
+        {
+            if (departmentId == null) throw new Exception("'departmentId' is requid");
+            Expression<Func<Employee, bool>> expression = e => e.Id == personId && e.DepartmentId == departmentId;
+            return await _emplRepo.FindOneAsync(expression) != null;
         }
     }
 }

@@ -26,15 +26,26 @@ builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<PersonnelDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Dependency Injection
+/// Dependency Injection
+// Token service
 builder.Services.AddScoped<TokenService>();
+// Acount
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IAssignmentService, AssignmentService>();
-builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+// Employee
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+// Assignment
+builder.Services.AddScoped<IAssignmentService, AssignmentService>();
+builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+// Salary History
+builder.Services.AddScoped<ISalaryHistoryService, SalaryHistoryService>();
+builder.Services.AddScoped<ISalaryHistoryRepository, SalaryHistoryRepository>();
+// Generic repository
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+// Role
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<RoleMapper>();
 // Department
 builder.Services.AddScoped<IDepartmentService, DepartmentService>(); // Đăng ký dịch vụ
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Đăng ký repository
@@ -95,18 +106,25 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;  // Cho phép cross-origin
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // Chỉ gửi cookie qua HTTPS
+});
+
 // allow specific host reactJs app run
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost3000", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")  // Cho phép yêu cầu từ localhost:3000
-              .AllowAnyHeader()                     // Cho phép bất kỳ tiêu đề
-              .AllowAnyMethod();                     // Cho phép bất kỳ phương thức HTTP (GET, POST, PUT, DELETE)
+        policy.WithOrigins("http://localhost:3000") // Cho phép yêu cầu từ localhost:3000
+            .AllowAnyHeader()                       // Cho phép bất kỳ tiêu đề
+            .AllowAnyMethod()                       // Cho phép bất kỳ phương thức HTTP (GET, POST, PUT, DELETE)
+            .AllowCredentials();                    // Cho phép gửi cookie/credentials
     });
 });
 
-// allow static file server
+// add static file server client
 builder.Services.AddHttpClient("WebStorageClient", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7084"); // Địa chỉ của Web Storage

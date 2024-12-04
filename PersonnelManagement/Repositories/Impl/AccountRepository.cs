@@ -4,18 +4,13 @@ using PersonnelManagement.Model;
 
 namespace PersonnelManagement.Repositories.Impl
 {
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository : GenericRepository<Account>, IAccountRepository
     {
-        private readonly PersonnelDataContext _dataContext;
-
-        public AccountRepository(PersonnelDataContext dataContext)
-        {
-            _dataContext = dataContext;
-        }
+        public AccountRepository(PersonnelDataContext dataContext) : base(dataContext) { }
 
         public async Task<Account?> GetAccountFullInforAsync(string email)
         {
-            return await _dataContext.Accounts
+            return await _context.Accounts
                 .Include(acc => acc.Employee)
                     .ThenInclude(emp => emp.LeaderOfDepartments)
                 .Include(acc => acc.Role)
@@ -26,7 +21,7 @@ namespace PersonnelManagement.Repositories.Impl
             string? sortByEmail, string? filterByStatus, string? filterByRole, string? keywordByEmployee, int pageNumber, int pageSize)
         {
             // Tim theo email hoac id, xep theo email, loc theo status, loc theo role, tim kiem theo ten hoac id employee
-            var query = _dataContext.Accounts
+            var query = _context.Accounts
                 .Include(a => a.Employee)
                 .AsQueryable();
 

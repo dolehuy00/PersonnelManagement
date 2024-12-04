@@ -8,6 +8,7 @@
         public string? Detail { get; set; }
         public double Penalty { get; set; }
         public double Tax { get; set; }
+        public double Total { get; set; }
         public DateTime Date { get; set; }
         public long EmployeeId { get; set; }
         public string? EmployeeName { get; set; }

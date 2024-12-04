@@ -1,5 +1,5 @@
-﻿using PersonnelManagement.DTO.Filter;
-using PersonnelManagement.DTO;
+﻿using PersonnelManagement.DTO;
+using PersonnelManagement.DTO.Filter;
 
 namespace PersonnelManagement.Services
 {
@@ -16,5 +16,6 @@ namespace PersonnelManagement.Services
         Task<string[]> DeleteMany(long[] deptAssignmentId);
         Task<ICollection<DeptAssignmentDTO>> AddMany(List<DeptAssignmentDTO> deptAssignmentDTOs);
         Task<ICollection<DeptAssignmentDTO>> EditManyByProjectId(long projectId, List<DeptAssignmentDTO> deptAssignmentDTOs);
+        Task<ICollection<DeptAssignmentDTO>> SearchIdAsync(long id);
     }
 }
