@@ -122,6 +122,7 @@ namespace PersonnelManagement.Repositories.Impl
             var totalRecords = await query.CountAsync();
             var skip = (page - 1) * pageSize;
             var items = await query
+                .Include(e => e.Department)
                 .Skip(skip)
                 .Take(pageSize)
                 .ToListAsync();

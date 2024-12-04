@@ -1,5 +1,4 @@
-﻿using PersonnelManagement.DTO;
-using PersonnelManagement.DTO.Filter;
+﻿using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Model;
 
 namespace PersonnelManagement.Repositories
