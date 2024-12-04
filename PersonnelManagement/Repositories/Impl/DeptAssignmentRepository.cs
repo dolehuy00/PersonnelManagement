@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PersonnelManagement.Data;
-using PersonnelManagement.DTO;
+﻿using PersonnelManagement.Data;
 using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Model;
 
@@ -8,7 +6,7 @@ namespace PersonnelManagement.Repositories.Impl
 {
     public class DeptAssignmentRepository : GenericRepository<DeptAssignment>, IDeptAssignmentRepository
     {
-        public DeptAssignmentRepository(PersonnelDataContext context) : base(context) { }        
+        public DeptAssignmentRepository(PersonnelDataContext context) : base(context) { }
 
         async Task<(ICollection<DeptAssignment>, int, int)> IDeptAssignmentRepository.FilterAsync(DeptAssignmentFilterDTO deptAssignmentFilter)
         {

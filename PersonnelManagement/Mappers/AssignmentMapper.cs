@@ -16,7 +16,13 @@ namespace PersonnelManagement.Mappers
                 cfg.CreateMap<Assignment, AssignmentDTO>()
                     .ForMember(
                         dest => dest.ResponsiblePesonName,
-                        opt => opt.MapFrom(src => src.ResponsiblePeson == null ? "Unknow" : src.ResponsiblePeson.Fullname));
+                        opt => opt.MapFrom(src => src.ResponsiblePeson == null ? null : src.ResponsiblePeson.Fullname))
+                    .ForMember(
+                        dest => dest.ProjectId,
+                        opt => opt.MapFrom(src => src.DeptAssignment.Project.Id))
+                    .ForMember(
+                        dest => dest.ProjectName,
+                        opt => opt.MapFrom(src => src.DeptAssignment.Project == null ? null : src.DeptAssignment.Project.Name));
             }).CreateMapper();
             mapperToEntity = new MapperConfiguration(cfg => cfg.CreateMap<AssignmentDTO, Assignment>()).CreateMapper();
         }

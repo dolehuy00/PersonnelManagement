@@ -1,6 +1,4 @@
-﻿using PersonnelManagement.Model;
-
-namespace PersonnelManagement.DTO
+﻿namespace PersonnelManagement.DTO
 {
     public class DeptAssignmentDTO
     {
@@ -9,6 +7,7 @@ namespace PersonnelManagement.DTO
         public string? MainTaskDetail { get; set; }
         public long ProjectId { get; set; }
         public long DepartmentId { get; set; }
+        public string? DepartmentName { get; set; }
         public ICollection<AssignmentDTO>? AssignmentDTOs { get; set; }
     }
 }

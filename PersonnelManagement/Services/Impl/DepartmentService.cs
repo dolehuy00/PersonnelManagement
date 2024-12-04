@@ -1,9 +1,10 @@
 ﻿using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
-using PersonnelManagement.Enum;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services.Impl
 {
@@ -107,9 +108,16 @@ namespace PersonnelManagement.Services.Impl
         public async Task<string> changeStatus(long departmentId)
         {
             Department currentDepartment = await _deptRepo.GetByIdAsync(departmentId);
-            currentDepartment.Status = currentDepartment.Status.Equals(Status.Lock) ?  Status.Active : Status.Lock;
+            currentDepartment.Status = currentDepartment.Status.Equals(Status.Lock) ? Status.Active : Status.Lock;
             await _deptRepo.UpdateAsync(currentDepartment);
             return currentDepartment.Status;
+        }
+
+        public async Task<bool> IsLeaderOfDepartment(long? departmentId, long leaderId)
+        {
+            if (departmentId == null) throw new Exception("'departmentId' is requid");
+            Expression<Func<Department, bool>> expression = d => d.Id == departmentId && d.LeaderId == leaderId;
+            return await _deptRepo.FindOneAsync(expression) != null;
         }
     }
 }

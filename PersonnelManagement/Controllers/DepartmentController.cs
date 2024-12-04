@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
-using PersonnelManagement.Enum;
 using PersonnelManagement.Services;
-using System.Diagnostics;
 
 namespace PersonnelManagement.Controllers
 {

@@ -3,6 +3,7 @@ using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
+using System.Linq.Expressions;
 
 namespace PersonnelManagement.Services.Impl
 {
@@ -48,7 +49,9 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<AssignmentDTO> Get(long assignmentId)
         {
-            var assignment = await _assignmentRepo.GetFullInforAsync(assignmentId);
+            Expression<Func<Assignment, bool>> exppression = s => s.Id == assignmentId;
+            Expression<Func<Assignment, object>>[] includes = [s => s.ResponsiblePeson!];
+            var assignment = await _genericRepo.FindOneAsync(exppression, includes);
             return assignment == null
                 ? throw new Exception("Assignment doesn't exist.")
                 : _mapper.ToDTO(assignment);
@@ -56,7 +59,7 @@ namespace PersonnelManagement.Services.Impl
 
         public async Task<ICollection<AssignmentDTO>> GetAll()
         {
-            var assignments = await _assignmentRepo.GetFullInforAsync();
+            var assignments = await _genericRepo.GetAllAsync();
             return _mapper.TolistDTO(assignments);
         }
 
@@ -79,12 +82,6 @@ namespace PersonnelManagement.Services.Impl
             return messages;
         }
 
-        public async Task<(ICollection<AssignmentDTO>, int, int)> GetPagesAsync(int pageNumber, int pageSize)
-        {
-            var (assignments, totalPage, totalRecords) = await _assignmentRepo.GetPagedListAsync(pageNumber, pageSize);
-            return (_mapper.TolistDTO(assignments), totalPage, totalRecords);
-        }
-
         public async Task<(ICollection<AssignmentDTO>, int, int)> FilterAsync(AssignmentFilterDTO filter)
         {
             if (filter.Page < 1 || filter.PageSize < 1)
@@ -92,14 +89,16 @@ namespace PersonnelManagement.Services.Impl
                 throw new ArgumentException("Page and PageSize must be >= 1.");
             }
             var (assignments, totalPage, totalRecords) = await _assignmentRepo.FilterAsync(filter.SortBy,
-                filter.Status, filter.ResponsiblePesonId, filter.ProjectId, filter.DepartmentId,
+                filter.Status, filter.ResponsiblePesonId, filter.ProjectId, filter.DepartmentId, filter.DeptAssignmentId,
                 filter.Page, filter.PageSize);
             return (_mapper.TolistDTO(assignments), totalPage, totalRecords);
         }
 
         public async Task<AssignmentDTO> GetByEmployee(long assignmentId, long emplyeeId)
         {
-            var assignment = await _assignmentRepo.GetByEmployeeAsync(assignmentId, emplyeeId);
+            Expression<Func<Assignment, bool>> exppression = s => s.Id == assignmentId && s.ResponsiblePesonId == emplyeeId;
+            Expression<Func<Assignment, object>>[] includes = [s => s.ResponsiblePeson!];
+            var assignment = await _genericRepo.FindOneAsync(exppression, includes);
             return assignment == null
                 ? throw new Exception("Assignment doesn't exist.")
                 : _mapper.ToDTO(assignment);
@@ -119,7 +118,7 @@ namespace PersonnelManagement.Services.Impl
                 throw new ArgumentException("Page and PageSize must be >= 1.");
             }
             var (assignments, totalPage, totalRecords) = await _assignmentRepo.FilterAsync(filter.SortBy,
-                filter.Status, userId, null, null, filter.Page, filter.PageSize);
+                filter.Status, userId, null, null, null, filter.Page, filter.PageSize);
             return (_mapper.TolistDTO(assignments), totalPage, totalRecords);
         }
     }

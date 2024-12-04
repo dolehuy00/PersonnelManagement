@@ -4,25 +4,15 @@ using PersonnelManagement.Model;
 
 namespace PersonnelManagement.Repositories.Impl
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        private readonly PersonnelDataContext _dataContext;
+        public EmployeeRepository(PersonnelDataContext dataContext) : base(dataContext) { }
 
-        public EmployeeRepository(PersonnelDataContext dataContext)
+        public void UpdateEmployeeIgnorePropeties(Employee employee)
         {
-            _dataContext = dataContext;
-        }
-
-        public void Update(Employee employee)
-        {
-            _dataContext.Employees.Attach(employee);
-            _dataContext.Entry(employee).State = EntityState.Modified;
-            _dataContext.Entry(employee).Property(e => e.Status).IsModified = false;
-        }
-
-        public async Task SaveChangeAsync()
-        {
-            await _dataContext.SaveChangesAsync();
+            _context.Employees.Attach(employee);
+            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(employee).Property(e => e.Status).IsModified = false;
         }
 
         public async Task<(ICollection<Employee>, int, int)> FilterAsync(string? nameOrId, string? address,
@@ -33,7 +23,7 @@ namespace PersonnelManagement.Repositories.Impl
             // Tim kiem theo ten hoac id, tim theo dia chi, loc theo khoang ngay sinh, loc theo khoang luong co ban
             // Loc theo vi tri, loc theo khoang ngay bat dau, loc theo phong ban, loc theo trang thai
             // Sap xep theo ten, sap xep theo ngay sinh, sap xep theo ngay bat dau
-            var query = _dataContext.Employees.AsQueryable();
+            var query = _context.Employees.AsQueryable();
 
             // Tim kiem theo ten hoac id
             if (!string.IsNullOrEmpty(nameOrId))

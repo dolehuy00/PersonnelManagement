@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieAppApi.Service;
 using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
 using PersonnelManagement.Services;
 
 namespace PersonnelManagement.Controllers
 {
-    [Authorize(Policy = "AdminOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class DeptAssignmentController : ControllerBase
     {
         private IDeptAssignmentService _deptAssignmentService;
+        private readonly TokenService _tokenServ;
+        private IDepartmentService _departmentService;
 
-        public DeptAssignmentController(IDeptAssignmentService deptAssignmentService)
+        public DeptAssignmentController(IDeptAssignmentService deptAssignmentService, TokenService tokenServ, IDepartmentService departmentService)
         {
             _deptAssignmentService = deptAssignmentService ?? throw new ArgumentNullException(nameof(deptAssignmentService));
+            _tokenServ = tokenServ;
+            _departmentService = departmentService;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] DeptAssignmentDTO deptAssignmentDTO)
         {
@@ -33,6 +38,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] DeptAssignmentDTO deptAssignmentDTO)
         {
@@ -48,6 +54,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
@@ -63,6 +70,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMany([FromQuery] long[] id)
         {
@@ -78,6 +86,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> Get(long id)
         {
@@ -93,7 +102,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("filter")]
         public async Task<IActionResult> Filter([FromQuery] DeptAssignmentFilterDTO filterDTO)
         {
@@ -110,6 +119,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("AddMany")]
         public async Task<IActionResult> AddMany([FromBody] List<DeptAssignmentDTO> deptAssignmentDTOs)
         {
@@ -128,6 +138,7 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("EditMany/{projectId}")]
         public async Task<IActionResult> AddMany(long projectId, [FromBody] List<DeptAssignmentDTO> deptAssignmentDTOs)
         {
@@ -145,5 +156,40 @@ namespace PersonnelManagement.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchId(long id)
+        {
+            var titleResponse = "Search dept assignment";
+            try
+            {
+                var results = await _deptAssignmentService.SearchIdAsync(id);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, results, 1, 1, results.Count));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AllRoles")]
+        [HttpGet("filter-by-leader")]
+        public async Task<IActionResult> FilterByLeader([FromQuery] DeptAssignmentFilterDTO filterDTO)
+        {
+            var titleResponse = "Filter deptAssignment.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                var isLeader = await _departmentService.IsLeaderOfDepartment(filterDTO.departmentId, long.Parse(userIdInToken));
+                if (!isLeader) return StatusCode(403, "Access denied! ");
+                var (results, totalPage, totalRecords) = await _deptAssignmentService.FilterAsync(filterDTO);
+                return Ok(new ResponseObjectDTO<DeptAssignmentDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Chi tiết: {ex.StackTrace}");
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
     }
 }

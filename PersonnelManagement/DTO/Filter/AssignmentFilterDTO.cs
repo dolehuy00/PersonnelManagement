@@ -9,5 +9,6 @@
         public long? DepartmentId { get; set; }
         public required int Page { get; set; }
         public required int PageSize { get; set; }
+        public long? DeptAssignmentId { get; set; }
     }
 }
