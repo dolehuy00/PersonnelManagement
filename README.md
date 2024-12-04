@@ -38,6 +38,17 @@ Hệ thống cho phép người dùng đăng nhập với quyền hạn được
 ### Quản lý lịch sử lương  
 ![Quản lý lịch sử lương](#)  
 
+# Luồng nghiệp vụ của hệ thống
+1. Đầu tiên hệ thống sẽ phải có tài khoản cho ADMIN.
+2. Tạo 'phòng ban'(Department).
+3. Thêm 'nhân viên'(Employee) mới vào 'phòng ban' và tạo 'tài khoản' cho nhân viên.
+5. Bầu Leader cho 'phòng ban'.
+6. Tạo ra các 'dự án'(Project).
+7. ADMIN sẽ phân công các 'dự án' cho các 'phòng ban' khác nhau với với 'nhiệm vụ'(DeptAssignment) khác nhau. Mỗi 'dự án' sẽ được nhiều 'phòng ban' phụ trách.
+8. Khi đăng nhập với tài khoản của leader. Sẽ xem được danh sách các 'nhiệm vụ' được giao cho 'phòng ban' mà leader đó đảm nhiệm. Leader sẽ phân công các 'công việc'(Assignment) của 'dự án' cho các 'nhân viên' thuộc 'phòng ban'.
+9. Khi đăng nhập với tài khoản user. Sẽ thấy được danh sách các 'công việc' được phân công. Ngoài ra còn thấy được các thông tin của user và 'lịch sử nhận lương'(Salary history).
+10. ADMIN có thể thêm lịch sử lương cho từng nhân viên.
+
 # Cài đặt  
 ## Cài đặt môi trường  
 ### BackEnd  
