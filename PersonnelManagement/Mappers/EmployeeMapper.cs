@@ -17,7 +17,7 @@ namespace PersonnelManagement.Mappers
                 cfg.CreateMap<Employee, EmployeeDTO>()
                     .ForMember(
                         dest => dest.DepartmentName,
-                        opt => opt.MapFrom(src => src.Department == null ? "No" : src.Department.Name)
+                        opt => opt.MapFrom(src => src.Department == null ? null : src.Department.Name)
                     ).ForMember(
                         dest => dest.Image,
                         opt => opt.MapFrom(src => src.Image != null ? $"{src.Image}/{tokenService.GenerateAccessTokenImgServer()}" : null)
