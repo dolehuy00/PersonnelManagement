@@ -1,5 +1,6 @@
 ﻿using PersonnelManagement.DTO;
 using PersonnelManagement.DTO.Filter;
+using PersonnelManagement.Enum;
 using PersonnelManagement.Mappers;
 using PersonnelManagement.Model;
 using PersonnelManagement.Repositories;
@@ -120,6 +121,19 @@ namespace PersonnelManagement.Services.Impl
             var (assignments, totalPage, totalRecords) = await _assignmentRepo.FilterAsync(filter.SortBy,
                 filter.Status, userId, null, null, null, filter.Page, filter.PageSize);
             return (_mapper.TolistDTO(assignments), totalPage, totalRecords);
+        }
+
+        public async Task ChangeStatusByUser(long id, string status, long userId)
+        {
+            if (status.Equals(AssignmentStatus.InProgress) || status.Equals(AssignmentStatus.Completed))
+            {
+                Expression<Func<Assignment, bool>> predicate = a => a.ResponsiblePesonId == userId && a.Id == id;
+                var assignment = await _genericRepo.FindOneAsync(predicate) ?? throw new Exception("Assignment does not exist.");
+                assignment.Status = status;
+                await _genericRepo.SaveChangesAsync();
+                return;
+            }
+            throw new Exception("Status not found!");
         }
     }
 }

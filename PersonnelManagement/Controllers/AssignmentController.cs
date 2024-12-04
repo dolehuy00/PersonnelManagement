@@ -67,11 +67,11 @@ namespace PersonnelManagement.Controllers
             {
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 var isLeader = await _departmentServ.IsLeaderOfDepartment(departmentId, long.Parse(userIdInToken));
-                if (!isLeader) return StatusCode(403, "Access denied!");
+                if (!isLeader) return StatusCode(403, new ResponseMessageDTO(titleResponse, 403, ["Access denied!"]));
                 if (assignmentDTO.ResponsiblePesonId.HasValue)
                 {
                     var isPerson = await _emplServ.IsPersonOfDepartment(departmentId, assignmentDTO.ResponsiblePesonId.Value);
-                    if (!isPerson) return StatusCode(400, "Person is not in department!");
+                    if (!isPerson) return StatusCode(400, new ResponseMessageDTO(titleResponse, 400, ["Person is not in department!"]));
                 }
                 var assignment = await _assignServ.Edit(assignmentDTO);
                 return Ok(new ResponseObjectDTO<AssignmentDTO>(titleResponse, [assignment]));
@@ -139,7 +139,7 @@ namespace PersonnelManagement.Controllers
             {
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 var isLeader = await _departmentServ.IsLeaderOfDepartment(departmentId, long.Parse(userIdInToken));
-                if (!isLeader) return StatusCode(403, "Access denied!");
+                if (!isLeader) return StatusCode(403, new ResponseMessageDTO(titleResponse, 403, ["Access denied!"]));
                 var assignment = await _assignServ.Get(id);
                 return Ok(new ResponseObjectDTO<AssignmentDTO>(titleResponse, [assignment]));
             }
@@ -241,7 +241,7 @@ namespace PersonnelManagement.Controllers
             {
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 var isLeader = await _departmentServ.IsLeaderOfDepartment(filterDTO.DepartmentId, long.Parse(userIdInToken));
-                if (!isLeader) return StatusCode(403, "Access denied!");
+                if (!isLeader) return StatusCode(403, new ResponseMessageDTO(titleResponse, 403, ["Access denied!"]));
                 var (results, totalPage, totalRecords) = await _assignServ.FilterAsync(filterDTO);
                 return Ok(new ResponseObjectDTO<AssignmentDTO>(titleResponse, results, filterDTO.Page, totalPage, totalRecords));
             }
@@ -260,14 +260,31 @@ namespace PersonnelManagement.Controllers
             {
                 var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
                 var isLeader = await _departmentServ.IsLeaderOfDepartment(departmentId, long.Parse(userIdInToken));
-                if (!isLeader) return StatusCode(403, "Access denied!");
+                if (!isLeader) return StatusCode(403, new ResponseMessageDTO(titleResponse, 403, ["Access denied!"]));
                 if (assignmentDTO.ResponsiblePesonId.HasValue)
                 {
                     var isPerson = await _emplServ.IsPersonOfDepartment(departmentId, assignmentDTO.ResponsiblePesonId.Value);
-                    if (!isPerson) return StatusCode(400, "Person is not in department!");
+                    if (!isPerson) return StatusCode(400, new ResponseMessageDTO(titleResponse, 400, ["Person is not in department!"]));
                 }
                 var assignment = await _assignServ.Add(assignmentDTO);
                 return Ok(new ResponseObjectDTO<AssignmentDTO>(titleResponse, [assignment]));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseMessageDTO(titleResponse, 400, [ex.Message]));
+            }
+        }
+
+        [Authorize(Policy = "AllRoles")]
+        [HttpPut("change-status-by-user")]
+        public async Task<IActionResult> UnLock(long id, string status)
+        {
+            var titleResponse = "Unlock employee.";
+            try
+            {
+                var userIdInToken = _tokenServ.GetAccountIdFromAccessToken(HttpContext);
+                await _assignServ.ChangeStatusByUser(id, status, long.Parse(userIdInToken));
+                return Ok(new ResponseMessageDTO(titleResponse, 200, [id.ToString(), status]));
             }
             catch (Exception ex)
             {

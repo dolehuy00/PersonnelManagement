@@ -16,5 +16,6 @@ namespace PersonnelManagement.Services
         Task<(ICollection<AssignmentDTO>, int, int)> GetPagesByEmployeeAsync(
             int pageNumber, int pageSize, long employeeId);
         Task<(ICollection<AssignmentDTO>, int, int)> FilterByUserAsync(AssignmentFilterDTO filter, long userId);
+        Task ChangeStatusByUser(long id, string status, long userId);
     }
 }
