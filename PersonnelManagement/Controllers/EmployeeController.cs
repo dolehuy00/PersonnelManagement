@@ -30,7 +30,7 @@ namespace PersonnelManagement.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] EmployeeDTO employeeDTO)
+        public async Task<IActionResult> Add([FromForm] EmployeeDTO employeeDTO)
         {
             var titleResponse = "Create an employee.";
             try
@@ -270,7 +270,7 @@ namespace PersonnelManagement.Controllers
                 // Update url image in database
                 await _emplServ.UpdateImageAsync(long.Parse(userIdInToken), fileUrl);
 
-                return Ok(new ResponseObjectDTO<dynamic>(titleResponse, [new { id = userIdInToken, fileUrl }]));
+                return Ok(new ResponseObjectDTO<dynamic>(titleResponse, [new { id = userIdInToken, fileUrl = $"{fileUrl}/{key}" }]));
             }
             catch (Exception ex)
             {

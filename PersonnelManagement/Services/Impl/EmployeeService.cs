@@ -13,17 +13,33 @@ namespace PersonnelManagement.Services.Impl
     {
         private readonly EmployeeMapper _emplMapper;
         private readonly IEmployeeRepository _emplRepo;
+        private readonly TokenService _tokenServ;
+        private readonly IStaticFileService _staticFileServ;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, TokenService tokenService)
+        public EmployeeService(IEmployeeRepository employeeRepository, TokenService tokenService, IStaticFileService staticFileServ)
         {
             _emplRepo = employeeRepository;
             _emplMapper = new EmployeeMapper(tokenService);
+            _tokenServ = tokenService;
+            _staticFileServ = staticFileServ;
         }
 
         public async Task<EmployeeDTO> Add(EmployeeDTO employeeDTO)
         {
             var newEmployee = _emplMapper.ToModel(employeeDTO);
             await _emplRepo.AddAsync(newEmployee);
+            if (employeeDTO.FileImage != null)
+            {
+                //Generate token for authen server storage file
+                var key = _tokenServ.GenerateAccessTokenImgServer();
+                // Create file name
+                var fileName = $"avatar-user-{newEmployee.Id}.{employeeDTO.FileImage.FileName.Split(".").Last()}";
+                // Gọi service để upload file
+                var fileUrl = await _staticFileServ.UploadImageAsync(employeeDTO.FileImage, fileName, key);
+                // Update url image in database
+                newEmployee.Image = fileUrl;
+                await _emplRepo.SaveChangesAsync();
+            }
             return _emplMapper.ToDTO(newEmployee);
 
         }

@@ -13,5 +13,6 @@
         public string? Status { get; set; }
         public long? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
+        public IFormFile? FileImage { get; set; }
     }
 }
