@@ -1,3 +1,5 @@
+* Link github front end: https://github.com/dolehuy00/PersonManagementFEReact.git
+
 # Giới thiệu  
 Xây dựng một website hỗ trợ doanh nghiệp trong việc tổ chức, quản lý các hoạt động liên quan đến nhân sự, phòng ban, lương nhân viên và đặc biệt là quản lý phân công công việc cho các dự án.  
 Hệ thống cho phép người dùng đăng nhập với quyền hạn được phân cấp rõ ràng giữa **ADMIN**, **USER** ngoài ra còn các chức năng phân công công việc được **Leader** của phòng ban thực hiện.  
