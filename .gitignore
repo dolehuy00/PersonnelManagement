@@ -48,3 +48,11 @@ msbuild.err
 msbuild.wrn
 /PersonnelManagement/bin/Debug/net8.0/PersonnelManagement.dll
 /PersonnelManagement/bin/Debug/net8.0/PersonnelManagement.exe
+
+
+/FrontEnd/argon-dashboard-react/build
+/FrontEnd/argon-dashboard-react/node_modules
+/FrontEnd/argon-dashboard-react/package-lock.json
+/FrontEnd/argon-dashboard-react/build
+/FrontEnd/argon-dashboard-react/.eslintcache
+/FrontEnd/argon-dashboard-react/.vscode

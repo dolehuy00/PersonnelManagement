@@ -1,0 +1,54 @@
+.overlay-spinner-table-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.loading-row {  
+    opacity: 0.5;
+    pointer-events: none; /* Prevent interactions */
+}
+
+.table-salary-user td{
+    border-top: 0;
+    padding: 0.8rem 0.8rem;
+}
+
+.table-salary-user thead tr th{
+    font-weight: bold;
+}
+
+.table-salary-user tbody tr:hover{
+    background-color: rgba(226, 226, 226, 0.533);
+    cursor: pointer;
+}
+
+.table-row-salary-user:hover{
+    background-color: rgba(226, 226, 226, 0.533);
+    cursor: pointer;
+}
+
+.card-department-management:hover{
+    background-color: rgba(226, 226, 226, 0.533);
+    cursor: pointer;
+}
+
+.input-file:disabled{
+    border-radius: 2px;
+    background-color: #e9ecef;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.input-file{
+    border-radius: 2px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #ffff;
+}
