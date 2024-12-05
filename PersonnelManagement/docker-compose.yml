@@ -1,0 +1,20 @@
+﻿version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver2022
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "SqlServer@1234" # Đặt mật khẩu cho user SA
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  sqlserver_data:
+  redis_data:
