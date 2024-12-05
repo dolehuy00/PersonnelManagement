@@ -32,7 +32,7 @@ Hệ thống cho phép người dùng đăng nhập với quyền hạn được
 - **ReactJS**: Thư viện JavaScript phổ biến dùng để xây dựng giao diện người dùng (UI).  
 
 # Mô hình quan hệ dữ liệu (ERD)  
-[![Mô hình ERD](#) ](https://github.com/user-attachments/assets/ed8ca4ba-0593-4e97-8f40-cad622e31ce8) 
+[![Mô hình ERD](#) ](./Readme_IMG/ERD.png) 
 
 # Cài đặt  
 ## Cài đặt môi trường  
