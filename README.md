@@ -4,14 +4,22 @@ Hệ thống cho phép người dùng đăng nhập với quyền hạn được
 
 # Luồng chức năng của hệ thống
 1. Đầu tiên hệ thống sẽ phải có tài khoản ADMIN để người quản lý đăng nhập vào.
+![Đăng Nhập](./Readme_IMG/login.png)
 2. Tạo 'phòng ban'(Department).
+![Thêm phòng ban](./Readme_IMG/DepartmentAdd.png)
 3. Thêm 'nhân viên'(Employee) mới vào 'phòng ban' và tạo 'tài khoản' cho nhân viên.
-5. Bầu Leader cho 'phòng ban'.
+![Thêm nhân viên](./Readme_IMG/AddEmployee.png)
+4. Bầu Leader cho 'phòng ban'.
 6. Tạo ra các 'dự án'(Project).
-7. ADMIN sẽ phân công các 'dự án' cho các 'phòng ban' khác nhau với với 'nhiệm vụ'(DeptAssignment) khác nhau. Mỗi 'dự án' sẽ được nhiều 'phòng ban' phụ trách.
-8. Khi đăng nhập với tài khoản của leader. Sẽ xem được danh sách các 'nhiệm vụ' được giao cho 'phòng ban' mà leader đó đảm nhiệm. Leader sẽ phân công các 'công việc'(Assignment) của 'dự án' cho các 'nhân viên' thuộc 'phòng ban'.
-9. Khi đăng nhập với tài khoản user. Sẽ thấy được danh sách các 'công việc' được phân công. Ngoài ra còn thấy được các thông tin của user và 'lịch sử nhận lương'(Salary history).
-10. ADMIN có thể thêm lịch sử lương cho từng nhân viên.
+![Thêm nhân viên](./Readme_IMG/ProjectList.png)
+8. ADMIN sẽ phân công các 'dự án' cho các 'phòng ban' khác nhau với với 'nhiệm vụ'(DeptAssignment) khác nhau. Mỗi 'dự án' sẽ được nhiều 'phòng ban' phụ trách.
+![Thêm nhân viên](./Readme_IMG/DeptAssignmentAdd.png)
+9. Khi đăng nhập với tài khoản của leader. Sẽ xem được danh sách các 'nhiệm vụ' được giao cho 'phòng ban' mà leader đó đảm nhiệm. Leader sẽ phân công các 'công việc'(Assignment) của 'dự án' cho các 'nhân viên' thuộc 'phòng ban'.
+![Thêm nhân viên](./Readme_IMG/AssignmentForLeader.png)
+10. Khi đăng nhập với tài khoản user. Sẽ thấy được danh sách các 'công việc' được phân công. Ngoài ra còn thấy được các thông tin của user và 'lịch sử nhận lương'(Salary history).
+![Thêm nhân viên](./Readme_IMG/ProfileUser.png)
+11. ADMIN có thể thêm lịch sử lương cho từng nhân viên.
+![Thêm nhân viên](./Readme_IMG/SalaryAdd.png)
 
 # Các công nghệ sử dụng  
 ## Backend  
@@ -24,30 +32,7 @@ Hệ thống cho phép người dùng đăng nhập với quyền hạn được
 - **ReactJS**: Thư viện JavaScript phổ biến dùng để xây dựng giao diện người dùng (UI).  
 
 # Mô hình quan hệ dữ liệu (ERD)  
-![Mô hình ERD](#)  
-
-# Giao diện Website  
-## Giao diện đăng nhập  
-![Giao diện đăng nhập](#)  
-
-## Giao diện User  
-![Giao diện User](#)  
-
-## Giao diện Admin  
-### Quản lý Nhân viên  
-![Quản lý Nhân viên](#)  
-
-### Quản lý Phòng ban  
-![Quản lý Phòng ban](#)  
-
-### Quản lý dự án  
-![Quản lý dự án](#)  
-
-### Quản lý phân công công việc  
-![Quản lý phân công công việc](#)  
-
-### Quản lý lịch sử lương  
-![Quản lý lịch sử lương](#)  
+[![Mô hình ERD](#) ](https://github.com/user-attachments/assets/ed8ca4ba-0593-4e97-8f40-cad622e31ce8) 
 
 # Cài đặt  
 ## Cài đặt môi trường  
